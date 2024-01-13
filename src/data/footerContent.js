@@ -1,7 +1,7 @@
 module.exports = [
   {
     id: 1,
-    title: "İş axtaranlar",
+    title: "Namizədlər",
     menuList: [
       { name: "Vakansiya axtar", route: "/vacancies-list" },
       // { name: "Browse Categories", route: "/job-list-v3" },
@@ -12,7 +12,7 @@ module.exports = [
   },
   {
     id: 2,
-    title: "İşçi axtaranlar",
+    title: "Şirkətlər",
     menuList: [
       { name: "Vakansiya paylaş", route: "/company-dashboard/post-vacancy" },
       { name: "İşçi axtaran hesabı", route: "/company-dashboard/dashboard" },

@@ -1,13 +1,14 @@
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import LoginWithSocial from "./LoginWithSocial";
 import Form from "./FormContent";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { validateUserData } from "../../../../services/api/auth_api";
 import { registerCandidate } from "../../../../services/api/candidate_api";
 import { registerCompany } from "../../../../services/api/company_api";
 import {toast} from 'react-toastify'
 const Register = () => {
+  const nav = useNavigate()
   const [showotp,setShowOtp] = useState(false);
   const [registerdata, setRegisterData] = useState({
     name:"",
@@ -61,17 +62,67 @@ const Register = () => {
   const submitRegister = async (e,userdata) => {
     try {
       const {data} = await registerCandidate(userdata);
+      toast.success(data.message,{
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          })
+          nav('/login')
       console.log(data)
     } catch (error) {
-      console.log(error.response)
+      if(error.response.data){
+        toast.error(error.response.data.message,{
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          })
+      }
+      else{
+        console.log(error)
+      }
     }
   }
   const submitRegisterCompany = async (e,userdata) => {
     try {
       const {data} = await registerCompany(userdata);
+      toast.success(data.message,{
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        })
+        nav('/login')
       console.log(data)
     } catch (error) {
-      console.log(error.response)
+      if(error.response.data){
+        toast.error(error.response.data.message,{
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          })
+      }
+      else{
+        console.log(error)
+      }
     }
   }
   return (

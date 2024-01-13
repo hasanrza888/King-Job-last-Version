@@ -19,9 +19,7 @@ const Pricing = () => {
       tag: "",
       features: [
         "Minimum 2 vakansiya",
-        "1 Vakansiya 25 AZN",
-        "Job displayed for 20 days",
-        "Premium Support 24/7",
+        "1 Vakansiya 25 AZN"
       ],
     },
     {

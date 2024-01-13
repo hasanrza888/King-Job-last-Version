@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
-const FormContent = ({submitRegister={submitRegister},handleRegister,handleChange,registerdata,showotp}) => {
-  const [otp,setotp] = useState("");
-  const mainFunction = (e) => (showotp ? submitRegister(e, { ...registerdata, otp }) : handleRegister(e));
+const FormContent = ({submitRegister,handleRegister,handleChange,registerdata,showotp}) => {
+  const [otp, setOtp] = useState("");
+  const [mainFunction, setMainFunction] = useState(() => handleRegister);
+
+  useEffect(() => {
+    setMainFunction(() => (showotp ? submitRegister : handleRegister));
+  }, [showotp, submitRegister, handleRegister]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    mainFunction(e, { ...registerdata, otp });
+  };
   return (
-    <form onSubmit={mainFunction} method="post">
+    <form onSubmit={handleSubmit} method="post">
       <div className="form-group">
         <label>Ad və Soyad</label>
         <input onChange={handleChange} value={registerdata.name} type="text" name="name" placeholder="Ad və Soyad" required />
@@ -45,7 +54,7 @@ const FormContent = ({submitRegister={submitRegister},handleRegister,handleChang
           type="text"
           name="otp"
           placeholder="otp"
-          onChange={(e)=>{setotp(e.target.value)}}
+          onChange={(e)=>{setOtp(e.target.value)}}
           value={otp}
         />
       </div>

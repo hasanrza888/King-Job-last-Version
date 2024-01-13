@@ -1,7 +1,6 @@
 import jobs from "../../../data/job-featured";
 import LoginPopup from "../../../components/common/form/login/LoginPopup";
 import FooterDefault from "../../../components/footer/common-footer";
-import DefaulHeader from "../../../components/header/DefaulHeader";
 import MobileMenu from "../../../components/header/MobileMenu";
 import JobOverView from "../../../components/job-single-pages/job-overview/JobOverView";
 import JobSkills from "../../../components/job-single-pages/shared-components/JobSkills";
@@ -13,6 +12,7 @@ import ApplyJobModalContent from "../../../components/job-single-pages/shared-co
 import { useParams } from "react-router";
 import RelatedJobs from "../../../components/job-single-pages/related-jobs/RelatedJobs";
 import { useSelector } from "react-redux";
+import DefaulHeader2 from "../../../components/header/DefaulHeader2";
 const JobSingleDynamicV2 = () => {
   const id = useParams().id;
   const {alljobs} = useSelector(state=>state.job)
@@ -26,7 +26,7 @@ const JobSingleDynamicV2 = () => {
       <LoginPopup />
       {/* End Login Popup Modal */}
 
-      <DefaulHeader />
+      <DefaulHeader2 />
       {/* <!--End Main Header --> */}
 
       <MobileMenu />

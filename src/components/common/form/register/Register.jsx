@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { validateUserData } from "../../../../services/api/auth_api";
 import { registerCandidate } from "../../../../services/api/candidate_api";
+import { registerCompany } from "../../../../services/api/company_api";
+import {toast} from 'react-toastify'
 const Register = () => {
   const [showotp,setShowOtp] = useState(false);
   const [registerdata, setRegisterData] = useState({
@@ -26,17 +28,47 @@ const Register = () => {
     try {
       const {data} = await validateUserData(registerdata);
       setShowOtp(data.success);
-     
+      toast.success(data.message,{
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          })
       console.log(data)
     } catch (error) {
-      console.log(error.response.data)
+      if(error.response.data){
+        toast.error(error.response.data.message,{
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          })
+      }
+      else{
+        console.log(error)
+      }
     }
-    // console.log(registerdata)
   }
 
   const submitRegister = async (e,userdata) => {
     try {
       const {data} = await registerCandidate(userdata);
+      console.log(data)
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
+  const submitRegisterCompany = async (e,userdata) => {
+    try {
+      const {data} = await registerCompany(userdata);
       console.log(data)
     } catch (error) {
       console.log(error.response)
@@ -70,7 +102,7 @@ const Register = () => {
         {/* End cadidates Form */}
 
         <TabPanel>
-          <Form />
+        <Form submitRegister={submitRegisterCompany} showotp={showotp} handleRegister={handleRegister} handleChange = {handleChange} registerdata={registerdata} />
         </TabPanel>
         {/* End Employer Form */}
       </Tabs>

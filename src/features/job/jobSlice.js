@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    alljobs:[],
     latestJob: ["full-time"],
+    currentJob:null,
     category: [
         {
             id: 1,
@@ -123,6 +125,12 @@ export const jobSlice = createSlice({
     name: "job",
     initialState,
     reducers: {
+        setJobs : (state, {payload}) => {
+            state.alljobs = payload;
+        },
+        setCurrentJob:(state,{payload}) => {
+            state.currentJob = payload;
+        },
         addLatestJob: (state, { payload }) => {
             const isExist = state.latestJob?.includes(payload);
             if (isExist) {
@@ -207,5 +215,7 @@ export const {
     clearDatePostToggle,
     experienceLavelCheck,
     clearExperienceToggle,
+    setJobs,
+    setCurrentJob
 } = jobSlice.actions;
 export default jobSlice.reducer;

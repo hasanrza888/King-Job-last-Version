@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    user:localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
+    isLoggedIn:!!localStorage.getItem('user'),
+    info:null,
     category: [
         {
             id: 1,
@@ -96,6 +99,19 @@ export const candidateSlice = createSlice({
     name: "candidate",
     initialState,
     reducers: {
+        setInfo:(state,{payload}) => {
+            state.info = payload;
+        },
+        setUser : (state,{payload})=>{
+            state.user = payload;
+            localStorage.setItem('user',JSON.stringify(payload));
+            state.isLoggedIn = true
+        },
+        clearUser : (state,{payload})=>{
+            state.user = null;
+            localStorage.removeItem('user');
+            state.isLoggedIn = false;
+        },
         addDatePostCheck: (state, { payload }) => {
             state?.datePost?.map((item) => {
                 item.isChecked = false;
@@ -169,5 +185,8 @@ export const {
     clearDatePost,
     clearExperience,
     clearQualification,
+    setUser,
+    clearUser,
+    setInfo
 } = candidateSlice.actions;
 export default candidateSlice.reducer;

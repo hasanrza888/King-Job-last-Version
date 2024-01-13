@@ -12,10 +12,11 @@ import RelatedJobs3 from "../../../components/job-single-pages/related-jobs/Rela
 import ApplyJobModalContent from "../../../components/job-single-pages/shared-components/ApplyJobModalContent";
 import { useParams } from "react-router";
 import RelatedJobs from "../../../components/job-single-pages/related-jobs/RelatedJobs";
-
+import { useSelector } from "react-redux";
 const JobSingleDynamicV2 = () => {
   const id = useParams().id;
-  const company = jobs.find((item) => item.id == id) || jobs[0];
+  const {alljobs} = useSelector(state=>state.job)
+  const job = alljobs.find((item) => item._id === id) || jobs[0];
 
   return (
     <>
@@ -45,39 +46,39 @@ const JobSingleDynamicV2 = () => {
                           <img
                             width={100}
                             height={98}
-                            src={company?.logo}
+                            src={job?.logo}
                             alt="logo"
                           />
                         </span>
-                        <h4>{company?.jobTitle}</h4>
+                        <h4>{job?.name}</h4>
 
                         <ul className="job-info">
                           <li>
                             <span className="icon flaticon-briefcase"></span>
-                            {company?.company}
+                            {job?.companyName}
                           </li>
                           {/* compnay info */}
                           <li>
                             <span className="icon flaticon-map-locator"></span>
-                            {company?.location}
+                            {job?.city}
                           </li>
                           {/* location info */}
                           <li>
                             <span className="icon flaticon-clock-3"></span>{" "}
-                            {company?.time}
+                            {job?.endTime?.split('T')[0]}
                           </li>
                           {/* time info */}
                           <li>
                             <span className="icon flaticon-money"></span>{" "}
-                            {company?.salary}
+                            {job?.agreedSalary ? 'Razilasma' :job?.salary}
                           </li>
                           {/* salary info */}
                         </ul>
                         {/* End .job-info */}
 
                         <ul className="job-other-info">
-                          <li className={`${company?.jobType?.[0].styleClass}`}>
-                            {company?.jobType?.[0]['type']}
+                          <li className={`green`}>
+                            {job?.type}
                           </li>
                         </ul>
                         {/* End .job-other-info */}
@@ -89,7 +90,7 @@ const JobSingleDynamicV2 = () => {
                 </div>
                 {/* End job-block-outer */}
 
-                <JobDetailsDescriptions />
+                <JobDetailsDescriptions job={job} />
                 {/* End jobdetails content */}
 
                 {/* <div className="other-options">
@@ -110,7 +111,7 @@ const JobSingleDynamicV2 = () => {
                   {/* End title box */}
 
                   <div className="row">
-                    <RelatedJobs />
+                    <RelatedJobs category={job?.category} id={job?._id} />
                   </div>
                   {/* End .row */}
                 </div>
@@ -166,11 +167,11 @@ const JobSingleDynamicV2 = () => {
                   <div className="sidebar-widget">
                     {/* <!-- Job Overview --> */}
                     <h4 className="widget-title">Vakansiya Detalları</h4>
-                    <JobOverView />
+                    <JobOverView job={job} />
 
                     <h4 className="widget-title mt-5">Bacarıqlar</h4>
                     <div className="widget-content">
-                      <JobSkills />
+                      <JobSkills job={job} />
                     </div>
                     {/* <!-- Job Skills --> */}
                   </div>
@@ -183,11 +184,11 @@ const JobSingleDynamicV2 = () => {
                           <img
                             width={54}
                             height={53}
-                            src={company.logo}
+                            src={job?.logo}
                             alt="resource"
                           />
                         </div>
-                        <h5 className="company-name">{company.company}</h5>
+                        <h5 className="company-name">{job?.company}</h5>
                         <a href="#" className="profile-link">
                           Şirkətin profilinə bax
                         </a>

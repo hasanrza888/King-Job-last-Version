@@ -1,53 +1,54 @@
 import { Link } from "react-router-dom";
 import jobFeatured from "../../data/job-featured";
-
+import { useSelector } from "react-redux";
 const JobFeatured1 = () => {
+  const {alljobs} = useSelector((state)=>state.job);
   return (
     <>
-      {jobFeatured.slice(0, 6).map((item) => (
-        <div className="job-block col-lg-6 col-md-12 col-sm-12" key={item.id}>
+      {alljobs.slice(0, 6).map((item) => (
+        <div className="job-block col-lg-6 col-md-12 col-sm-12" key={item?._id}>
           <div className="inner-box">
             <div className="content">
               <span className="company-logo">
                 <img
                   width={50}
                   height={49}
-                  src={item.logo}
+                  src={item?.logo}
                   alt="item brand"
                 />
               </span>
               <h4>
-                <Link to={`/vacancies-list/${item.id}`}>{item.jobTitle}</Link>
+                <Link to={`/vacancies-list/${item?._id}`}>{item?.name}</Link>
               </h4>
 
               <ul className="job-info">
                 <li>
                   <span className="icon flaticon-briefcase"></span>
-                  {item.company}
+                  {item?.companyName}
                 </li>
                 {/* compnay info */}
                 <li>
                   <span className="icon flaticon-map-locator"></span>
-                  {item.location}
+                  {item?.city}
                 </li>
                 {/* location info */}
                 <li>
-                  <span className="icon flaticon-clock-3"></span> {item.time}
+                  <span className="icon flaticon-clock-3"></span> {item?.endTime?.split('T')[0]}
                 </li>
                 {/* time info */}
                 <li>
-                  <span className="icon flaticon-money"></span> {item.salary}
+                  <span className="icon flaticon-money"></span> {item?.agreedSalary ? 'Raz;lasma' : item?.salary}
                 </li>
                 {/* salary info */}
               </ul>
               {/* End .job-info */}
 
               <ul className="job-other-info">
-                {item.jobType.map((val, i) => (
-                  <li key={i} className={`${val.styleClass}`}>
-                    {val.type}
+                {/* {item.jobType.map((val, i) => ( */}
+                  <li className={`green`}>
+                    {item?.type}
                   </li>
-                ))}
+                {/* ))} */}
               </ul>
               {/* End .job-other-info */}
 

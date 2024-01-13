@@ -1,26 +1,26 @@
-const JobOverView = () => {
+const JobOverView = ({job}) => {
   return (
     <div className="widget-content">
       <ul className="job-overview">
         <li>
           <i className="icon icon-calendar"></i>
           <h5>Paylaşılma Tarixi:</h5>
-          <span>1 saat əvvəl</span>
+          <span>{job?.createdAt?.split('T')[0]}</span>
         </li>
         <li>
           <i className="icon icon-expiry"></i>
           <h5>Son Tarix:</h5>
-          <span>06.02.2024</span>
+          <span>{job?.endTime?.split('T')[0]}</span>
         </li>
         <li>
           <i className="icon icon-location"></i>
           <h5>Şəhər:</h5>
-          <span>London, UK</span>
+          <span>{job?.city}</span>
         </li>
         <li>
           <i className="icon icon-user-2"></i>
           <h5>Vakansiya adı:</h5>
-          <span>Designer</span>
+          <span>{job?.name}</span>
         </li>
         {/* <li>
           <i className="icon icon-clock"></i>
@@ -35,7 +35,7 @@ const JobOverView = () => {
         <li>
           <i className="icon icon-salary"></i>
           <h5>Maaş:</h5>
-          <span>35k - 45k AZN</span>
+          <span>{job?.agreedSalary ? 'Razilasma' :job?.salary}</span>
         </li>
       </ul>
     </div>

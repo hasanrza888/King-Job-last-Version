@@ -24,13 +24,18 @@ const initialState = {
         },
     ],
     companySize: [],
+    allCompanies:[],
 };
 
 export const employerSlice = createSlice({
     name: "employer",
     initialState,
-    reducers: {},
+    reducers: {
+        setCompanies: (state,{payload}) => {
+            state.allCompanies = payload
+        }
+    },
 });
 
-export const {} = employerSlice.actions;
+export const {setCompanies} = employerSlice.actions;
 export default employerSlice.reducer;

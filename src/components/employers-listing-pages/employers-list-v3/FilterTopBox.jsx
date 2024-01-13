@@ -1,7 +1,10 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import companyData from "../../../data/topCompany";
 import Pagination from "../components/Pagination";
 import { useDispatch, useSelector } from "react-redux";
+import defaultcompanylogo from '../../../img/defaultcompanylogo.jpg'
+import {toast} from 'react-toastify'
 import {
   addCategory,
   addDestination,
@@ -11,7 +14,9 @@ import {
   addPerPage,
   addSort,
 } from "../../../features/filter/employerFilterSlice";
-
+//Services
+import { fetchcompanies } from "../../../services/api/common_api";
+import { setCompanies } from "../../../features/employer/employerSlice";
 const FilterTopBox = () => {
   const {
     keyword,
@@ -23,7 +28,36 @@ const FilterTopBox = () => {
     perPage,
   } = useSelector((state) => state.employerFilter) || {};
   const dispatch = useDispatch();
+  const {allCompanies} = useSelector(state=>state.employer);
+  console.log(allCompanies)
+  useEffect(()=>{
+    const fetchAllCompanies = async () => {
+      try {
+        const {data} = await fetchcompanies();
+        console.log(data.data)
+        dispatch(setCompanies(data.data));
+      } catch (error) {
+        if(error.response.data){
+           toast.error(error.response.data.message,{
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          })
+        }
+        else{
+          console.log(error)
+        }
+      }
+    }
 
+    fetchAllCompanies();
+  },[dispatch])
+  // console.log(allCompanies)
   // keyword filter
   const keywordFilter = (item) =>
     keyword !== ""
@@ -56,18 +90,18 @@ const FilterTopBox = () => {
   const sortFilter = (a, b) =>
     sort === "des" ? a.id > b.id && -1 : a.id < b.id && -1;
 
-  let content = companyData
-    ?.slice(perPage.start !== 0 && 12, perPage.end !== 0 ? perPage.end : 24)
-    ?.filter(keywordFilter)
-    ?.filter(locationFilter)
-    ?.filter(destinationFilter)
-    ?.filter(categoryFilter)
-    ?.filter(foundationDataFilter)
-    ?.sort(sortFilter)
+  let content = allCompanies
+    // ?.slice(perPage.start !== 0 && 12, perPage.end !== 0 ? perPage.end : 24)
+    // ?.filter(keywordFilter)
+    // ?.filter(locationFilter)
+    // ?.filter(destinationFilter)
+    // ?.filter(categoryFilter)
+    // ?.filter(foundationDataFilter)
+    // ?.sort(sortFilter)
     ?.map((company) => (
       <div
         className="company-block-four col-xl-3 col-lg-6 col-md-6 col-sm-12"
-        key={company.id}
+        key={company?.company?._id}
       >
         <div className="inner-box">
           <button className="bookmark-btn">
@@ -80,28 +114,29 @@ const FilterTopBox = () => {
               <img
                 width={50}
                 height={50}
-                src={company.img}
+                src={company?.logo || defaultcompanylogo}
                 alt="company brand"
               />
             </span>
             <h4>
               <Link to={`/companies-list/${company.id}`}>
-                {company.name}
+                {company?.company?.name}
               </Link>
             </h4>
             <ul className="job-info flex-column">
               <li className="me-0">
                 <span className="icon flaticon-map-locator"></span>
-                {company.location}
+                {'Baku'}
               </li>
               <li className="me-0">
                 <span className="icon flaticon-briefcase"></span>
-                {company.jobType}
+                {'IT'}
               </li>
             </ul>
           </div>
 
-          <div className="job-type me-0">{company.jobNumber} Vakansiya</div>
+          <div className="job-type me-0">{company?.applynum} Müraciət</div>
+          <div className="job-type me-0">{company?.vacancynum} Vakansiya</div>
         </div>
       </div>
     ));

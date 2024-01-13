@@ -1,10 +1,10 @@
 import React from "react";
 import Home from "../../../components/home-1";
 
-const index = () => {
+const index = ({numjob}) => {
   return (
     <>
-      <Home />
+      <Home numjob={numjob}  />
     </>
   );
 };

@@ -38,9 +38,10 @@ import ShortListedJobs from './pages/candidates-dashboard/short-listed-jobs/page
 import MessagesCandidates from './pages/candidates-dashboard/messages/page.jsx';
 import ChangePasswordCandidate from './pages/candidates-dashboard/change-password/page.jsx';
 //Services
-import { fetchjobsandsearch } from './services/api/common_api.js';
+import { fetchjobsandsearch,getCategories } from './services/api/common_api.js';
 import { setJobs } from './features/job/jobSlice.js';
 import { loggedin,logout } from './services/api/auth_api.js';
+import { setCategories } from './features/category/categorySlice.js';
 //Protected
 import PrivateRoutes from './routes/PrivateRoutes.js';
 import PublicRoutes from './routes/PublicRoutes.js';
@@ -50,6 +51,7 @@ function App() {
   const dispatch = useDispatch();
   const token = useSelector(state=>state.candidate.isLoggedIn)
   const {user,info} = useSelector(state=>state.candidate);
+  const {alljobs} = useSelector(state=>state.job)
   // console.log(info)
   useEffect(() => {
     Aos.init({
@@ -83,8 +85,22 @@ function App() {
           console.log(error)
         }
       }
+    };
+    const fetchCategories = async () => {
+      try {
+        const {data} = await getCategories();
+        dispatch(setCategories(data.data));
+      } catch (error) {
+        if(error.response.data){
+          toast.error(error.response.data.message)
+        }
+        else{
+          console.log(error)
+        }
+      }
     }
     fetchAllJobs();
+    fetchCategories();
   },[])
 
   useEffect(()=>{
@@ -135,7 +151,7 @@ function App() {
     <div className="page-wrapper">
       {/* _____________________ Routers _______________________ */}
       <Routes>
-        <Route path='/' element={<Home />}/>
+        <Route path='/' element={<Home numjob={alljobs?.length} />}/>
         <Route path='/vacancies-list' element={<JobList />}/>
         <Route path='/vacancies-list/:id' element={<JobSingleDynamicV2 />}/>
         <Route path='/companies-list' element={<EmployersList />}/>

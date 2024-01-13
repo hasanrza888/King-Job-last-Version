@@ -13,8 +13,8 @@ import Hero1 from "../hero/hero-1";
 import JobCategorie1 from "../job-categories/JobCategorie1";
 import JobFeatured1 from "../job-featured/JobFeatured1";
 import Testimonial from "../testimonial/Testimonial";
-
-const index = () => {
+import { useSelector } from "react-redux";
+const index = ({numjob}) => {
   return (
     <>
       <LoginPopup />
@@ -32,8 +32,8 @@ const index = () => {
       <section className="job-categories ui-job-categories">
         <div className="auto-container">
           <div className="sec-title text-center">
-            <h2>Məşhur Kateqoriyalar</h2>
-            <div className="text">202 Aktiv Vakansiya - 29 bugün əlavə olunub.</div>
+            <h2>Kateqoriyalar</h2>
+            <div className="text">{numjob} Aktiv Vakansiya</div>
           </div>
 
           <div

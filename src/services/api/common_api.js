@@ -12,3 +12,7 @@ export const fetchcompanies = () => {
 export const getJobWithId = (id,d) => {
     return axiosInstance.get('/getJobWithId/'+id+`?isViewed=${d}`);
 }
+
+export const getCategories = () => {
+    return axiosInstance.get('/categories');
+}

@@ -1,10 +1,19 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import HeaderNavContent from "./HeaderNavContent";
-
+import { useSelector } from "react-redux";
 const DefaulHeader2 = () => {
   const [navbar, setNavbar] = useState(false);
-
+  const {isLoggedIn,user} = useSelector(state=>state.candidate);
+  // console.log(user)
+  // const { u_t_p } = user || {u_t_p:'x'};
+  const u_t_p = user ? user.u_t_p : 'x'
+  const profilenavigate = {
+    'c_m_p':'/company-dashboard/dashboard',
+    'u_s_r':'/applicants-dashboard/dashboard',
+    'x':'/'
+  }
+  // console.log(user)
   const changeBackground = () => {
     if (window.scrollY >= 10) {
       setNavbar(true);
@@ -55,18 +64,24 @@ const DefaulHeader2 = () => {
           
           {/* <!-- Login/Register --> */}
           <div className="btn-box">
-            <Link
+            {!isLoggedIn && <Link
               to="/login"
               className="theme-btn btn-style-three"
             >
               Daxil OL
-            </Link>
-            <Link
+            </Link>}
+            {!isLoggedIn && <Link
               to="/register"
               className="theme-btn btn-style-one"
             >
               Qeydiyyat
-            </Link>
+            </Link>}
+            {isLoggedIn && user && <Link
+              to={profilenavigate[u_t_p]}
+              className="theme-btn btn-style-one"
+            >
+              Profile
+            </Link>}
           </div>
         </div>
       </div>

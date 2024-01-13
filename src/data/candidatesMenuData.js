@@ -5,6 +5,7 @@ module.exports = [
     icon: "la-home",
     routePath: "/applicants-dashboard/dashboard",
     active: "active",
+    onCLick:""
   },
   {
     id: 2,
@@ -12,6 +13,7 @@ module.exports = [
     icon: "la-user-tie",
     routePath: "/applicants-dashboard/my-profile",
     active: "",
+    onCLick:""
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ module.exports = [
     icon: "la la-file-invoice",
     routePath: "/applicants-dashboard/my-resume",
     active: "",
+    onCLick:""
   },
   {
     id: 4,
@@ -26,6 +29,7 @@ module.exports = [
     icon: "la-briefcase",
     routePath: "/applicants-dashboard/applies",
     active: "",
+    onCLick:""
   },
   {
     id: 5,
@@ -33,6 +37,7 @@ module.exports = [
     icon: "la la-bell",
     routePath: "/applicants-dashboard/feedbacks",
     active: "",
+    onCLick:""
   },
   {
     id: 6,
@@ -40,6 +45,7 @@ module.exports = [
     icon: "la-bookmark-o",
     routePath: "/applicants-dashboard/saved-vacancies",
     active: "",
+    onCLick:""
   },
   // {
   //   id: 7,
@@ -61,6 +67,7 @@ module.exports = [
     icon: "la-comment-o",
     routePath: "/applicants-dashboard/messages",
     active: "",
+    onCLick:""
   },
   {
     id: 10,
@@ -68,6 +75,7 @@ module.exports = [
     icon: "la-lock",
     routePath: "/applicants-dashboard/change-password",
     active: "",
+    onCLick:""
   },
   {
     id: 11,
@@ -75,6 +83,7 @@ module.exports = [
     icon: "la-sign-out",
     routePath: "/login",
     active: "",
+    onCLick:"ok"
   },
   // {
   //   id: 12,

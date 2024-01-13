@@ -1,10 +1,11 @@
 import { Route, Routes } from 'react-router';
 import './App.css';
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer,toast } from "react-toastify";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from 'react';
+import { useDispatch,useSelector } from 'react-redux';
 import ScrollToTop from "./components/common/ScrollTop";
 import Home from './pages/home/home-1/page';
 import JobList from "./pages/job-list/job-list-v6/page.jsx";
@@ -36,8 +37,20 @@ import JobAlerts from './pages/candidates-dashboard/job-alerts/page.jsx';
 import ShortListedJobs from './pages/candidates-dashboard/short-listed-jobs/page.jsx';
 import MessagesCandidates from './pages/candidates-dashboard/messages/page.jsx';
 import ChangePasswordCandidate from './pages/candidates-dashboard/change-password/page.jsx';
-
+//Services
+import { fetchjobsandsearch } from './services/api/common_api.js';
+import { setJobs } from './features/job/jobSlice.js';
+import { loggedin,logout } from './services/api/auth_api.js';
+//Protected
+import PrivateRoutes from './routes/PrivateRoutes.js';
+import PublicRoutes from './routes/PublicRoutes.js';
+//Slices
+import { setUser,clearUser,setInfo } from './features/candidate/candidateSlice.js';
 function App() {
+  const dispatch = useDispatch();
+  const token = useSelector(state=>state.candidate.isLoggedIn)
+  const {user,info} = useSelector(state=>state.candidate);
+  // console.log(info)
   useEffect(() => {
     Aos.init({
       duration: 1400,
@@ -45,6 +58,79 @@ function App() {
     });
   }, []);
 
+  useEffect(()=>{
+    const fetchAllJobs = async () => {
+      try {
+        const {data} = await fetchjobsandsearch();
+        dispatch(setJobs(data.data));
+        // console.log(data)
+        // toast.success("Fetched",{
+        //   position: "top-right",
+        //   autoClose: 5000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: "light",
+        //   })
+        // console.log(data);
+      } catch (error) {
+        if(error.response.data){
+          toast.error(error.response.data.message)
+        }
+        else{
+          console.log(error)
+        }
+      }
+    }
+    fetchAllJobs();
+  },[])
+
+  useEffect(()=>{
+    const checkLoggedIn = async() => {
+      try {
+        const {data} = await loggedin();
+        if (data.user.returnedData.u_t_p === 'c_m_p') {
+          if (data.user.info.isBlock) {
+            // console.log("okkkokokok")
+            return logoutUser();
+          }
+          dispatch(setUser(data.user.returnedData));
+          dispatch(setInfo(data.user.info));
+        }
+      } catch (error) {
+        dispatch(clearUser())
+      }
+    }
+
+    checkLoggedIn();
+  },[dispatch,logoutUser])
+
+
+  async function logoutUser() {
+    try {
+      const { data } = await logout();
+      dispatch(clearUser());
+      toast.success("Succesfully logged out",{
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          })
+    } catch (error) {
+      if(error.response.data){
+        toast.error(error.response.data.message)
+      }
+      else{
+        console.log(error)
+      }
+    }
+  }
   return (
     <div className="page-wrapper">
       {/* _____________________ Routers _______________________ */}
@@ -60,10 +146,13 @@ function App() {
         <Route path='/subscriptions' element={<Pricing />}/>
         <Route path='/terms' element={<Terms />}/>
         <Route path='*' element={<Notfound />} />
+        <Route element={<PublicRoutes />}>
         <Route path='/login' element={<LogIn />} />
         <Route path='/register' element={<RegisterForm />} />
+        </Route>
         
         {/* company dashboard pages */}
+        <Route element={<PrivateRoutes />}>
         <Route path='/company-dashboard/dashboard' element={<DashboadHome />} />
         <Route path='/company-dashboard/company-profile' element={<CompanyProfile />} />
         <Route path='/company-dashboard/post-vacancy' element={<PostJob />} />
@@ -73,7 +162,7 @@ function App() {
         <Route path='/company-dashboard/subscriptions' element={<Packages />} />
         <Route path='/company-dashboard/messages' element={<Messages />} />
         <Route path='/company-dashboard/change-password' element={<ChangePassword />} />
-
+        
         {/* candidate dashboard pages */}
         <Route path='/applicants-dashboard/dashboard' element={<ApplicantDashboard />} />
         <Route path='/applicants-dashboard/my-profile' element={<MyProfile />} />
@@ -83,13 +172,13 @@ function App() {
         <Route path='/applicants-dashboard/saved-vacancies' element={<ShortListedJobs />} />
         <Route path='/applicants-dashboard/messages' element={<MessagesCandidates />} />
         <Route path='/applicants-dashboard/change-password' element={<ChangePasswordCandidate />} />
-        
+        </Route>
       </Routes>
 
       {/* Toast notification container */}
       <ToastContainer
         position="bottom-right"
-        autoClose={500}
+        autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

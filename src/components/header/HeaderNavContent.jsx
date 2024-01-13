@@ -14,7 +14,7 @@ import {
   isActiveParentChaild,
 } from "../../utils/linkActiveChecker";
 import { useLocation } from 'react-router-dom';
-
+import { useSelector } from "react-redux";
 const HeaderNavContent = () => {
   const location = useLocation();
 

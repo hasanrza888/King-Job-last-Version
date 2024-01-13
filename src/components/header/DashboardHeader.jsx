@@ -4,9 +4,16 @@ import employerMenuData from "../../data/employerMenuData";
 import HeaderNavContent from "./HeaderNavContent";
 import { isActiveLink } from "../../utils/linkActiveChecker";
 import { useLocation } from 'react-router-dom';
-
-
+import defaultProfile  from '../../img/defaultcompanylogo.jpg'
+import { useSelector } from "react-redux";
 const DashboardHeader = () => {
+    const {user,info} = useSelector(state=>state.candidate);
+    const u_t_p = user ? user.u_t_p : 'x'
+    const ppphoto = {
+        'u_s_r':info?.profilepic,
+        'c_m_p':info?.logo
+    }
+    console.log(ppphoto[u_t_p])
     const [navbar, setNavbar] = useState(false);
     const location = useLocation();
 
@@ -79,11 +86,11 @@ const DashboardHeader = () => {
                                 <img
                                     alt="avatar"
                                     className="thumb"
-                                    src="/images/resource/company-6.png"
+                                    src={ppphoto[u_t_p] || defaultProfile}
                                     width={50}
                                     height={50}
                                 />
-                                <span className="name">My Account</span>
+                                <span className="name">{user?.name}</span>
                             </a>
 
                             <ul className="dropdown-menu">

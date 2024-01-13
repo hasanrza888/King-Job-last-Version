@@ -1,42 +1,45 @@
 import { Link } from "react-router-dom";
-import jobs from "../../../data/job-featured";
+import { useSelector } from "react-redux";
+const RelatedJobs = ({category,id}) => {
+  const {alljobs} = useSelector(state=>state.job);
 
-const RelatedJobs = () => {
+  const relatedJobs = alljobs?.filter(job=>(job.category === category && job._id!==id));
+  // console.log(relatedJobs)
   return (
     <>
-      {jobs.slice(3, 7).map((item) => (
-        <div className="job-block" key={item.id}>
+      {relatedJobs?.map((item) => (
+        <div className="job-block" key={item._id}>
           <div className="inner-box">
             <div className="content">
               <span className="company-logo">
                 <img
                   width={50}
                   height={49}
-                  src={item.logo}
+                  src={item?.logo}
                   alt="item brand"
                 />
               </span>
               <h4>
-                <Link to={`/vacancies-list/${item.id}`}>{item.jobTitle}</Link>
+                <Link to={`/vacancies-list/${item._id}`}>{item.name}</Link>
               </h4>
 
               <ul className="job-info">
                 <li>
                   <span className="icon flaticon-briefcase"></span>
-                  {item.company}
+                  {item?.companyName}
                 </li>
                 {/* compnay info */}
                 <li>
                   <span className="icon flaticon-map-locator"></span>
-                  {item.location}
+                  {item?.city}
                 </li>
                 {/* location info */}
                 <li>
-                  <span className="icon flaticon-clock-3"></span> {item.time}
+                  <span className="icon flaticon-clock-3"></span> {item?.endTime?.split('T')[0]}
                 </li>
                 {/* time info */}
                 <li>
-                  <span className="icon flaticon-money"></span> {item.salary}
+                  <span className="icon flaticon-money"></span> {item?.agreedSalary ? "Razilasma" : item?.salary}
                 </li>
                 {/* salary info */}
               </ul>
@@ -48,8 +51,8 @@ const RelatedJobs = () => {
                     {val.type}
                   </li>
                 ))} */}
-                <li className={`${item?.jobType?.[0].styleClass}`}>
-                  {item?.jobType?.[0]['type']}
+                <li className={`green`}>
+                  {item?.type}
                 </li>
               </ul>
               {/* End .job-other-info */}

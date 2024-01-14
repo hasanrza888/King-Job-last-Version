@@ -16,3 +16,6 @@ export const getJobWithId = (id,d) => {
 export const getCategories = () => {
     return axiosInstance.get('/categories');
 }
+export const getjobTypes = () => {
+    return axiosInstance.get('/types');
+}

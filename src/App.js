@@ -38,7 +38,7 @@ import ShortListedJobs from './pages/candidates-dashboard/short-listed-jobs/page
 import MessagesCandidates from './pages/candidates-dashboard/messages/page.jsx';
 import ChangePasswordCandidate from './pages/candidates-dashboard/change-password/page.jsx';
 //Services
-import { fetchjobsandsearch,getCategories } from './services/api/common_api.js';
+import { fetchjobsandsearch,getCategories,getjobTypes } from './services/api/common_api.js';
 import { setJobs } from './features/job/jobSlice.js';
 import { loggedin,logout } from './services/api/auth_api.js';
 import { setCategories } from './features/category/categorySlice.js';
@@ -47,6 +47,7 @@ import PrivateRoutes from './routes/PrivateRoutes.js';
 import PublicRoutes from './routes/PublicRoutes.js';
 //Slices
 import { setUser,clearUser,setInfo } from './features/candidate/candidateSlice.js';
+import { setJobtypes } from './features/jobtypes/jobtypeSlice.js';
 function App() {
   const dispatch = useDispatch();
   const token = useSelector(state=>state.candidate.isLoggedIn)
@@ -99,36 +100,30 @@ function App() {
         }
       }
     }
-    fetchAllJobs();
-    fetchCategories();
-  },[])
-
-  useEffect(()=>{
-    const checkLoggedIn = async() => {
+    const fetchJobtypes = async () => {
       try {
-        const {data} = await loggedin();
-        if (data.user.returnedData.u_t_p === 'c_m_p') {
-          if (data.user.info.isBlock) {
-            // console.log("okkkokokok")
-            return logoutUser();
-          }
-          dispatch(setUser(data.user.returnedData));
-          dispatch(setInfo(data.user.info));
-        }
+        const {data} = await getjobTypes();
+        dispatch(setJobtypes(data.data));
       } catch (error) {
-        dispatch(clearUser())
+        if(error.response.data){
+          toast.error(error.response.data.message)
+        }
+        else{
+          console.log(error)
+        }
       }
     }
+    fetchAllJobs();
+    fetchCategories();
+    fetchJobtypes();
+  },[dispatch])
 
-    checkLoggedIn();
-  },[dispatch,logoutUser])
-
-
-  async function logoutUser() {
-    try {
-      const { data } = await logout();
-      dispatch(clearUser());
-      toast.success("Succesfully logged out",{
+  useEffect(() => {
+    const logoutUser = async () => {
+      try {
+        const { data } = await logout();
+        dispatch(clearUser());
+        toast.success("Successfully logged out", {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: false,
@@ -137,16 +132,39 @@ function App() {
           draggable: true,
           progress: undefined,
           theme: "light",
-          })
-    } catch (error) {
-      if(error.response.data){
-        toast.error(error.response.data.message)
+        });
+      } catch (error) {
+        if (error.response.data) {
+          toast.error(error.response.data.message);
+        } else {
+          console.log(error);
+        }
       }
-      else{
-        console.log(error)
+    };
+  
+    const checkLoggedIn = async () => {
+      try {
+        const { data } = await loggedin();
+        if (data.user.returnedData.u_t_p === 'c_m_p') {
+          if (data.user.info.isBlock) {
+            // console.log("okkkokokok")
+            return logoutUser();
+          }
+        }
+        dispatch(setUser(data?.user?.returnedData));
+        dispatch(setInfo(data?.user?.info));
+        console.log(data?.user?.info);
+      } catch (error) {
+        dispatch(clearUser());
       }
-    }
-  }
+    };
+  
+    checkLoggedIn();
+  }, [dispatch]);
+  
+
+
+  
   return (
     <div className="page-wrapper">
       {/* _____________________ Routers _______________________ */}

@@ -35,9 +35,9 @@ const index = () => {
         </div>
         {/* <!--  education and word-experiences --> */}
 
-        <div className="form-group col-lg-6 col-md-12">
+        {/* <div className="form-group col-lg-6 col-md-12">
           <AddPortfolio />
-        </div>
+        </div> */}
         {/* <!-- End more portfolio upload --> */}
 
         <div className="form-group col-lg-12 col-md-12">

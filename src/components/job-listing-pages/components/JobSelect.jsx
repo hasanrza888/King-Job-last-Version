@@ -9,6 +9,7 @@ import {
 } from "../../../features/filter/filterSlice";
 
 export default function JobSelect() {
+    const {jobtypes} = useSelector(state=>state.jobtype)
     const { jobList } = useSelector((state) => state.filter);
     const { jobTypeList, datePost, experienceLavel } = useSelector(
         (state) => state.job
@@ -48,8 +49,8 @@ export default function JobSelect() {
                             value={jobList?.jobTypeSelect}
                         >
                             <option value="">İş qrafiki</option>
-                            {jobTypeList?.map((item) => (
-                                <option value={item.value} key={item.id}>
+                            {jobtypes?.map((item) => (
+                                <option value={item.name} key={item._id}>
                                     {item.name}
                                 </option>
                             ))}
@@ -57,7 +58,7 @@ export default function JobSelect() {
                     </div>
                     {/* End job type filter */}
 
-                    <div className="form-group">
+                    {/* <div className="form-group">
                         <select
                             onChange={datePostHandler}
                             className="chosen-single form-select"
@@ -69,7 +70,7 @@ export default function JobSelect() {
                                 </option>
                             ))}
                         </select>
-                    </div>
+                    </div> */}
                     {/* End date posted filter */}
 
                     <div className="form-group">
@@ -105,34 +106,58 @@ export default function JobSelect() {
                             <option
                                 value={JSON.stringify({
                                     min: 0,
-                                    max: 5000,
+                                    max: 1500,
                                 })}
                             >
-                                0 - 5000
+                                0 - 1500
                             </option>
                             <option
                                 value={JSON.stringify({
-                                    min: 5000,
-                                    max: 10000,
+                                    min: 1500,
+                                    max: 3000,
                                 })}
                             >
-                                5000 - 10000
+                                1500 - 3000
                             </option>
                             <option
                                 value={JSON.stringify({
-                                    min: 10000,
-                                    max: 15000,
+                                    min: 3000,
+                                    max: 4500,
                                 })}
                             >
-                                10000 - 15000
+                                3000 - 4500
                             </option>
                             <option
                                 value={JSON.stringify({
-                                    min: 15000,
-                                    max: 20000,
+                                    min: 4500,
+                                    max: 6000,
                                 })}
                             >
-                                15000 - 20000
+                                4500 - 6000
+                            </option>
+                            <option
+                                value={JSON.stringify({
+                                    min: 6000,
+                                    max: 7500,
+                                })}
+                            >
+                                6000 - 7500
+                            </option>
+                            <option
+                                value={JSON.stringify({
+                                    min: 7500,
+                                    max: 9000,
+                                })}
+                            >
+                                7500 - 9000
+                            </option>
+                            <option
+                                value={JSON.stringify({
+                                    min: 9000,
+                                    max: Infinity,
+                                })}
+                            >
+                                9000 +
                             </option>
                         </select>
                     </div>

@@ -1,4 +1,4 @@
-import { Link,useNavigate } from "react-router-dom";
+import { Link,useNavigate,useLocation } from "react-router-dom";
 import LoginWithSocial from "./LoginWithSocial";
 import { loginUser } from "../../../../services/api/auth_api";
 import {toast} from 'react-toastify';
@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser,setInfo } from "../../../../features/candidate/candidateSlice";
 const FormContent2 = () => {
+  const location = useLocation();
   const nav = useNavigate();
   const dispatch = useDispatch();
   const tt = new Date();
@@ -40,7 +41,7 @@ const FormContent2 = () => {
         progress: undefined,
         theme: "light",
         })
-        nav('/')
+        nav(location?.state?.prevUrl || '/')
       // console.log(data)
     } catch (error) {
       if(error.response.data){

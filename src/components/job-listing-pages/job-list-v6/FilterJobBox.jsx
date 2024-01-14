@@ -37,13 +37,13 @@ const FilterJobBox = () => {
   // keyword filter on title
   const keywordFilter = (item) =>
     keyword !== ""
-      ? item.jobTitle.toLocaleLowerCase().includes(keyword.toLocaleLowerCase())
+      ? item.name.toLocaleLowerCase().includes(keyword.toLocaleLowerCase())
       : item;
 
   // location filter
   const locationFilter = (item) =>
     location !== ""
-      ? item?.location
+      ? item?.city
           ?.toLocaleLowerCase()
           .includes(location?.toLocaleLowerCase())
       : item;
@@ -61,8 +61,8 @@ const FilterJobBox = () => {
 
   // job-type filter
   const jobTypeFilter = (item) =>
-    item.jobType !== undefined && jobTypeSelect !== ""
-      ? item?.jobType[0]?.type.toLocaleLowerCase().split(" ").join("-") ===
+    item.type !== undefined && jobTypeSelect !== ""
+      ? item?.type.toUpperCase() ===
           jobTypeSelect && item
       : item;
 
@@ -79,30 +79,37 @@ const FilterJobBox = () => {
   // experience level filter
   const experienceFilter = (item) =>
     experienceSelect !== ""
-      ? item?.experience?.split(" ").join("-").toLocaleLowerCase() ===
-          experienceSelect && item
+      ? item?.experience?.toUpperCase() ===
+          experienceSelect.toUpperCase() && item
       : item;
 
   // salary filter
-  const salaryFilter = (item) =>
-    item?.totalSalary?.min >= salary?.min &&
-    item?.totalSalary?.max <= salary?.max;
+  const salaryFilter = (item) => {
+    if (item?.agreedSalary) {
+        return true;
+    }
+    return (
+        item?.salary !== null &&
+        item?.salary >= jobList.salary.min &&
+        item?.salary <= jobList.salary.max
+    );
+};
 
   // sort filter
   const sortFilter = (a, b) =>
-    sort === "des" ? a.id > b.id && -1 : a.id < b.id && -1;
+    sort === "des" ? a._id > b._id && -1 : a._id < b._id && -1;
 
   let content = alljobs
-    // ?.filter(keywordFilter)
-    // ?.filter(locationFilter)
+    ?.filter(keywordFilter)
+    ?.filter(locationFilter)
     // ?.filter(destinationFilter)
-    // ?.filter(categoryFilter)
-    // ?.filter(jobTypeFilter)
+    ?.filter(categoryFilter)
+    ?.filter(jobTypeFilter)
     // ?.filter(datePostedFilter)
-    // ?.filter(experienceFilter)
-    // ?.filter(salaryFilter)
-    // ?.sort(sortFilter)
-    // .slice(perPage.start, perPage.end !== 0 ? perPage.end : 16)
+    ?.filter(experienceFilter)
+    ?.filter(salaryFilter)
+    ?.sort(sortFilter)
+    .slice(perPage.start, perPage.end !== 0 ? perPage.end : 16)
     ?.map((item) => (
       <div className="job-block col-lg-6 col-md-12 col-sm-12" key={item?._id}>
         <div className="inner-box">
@@ -235,6 +242,14 @@ const FilterJobBox = () => {
             <option
               value={JSON.stringify({
                 start: 0,
+                end: 10,
+              })}
+            >
+              Səhifədə 10 ədəd
+            </option>
+            <option
+              value={JSON.stringify({
+                start: 0,
                 end: 20,
               })}
             >
@@ -247,14 +262,6 @@ const FilterJobBox = () => {
               })}
             >
               Səhifədə 30 ədəd
-            </option>
-            <option
-              value={JSON.stringify({
-                start: 0,
-                end: 40,
-              })}
-            >
-              Səhifədə 40 ədəd
             </option>
           </select>
           {/* End select */}

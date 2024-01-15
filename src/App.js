@@ -37,8 +37,10 @@ import JobAlerts from './pages/candidates-dashboard/job-alerts/page.jsx';
 import ShortListedJobs from './pages/candidates-dashboard/short-listed-jobs/page.jsx';
 import MessagesCandidates from './pages/candidates-dashboard/messages/page.jsx';
 import ChangePasswordCandidate from './pages/candidates-dashboard/change-password/page.jsx';
+import Loading from './components/common/Loading/Loading.jsx';
 //Services
 import { fetchjobsandsearch,getCategories,getjobTypes } from './services/api/common_api.js';
+import { getuserapplys,getsavedjobs,getallcontacts } from './services/api/candidate_api.js';
 import { setJobs } from './features/job/jobSlice.js';
 import { loggedin,logout } from './services/api/auth_api.js';
 import { setCategories } from './features/category/categorySlice.js';
@@ -46,14 +48,16 @@ import { setCategories } from './features/category/categorySlice.js';
 import PrivateRoutes from './routes/PrivateRoutes.js';
 import PublicRoutes from './routes/PublicRoutes.js';
 //Slices
-import { setUser,clearUser,setInfo } from './features/candidate/candidateSlice.js';
+import { setUser,clearUser,setInfo,setApplieds,setSavedJobs,setContacts } from './features/candidate/candidateSlice.js';
 import { setJobtypes } from './features/jobtypes/jobtypeSlice.js';
+import { handleApiError } from './utils/apiErrorHandling.js';
 function App() {
   const dispatch = useDispatch();
-  const token = useSelector(state=>state.candidate.isLoggedIn)
-  const {user,info} = useSelector(state=>state.candidate);
-  const {alljobs} = useSelector(state=>state.job)
-  // console.log(info)
+  const { user, info, isLoggedIn } = useSelector(state => state.candidate);
+  const { alljobs } = useSelector(state => state.job);
+  const { loading } = useSelector(state => state.loading);
+
+  // useEffect for Aos initialization
   useEffect(() => {
     Aos.init({
       duration: 1400,
@@ -61,63 +65,42 @@ function App() {
     });
   }, []);
 
-  useEffect(()=>{
-    const fetchAllJobs = async () => {
+  // useEffect for fetching data
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        const {data} = await fetchjobsandsearch();
-        dispatch(setJobs(data.data));
-        // console.log(data)
-        // toast.success("Fetched",{
-        //   position: "top-right",
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: "light",
-        //   })
-        // console.log(data);
+        // Fetch jobs, categories, job types, etc.
+        const [jobsResponse, categoriesResponse, jobTypesResponse] = await Promise.all([
+          fetchjobsandsearch(),
+          getCategories(),
+          getjobTypes()
+        ]);
+
+        dispatch(setJobs(jobsResponse.data.data));
+        dispatch(setCategories(categoriesResponse.data.data));
+        dispatch(setJobtypes(jobTypesResponse.data.data));
+
+        if (isLoggedIn) {
+          // Fetch additional data for logged-in users
+          const [appliedsResponse, savedJobsResponse, contactsResponse] = await Promise.all([
+            getuserapplys(),
+            getsavedjobs(),
+            getallcontacts()
+          ]);
+
+          dispatch(setApplieds(appliedsResponse.data.data));
+          dispatch(setSavedJobs(savedJobsResponse.data.data));
+          dispatch(setContacts(contactsResponse.data.data));
+        }
       } catch (error) {
-        if(error.response.data){
-          toast.error(error.response.data.message)
-        }
-        else{
-          console.log(error)
-        }
+        handleApiError(error);
       }
     };
-    const fetchCategories = async () => {
-      try {
-        const {data} = await getCategories();
-        dispatch(setCategories(data.data));
-      } catch (error) {
-        if(error.response.data){
-          toast.error(error.response.data.message)
-        }
-        else{
-          console.log(error)
-        }
-      }
-    }
-    const fetchJobtypes = async () => {
-      try {
-        const {data} = await getjobTypes();
-        dispatch(setJobtypes(data.data));
-      } catch (error) {
-        if(error.response.data){
-          toast.error(error.response.data.message)
-        }
-        else{
-          console.log(error)
-        }
-      }
-    }
-    fetchAllJobs();
-    fetchCategories();
-    fetchJobtypes();
-  },[dispatch])
 
+    fetchData();
+  }, [dispatch, isLoggedIn]);
+
+  // useEffect for checking user authentication
   useEffect(() => {
     const logoutUser = async () => {
       try {
@@ -134,14 +117,9 @@ function App() {
           theme: "light",
         });
       } catch (error) {
-        if (error.response.data) {
-          toast.error(error.response.data.message);
-        } else {
-          console.log(error);
-        }
+        handleApiError(error)
       }
     };
-  
     const checkLoggedIn = async () => {
       try {
         const { data } = await loggedin();
@@ -158,17 +136,15 @@ function App() {
         dispatch(clearUser());
       }
     };
-  
+
     checkLoggedIn();
   }, [dispatch]);
-  
-
-
-  
   return (
     <div className="page-wrapper">
+      <Loading show={loading} />
       {/* _____________________ Routers _______________________ */}
       <Routes>
+        
         <Route path='/' element={<Home numjob={alljobs?.length} />}/>
         <Route path='/vacancies-list' element={<JobList />}/>
         <Route path='/vacancies-list/:id' element={<JobSingleDynamicV2 />}/>

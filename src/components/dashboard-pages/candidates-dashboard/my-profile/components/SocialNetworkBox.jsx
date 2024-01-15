@@ -3,7 +3,10 @@ import { addLinks } from "../../../../../services/api/candidate_api";
 import { addLink,setLinks } from "../../../../../features/candidate/candidateSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import React from 'react'
+import { setLoading } from "../../../../../features/loading/loadingSlice";
 import {toast} from 'react-toastify'
+import { handleApiError } from "../../../../../utils/apiErrorHandling";
 const SocialNetworkBox = () => {
   const dispatch = useDispatch();
   const { info } = useSelector((state) => state.candidate);
@@ -30,12 +33,14 @@ const SocialNetworkBox = () => {
 
   const saveLinks = async (e) => {
     e.preventDefault();
+    dispatch(setLoading(true))
     try {
       // Filter out empty links
       const nonEmptyLinks = info.links.filter((link) => link.url.trim() !== "");
       const { data } = await addLinks({ links: nonEmptyLinks });
-      console.log(data);
-      console.log(nonEmptyLinks);
+      // console.log(data);
+      // console.log(nonEmptyLinks);
+      dispatch(setLoading(false))
       toast.success(data.message,{
         position: "top-right",
         autoClose: 2000,
@@ -47,12 +52,8 @@ const SocialNetworkBox = () => {
         theme: "light",
         })
     } catch (error) {
-      if(error.response.data){
-        toast.error(error.response.data.message)
-      }
-      else{
-        console.log(error)
-      }
+      dispatch(setLoading(false))
+      handleApiError(error)
     }
   };
 
@@ -79,7 +80,7 @@ const SocialNetworkBox = () => {
         </div>
         <div className="form-group col-lg-6 col-md-12">
           <button type="submit" className="theme-btn btn-style-one">
-            Save
+            Yadda saxla
           </button>
         </div>
       </div>

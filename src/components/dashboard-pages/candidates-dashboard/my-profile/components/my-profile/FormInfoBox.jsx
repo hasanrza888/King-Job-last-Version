@@ -3,10 +3,13 @@ import { useEffect,useState } from "react";
 import { setInfo } from "../../../../../../features/candidate/candidateSlice";
 import { useSelector,useDispatch } from "react-redux";
 import { updatecarieerinfo } from "../../../../../../services/api/candidate_api";
+import { setLoading } from "../../../../../../features/loading/loadingSlice";
 import {toast} from 'react-toastify'
+import { handleApiError } from "../../../../../../utils/apiErrorHandling";
 const FormInfoBox = () => {
   const dispatch = useDispatch();
   const {info} = useSelector(state=>state.candidate);
+  console.log(info)
   const [formData, setFormData] = useState({
     jobTitle: info.jobTitle || "",
     phone: info.phone || "",
@@ -42,9 +45,11 @@ const FormInfoBox = () => {
 
   const updateSubmit =async (e) => {
     e.preventDefault();
+    dispatch(setLoading(true))
     try {
       const {data} = await updatecarieerinfo(formData);
       dispatch(setInfo(data.data));
+      dispatch(setLoading(false))
       toast.success(data.message, {
         position: "top-right",
         autoClose: 2000,
@@ -57,11 +62,8 @@ const FormInfoBox = () => {
       });
       console.log(data)
     } catch (error) {
-      if (error.response && error.response.data) {
-        toast.error(error.response.data.message);
-      } else {
-        console.error(error);
-      }
+      dispatch(setLoading(false))
+      handleApiError(error);
       
     }
 
@@ -77,14 +79,14 @@ const FormInfoBox = () => {
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Job Title</label>
+          <label>Vəzifə</label>
           <input type="text" name="jobTitle" placeholder="UI Designer" value={formData.jobTitle}
         onChange={handleChange}  />
         </div>
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Phone</label>
+          <label>Telefon</label>
           <input
             type="text"
             name="phone"
@@ -119,7 +121,7 @@ const FormInfoBox = () => {
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-3 col-md-12">
-          <label>Current Salary($)</label>
+          <label>Hazırki əməkhaqqınız($/AZN)</label>
           <input
             type="text"
             name="currentSalary"
@@ -131,7 +133,7 @@ const FormInfoBox = () => {
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-3 col-md-12">
-          <label>Expected Salary($)</label>
+          <label>Gözlənti əmək haqqı($/AZN)</label>
           <input
             type="text"
             name="expestedSalary"
@@ -143,28 +145,28 @@ const FormInfoBox = () => {
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Experience</label>
+          <label>Təcrübə</label>
           <input type="text" name="experiencesYear" placeholder="5-10 Years" value={formData.experiencesYear}
         onChange={handleChange}  />
         </div>
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Age</label>
+          <label>Yaş</label>
           <input type="text" name="age" placeholder="22 years" value={formData.age}
         onChange={handleChange}  />
         </div>
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Education Levels</label>
+          <label>Hazırki təhsil pilləsi</label>
           <input type="text" name="educationlevelNow" placeholder="Master" value={formData.educationlevelNow}
         onChange={handleChange} />
         </div>
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Languages</label>
+          <label>Dil bilikləri</label>
           <input
             type="text"
             name="languages"
@@ -207,7 +209,7 @@ const FormInfoBox = () => {
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
           <button type="submit" className="theme-btn btn-style-one">
-            Save
+            Yadda saxla
           </button>
         </div>
       </div>

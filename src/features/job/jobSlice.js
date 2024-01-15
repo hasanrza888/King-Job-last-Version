@@ -4,6 +4,7 @@ const initialState = {
     alljobs:[],
     latestJob: ["full-time"],
     currentJob:null,
+    viewedJobs: localStorage.getItem('viewed') ? JSON.parse(localStorage.getItem('viewed')) : [],
     category: [
         {
             id: 1,
@@ -152,6 +153,17 @@ export const jobSlice = createSlice({
         setJobs : (state, {payload}) => {
             state.alljobs = payload;
         },
+        updateJob : (state,{payload}) => {
+            const index = state.alljobs.findIndex(job => job._id === payload._id);
+            // If the job is found, update it
+            if (index !== -1) {
+                state.viewedJobs = [...state.viewedJobs,payload._id];
+                localStorage.setItem('viewed',JSON.stringify(state.viewedJobs));
+                state.alljobs = state.alljobs.map((job, i) =>
+                    i === index ? { ...job, ...payload } : job
+                );
+            }
+        },
         setCurrentJob:(state,{payload}) => {
             state.currentJob = payload;
         },
@@ -240,6 +252,7 @@ export const {
     experienceLavelCheck,
     clearExperienceToggle,
     setJobs,
-    setCurrentJob
+    setCurrentJob,
+    updateJob
 } = jobSlice.actions;
 export default jobSlice.reducer;

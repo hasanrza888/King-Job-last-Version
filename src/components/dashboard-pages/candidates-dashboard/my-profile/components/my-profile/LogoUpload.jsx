@@ -2,7 +2,9 @@ import { useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { updateprofilepic } from "../../../../../../services/api/candidate_api"; // Update this with the correct path
 import { setInfo } from "../../../../../../features/candidate/candidateSlice"; // Update this with the correct path
+import { setLoading } from "../../../../../../features/loading/loadingSlice";
 import {toast} from 'react-toastify'
+import { handleApiError } from "../../../../../../utils/apiErrorHandling";
 const LogoUpload = () => {
   const dispatch = useDispatch();
   const {info} = useSelector(state=>state.candidate)
@@ -15,11 +17,12 @@ const logoImgHandler = async (e) => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-
+      dispatch(setLoading(true))
       const { data } = await updateprofilepic(formData);
 
       // Assuming your API response contains the updated user info
       dispatch(setInfo(data.data));
+      dispatch(setLoading(false))
       toast.success(data.message, {
         position: "top-right",
         autoClose: 2000,
@@ -31,12 +34,8 @@ const logoImgHandler = async (e) => {
         theme: "light",
       });
     } catch (error) {
-      if (error.response && error.response.data) {
-        toast.error(error.response.data.message);
-      } else {
-        console.error(error);
-      }
-      console.error("Error uploading profile photo:", error);
+      dispatch(setLoading(false))
+      handleApiError(error);
     }
   };
 

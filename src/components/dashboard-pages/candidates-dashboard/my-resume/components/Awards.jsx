@@ -6,11 +6,14 @@ import { Button, Modal, Form } from "react-bootstrap";
 import { useSelector,useDispatch } from "react-redux";
 import { deleteachievement,addachievement } from "../../../../../services/api/candidate_api";
 import { addAchievement,deleteAchievement } from "../../../../../features/candidate/candidateSlice";
+import { setLoading } from "../../../../../features/loading/loadingSlice";
+import { handleApiError } from "../../../../../utils/apiErrorHandling";
 const Awards = () => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
 
-  const openModal = () => {
+  const openModal = (e) => {
+    e.preventDefault()
     setShowModal(true);
   };
 
@@ -35,9 +38,11 @@ const Awards = () => {
   const {info} = useSelector(state=>state.candidate);
   const submitAchievement =async (e) => {
     e.preventDefault();
+    dispatch(setLoading(true))
     try {
       const {data} = await addachievement(edu);
       dispatch(addAchievement(data.data));
+      dispatch(setLoading(false))
       toast.success(data.message, {
         position: "top-right",
         autoClose: 2000,
@@ -50,19 +55,18 @@ const Awards = () => {
       });
       closeModal();
     } catch (error) {
-      if (error.response && error.response.data) {
-        toast.error(error.response.data.message);
-      } else {
-        console.error(error);
-      }
+      dispatch(setLoading(false))
+      handleApiError(error)
     }
 
   }
   const dltachievement = async (id) => {
+    dispatch(setLoading(true))
     try {
       const {data} = await deleteachievement(id);
       console.log(data)
       dispatch(deleteAchievement(data.data));
+      dispatch(setLoading(false))
       toast.success(data.message, {
         position: "top-right",
         autoClose: 2000,
@@ -75,19 +79,16 @@ const Awards = () => {
       });
       closeModal();
     } catch (error) {
-      if (error.response && error.response.data) {
-        toast.error(error.response.data.message);
-      } else {
-        console.error(error);
-      }
+      dispatch(setLoading(false))
+      handleApiError(error)
     }
   }
   return (
     <div className="resume-outer theme-yellow">
       <div className="upper-title">
-        <h4>Awards</h4>
+        <h4>Sertifikatlar</h4>
         <button onClick={openModal}  className="add-info-btn">
-          <span className="icon flaticon-plus"></span>Add Awards
+        <span className="icon flaticon-plus"></span> Əlavə et
         </button>
       </div>
       {

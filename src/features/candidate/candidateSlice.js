@@ -16,6 +16,7 @@ const initialState = {
         links:[],
         profilepic:"",
         talks:[],
+        skills:[],
         updatedAt:"",
         jobTitle:"",
         phone:"",
@@ -26,6 +27,9 @@ const initialState = {
         educationlevelNow:"",
         languages:"",
     },
+    myapplieds:[],
+    savedjobs:[],
+    contacts:[],
     category: [
         {
             id: 1,
@@ -161,6 +165,27 @@ export const candidateSlice = createSlice({
             localStorage.removeItem('user');
             state.isLoggedIn = false;
         },
+        setApplieds:(state,{payload}) => {
+            state.myapplieds = payload;
+        },
+        addAplied:(state,{payload}) => {
+            state.myapplieds = [...state.myapplieds,payload]
+        },
+        setSavedJobs:(state,{payload}) => {
+            state.savedjobs = payload;
+        },
+        addJobToSaved:(state,{payload}) => {
+            state.savedjobs = [...state.savedjobs,payload];
+        },
+        deleteJobFromSaved:(state,{payload}) => {
+            console.log(payload);
+            console.log(state.savedjobs)
+            const filtered = state.savedjobs.filter(sv=>sv.job.toString()!==payload);
+            state.savedjobs = filtered;
+        },
+        setContacts:(state,{payload}) => {
+            state.contacts = payload;
+        },
         addDatePostCheck: (state, { payload }) => {
             state?.datePost?.map((item) => {
                 item.isChecked = false;
@@ -244,6 +269,12 @@ export const {
     addExperience,
     deleteExperience,
     addAchievement,
-    deleteAchievement
+    deleteAchievement,
+    setApplieds,
+    addAplied,
+    setSavedJobs,
+    addJobToSaved,
+    deleteJobFromSaved,
+    setContacts
 } = candidateSlice.actions;
 export default candidateSlice.reducer;

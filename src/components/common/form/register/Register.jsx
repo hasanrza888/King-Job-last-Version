@@ -6,8 +6,12 @@ import { useState } from "react";
 import { validateUserData } from "../../../../services/api/auth_api";
 import { registerCandidate } from "../../../../services/api/candidate_api";
 import { registerCompany } from "../../../../services/api/company_api";
-import {toast} from 'react-toastify'
+import {toast} from 'react-toastify';
+import { useDispatch } from "react-redux";
+import { setLoading } from "../../../../features/loading/loadingSlice";
+import { handleApiError } from "../../../../utils/apiErrorHandling";
 const Register = () => {
+  const dispatch = useDispatch();
   const nav = useNavigate()
   const [showotp,setShowOtp] = useState(false);
   const [registerdata, setRegisterData] = useState({
@@ -26,9 +30,11 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    dispatch(setLoading(true))
     try {
       const {data} = await validateUserData(registerdata);
       setShowOtp(data.success);
+      dispatch(setLoading(false))
       toast.success(data.message,{
           position: "top-right",
           autoClose: 5000,
@@ -41,27 +47,16 @@ const Register = () => {
           })
       console.log(data)
     } catch (error) {
-      if(error.response.data){
-        toast.error(error.response.data.message,{
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          })
-      }
-      else{
-        console.log(error)
-      }
+      dispatch(setLoading(false))
+      handleApiError(error)
     }
   }
 
   const submitRegister = async (e,userdata) => {
+    dispatch(setLoading(true))
     try {
       const {data} = await registerCandidate(userdata);
+      dispatch(setLoading(false))
       toast.success(data.message,{
           position: "top-right",
           autoClose: 5000,
@@ -75,26 +70,15 @@ const Register = () => {
           nav('/login')
       console.log(data)
     } catch (error) {
-      if(error.response.data){
-        toast.error(error.response.data.message,{
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          })
-      }
-      else{
-        console.log(error)
-      }
+      dispatch(setLoading(false))
+      handleApiError(error)
     }
   }
   const submitRegisterCompany = async (e,userdata) => {
+    dispatch(setLoading(true))
     try {
       const {data} = await registerCompany(userdata);
+      dispatch(setLoading(false))
       toast.success(data.message,{
         position: "top-right",
         autoClose: 5000,
@@ -108,21 +92,8 @@ const Register = () => {
         nav('/login')
       console.log(data)
     } catch (error) {
-      if(error.response.data){
-        toast.error(error.response.data.message,{
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          })
-      }
-      else{
-        console.log(error)
-      }
+      dispatch(setLoading(false))
+      handleApiError(error);
     }
   }
   return (

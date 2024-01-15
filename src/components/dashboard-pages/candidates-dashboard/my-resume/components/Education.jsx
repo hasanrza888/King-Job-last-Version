@@ -4,6 +4,8 @@ import { useSelector,useDispatch } from "react-redux";
 import {toast} from 'react-toastify';
 import { deleteeducation,addeducation } from "../../../../../services/api/candidate_api";
 import { addEducation,deleteEducation } from "../../../../../features/candidate/candidateSlice";
+import { setLoading } from "../../../../../features/loading/loadingSlice";
+import { handleApiError } from "../../../../../utils/apiErrorHandling";
 const Education = () => {
   const [edu,setEdu] = useState({
     name:"",
@@ -31,7 +33,8 @@ const Education = () => {
   const {info} = useSelector(state=>state.candidate)
   const [showModal, setShowModal] = useState(false);
 
-  const openModal = () => {
+  const openModal = (e) => {
+    e.preventDefault()
     setShowModal(true);
   };
 
@@ -45,9 +48,11 @@ const Education = () => {
   };
   const submitEducation =async (e) => {
     e.preventDefault();
+    dispatch(setLoading(true))
     try {
       const {data} = await addeducation({education:edu});
       dispatch(addEducation(data.data));
+      dispatch(setLoading(false))
       toast.success(data.message, {
         position: "top-right",
         autoClose: 2000,
@@ -60,19 +65,18 @@ const Education = () => {
       });
       closeModal();
     } catch (error) {
-      if (error.response && error.response.data) {
-        toast.error(error.response.data.message);
-      } else {
-        console.error(error);
-      }
+      dispatch(setLoading(false))
+      handleApiError(error)
     }
 
   }
   const dlteducation = async (id) => {
+    dispatch(setLoading(true))
     try {
       const {data} = await deleteeducation(id);
       console.log(data)
       dispatch(deleteEducation(data.data));
+      dispatch(setLoading(false))
       toast.success(data.message, {
         position: "top-right",
         autoClose: 2000,
@@ -85,19 +89,16 @@ const Education = () => {
       });
       closeModal();
     } catch (error) {
-      if (error.response && error.response.data) {
-        toast.error(error.response.data.message);
-      } else {
-        console.error(error);
-      }
+      dispatch(setLoading(false))
+      handleApiError(error)
     }
   }
   return (
     <div className="resume-outer">
       <div className="upper-title">
-        <h4>Education</h4>
+        <h4>Təhsil</h4>
         <button className="add-info-btn" onClick={openModal}>
-          <span className="icon flaticon-plus"></span> Add Aducation
+          <span className="icon flaticon-plus"></span> Əlavə et
         </button>
       </div>
       {/* <!-- Resume BLock --> */}

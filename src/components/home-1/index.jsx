@@ -14,6 +14,7 @@ import JobCategorie1 from "../job-categories/JobCategorie1";
 import JobFeatured1 from "../job-featured/JobFeatured1";
 import Testimonial from "../testimonial/Testimonial";
 import { useSelector } from "react-redux";
+import JobBox from "../job-listing-pages/job-list-v6/JobBox";
 const index = ({numjob}) => {
   return (
     <>

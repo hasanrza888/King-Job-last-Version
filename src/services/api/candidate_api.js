@@ -38,3 +38,23 @@ export const addachievement = (data) => {
 export const deleteachievement = (id) => {
     return axiosInstance.delete('/deleteachievement/'+id);
 }
+
+//APPLYING
+export const getuserapplys = () => {
+    return axiosInstance.get('/getApplysForEachUser');
+}
+export const sendapply = (data) => {
+    return axiosInstance.post('/postApply',data)
+}
+//Saved Jobs
+export const addjobtosaved = (id) => {
+    return axiosInstance.post('/addJobToSaved/'+id);
+}
+export const getsavedjobs = () => {
+    return axiosInstance.get('/getAllUSerSavedJobs');
+}
+
+//Messaging
+export const getallcontacts = () => {
+    return axiosInstance.get('/usermessagers')
+}

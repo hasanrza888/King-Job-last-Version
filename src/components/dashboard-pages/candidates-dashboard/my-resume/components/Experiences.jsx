@@ -4,10 +4,13 @@ import { Button, Modal, Form } from "react-bootstrap";
 import {toast} from 'react-toastify'
 import { addexperience,deleteexperience } from "../../../../../services/api/candidate_api";
 import { addExperience,deleteExperience } from "../../../../../features/candidate/candidateSlice.js";
+import { setLoading } from "../../../../../features/loading/loadingSlice.js";
+import { handleApiError } from "../../../../../utils/apiErrorHandling.js";
 const Experiences = () => {
   const [showModal, setShowModal] = useState(false);
 
-  const openModal = () => {
+  const openModal = (e) => {
+    e.preventDefault()
     setShowModal(true);
   };
 
@@ -34,9 +37,11 @@ const Experiences = () => {
   const {info} = useSelector(state=>state.candidate);
   const submitExperience =async (e) => {
     e.preventDefault();
+    dispatch(setLoading(true))
     try {
       const {data} = await addexperience(edu);
       dispatch(addExperience(data.data));
+      dispatch(setLoading(false))
       toast.success(data.message, {
         position: "top-right",
         autoClose: 2000,
@@ -49,6 +54,7 @@ const Experiences = () => {
       });
       closeModal();
     } catch (error) {
+      dispatch(setLoading(false))
       if (error.response && error.response.data) {
         toast.error(error.response.data.message);
       } else {
@@ -58,10 +64,12 @@ const Experiences = () => {
 
   }
   const dltexperience = async (id) => {
+    dispatch(setLoading(true))
     try {
       const {data} = await deleteexperience(id);
       console.log(data)
       dispatch(deleteExperience(data.data));
+      dispatch(setLoading(false))
       toast.success(data.message, {
         position: "top-right",
         autoClose: 2000,
@@ -74,19 +82,16 @@ const Experiences = () => {
       });
       closeModal();
     } catch (error) {
-      if (error.response && error.response.data) {
-        toast.error(error.response.data.message);
-      } else {
-        console.error(error);
-      }
+      dispatch(setLoading(false))
+      handleApiError(error)
     }
   }
   return (
     <div className="resume-outer theme-blue">
       <div className="upper-title">
-        <h4>Work & Experience</h4>
+        <h4>İş və Təcrübə</h4>
         <button onClick={openModal} className="add-info-btn">
-          <span className="icon flaticon-plus"></span> Add Work
+          <span className="icon flaticon-plus"></span> Əlavə et
         </button>
       </div>
       {/* <!-- Resume BLock --> */}
@@ -121,7 +126,7 @@ const Experiences = () => {
       }
       <Modal show={showModal} onHide={closeModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Təcrübə əlavə et</Modal.Title>
+          <Modal.Title>İş və ya təcrübə əlavə et</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {/* Your education form goes here */}

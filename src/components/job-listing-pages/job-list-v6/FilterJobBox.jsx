@@ -1,8 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link,useNavigate,useLocation } from "react-router-dom";
 import jobs from "../../../data/job-featured";
 import ListingShowing from "../components/ListingShowing";
 import JobSelect from "../components/JobSelect";
+import { addjobtosaved } from "../../../services/api/candidate_api";
+import { addJobToSaved,deleteJobFromSaved } from "../../../features/candidate/candidateSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "../../../features/loading/loadingSlice";
+import {toast} from 'react-toastify'
+import JobBox from "./JobBox";
 import {
   addCategory,
   addDatePosted,
@@ -14,10 +19,14 @@ import {
   addSalary,
   addSort,
 } from "../../../features/filter/filterSlice";
+import { handleApiError } from "../../../utils/apiErrorHandling";
 
 const FilterJobBox = () => {
+  const navigate = useNavigate();
+  const locations = useLocation();
   const { jobList, jobSort } = useSelector((state) => state.filter);
   const {alljobs} = useSelector((state)=>state.job);
+  const {savedjobs,isLoggedIn} = useSelector(state=>state.candidate)
   console.log(alljobs)
   const {
     keyword,
@@ -94,6 +103,55 @@ const FilterJobBox = () => {
         item?.salary <= jobList.salary.max
     );
 };
+const removeJobFromSaved = async (id) => {
+  if(!isLoggedIn){
+    toast.info('İşi yadda saxlamaq üçün hesabınıza daxil olun',{
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      })
+    navigate('/login', { state: { prevUrl: locations.pathname } });
+  }
+  else{
+  dispatch(setLoading(true));
+  try {
+    const {data} = await addjobtosaved(id);
+  const {action} = data;
+  dispatch(setLoading(false));
+  if(action === 'remove'){
+    dispatch(deleteJobFromSaved(data.data))
+  }
+  else{
+    dispatch(addJobToSaved(data.data))
+  }
+  toast.success(data.message, {
+    position: "top-right",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+    
+  } catch (error) {
+    dispatch(setLoading(false));
+    handleApiError(error);
+  }
+  }
+  
+}
+const check = (id) => {
+  let d = savedjobs?.find(s=>s.job.toString() === id.toString());
+  if(d) return true;
+  return false
+}
 
   // sort filter
   const sortFilter = (a, b) =>
@@ -111,53 +169,7 @@ const FilterJobBox = () => {
     ?.sort(sortFilter)
     .slice(perPage.start, perPage.end !== 0 ? perPage.end : 16)
     ?.map((item) => (
-      <div className="job-block col-lg-6 col-md-12 col-sm-12" key={item?._id}>
-        <div className="inner-box">
-          <div className="content">
-            <span className="company-logo">
-              <img width={50} height={49} src={item?.logo} alt="item brand" />
-            </span>
-            <h4>
-              <Link to={`/vacancies-list/${item?._id}`}>{item?.name}</Link>
-            </h4>
-
-            <ul className="job-info">
-              <li>
-                <span className="icon flaticon-briefcase"></span>
-                {item?.companyName}
-              </li>
-              {/* compnay info */}
-              <li>
-                <span className="icon flaticon-map-locator"></span>
-                {item?.city}
-              </li>
-              {/* location info */}
-              <li>
-                <span className="icon flaticon-clock-3"></span> {item?.endTime?.split("T")[0]}
-              </li>
-              {/* time info */}
-              <li>
-                <span className="icon flaticon-money"></span> {item?.agreedSalary ? "Razılaşma": item?.salary}
-              </li>
-              {/* salary info */}
-            </ul>
-            {/* End .job-info */}
-
-            <ul className="job-other-info">
-              {/* {item?.jobType?.map((val, i) => ( */}
-                <li className={`green`}>
-                  {item?.type}
-                </li>
-              {/* ))} */}
-            </ul>
-            {/* End .job-other-info */}
-
-            <button className="bookmark-btn">
-              <span className="flaticon-bookmark"></span>
-            </button>
-          </div>
-        </div>
-      </div>
+      <JobBox item={item} />
       // End all jobs
     ));
 

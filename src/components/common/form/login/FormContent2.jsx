@@ -5,6 +5,8 @@ import {toast} from 'react-toastify';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser,setInfo } from "../../../../features/candidate/candidateSlice";
+import { setLoading } from "../../../../features/loading/loadingSlice";
+import { handleApiError } from "../../../../utils/apiErrorHandling";
 const FormContent2 = () => {
   const location = useLocation();
   const nav = useNavigate();
@@ -26,10 +28,12 @@ const FormContent2 = () => {
 
   const login = async (e) => {
     e.preventDefault();
+    dispatch(setLoading(true))
     try {
       const {data} = await loginUser(userData);
       dispatch(setUser(data.user.modified));
       dispatch(setInfo(data.user.info))
+      dispatch(setLoading(false))
       console.log('logon',data.user.info)
       toast.success(data.message,{
         position: "top-right",
@@ -44,21 +48,8 @@ const FormContent2 = () => {
         nav(location?.state?.prevUrl || '/')
       // console.log(data)
     } catch (error) {
-      if(error.response.data){
-        toast.error(error.response.data.message,{
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          })
-      }
-      else{
-        console.log(error)
-      }
+      dispatch(setLoading(false))
+      handleApiError(error);
     }
   }
 

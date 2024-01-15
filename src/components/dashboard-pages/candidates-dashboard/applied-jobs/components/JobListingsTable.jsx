@@ -1,20 +1,21 @@
 import { Link } from "react-router-dom";
 import jobs from "../../../../../data/job-featured.js";
-
+import { useSelector } from "react-redux";
 const JobListingsTable = () => {
+  const {myapplieds} = useSelector(state=>state.candidate)
   return (
     <div className="tabs-box">
       <div className="widget-title">
-        <h4>My Applied Jobs</h4>
+        <h4>Müraciət etdiyim işlər</h4>
 
         <div className="chosen-outer">
           {/* <!--Tabs Box--> */}
           <select className="chosen-single form-select">
-            <option>Last 6 Months</option>
-            <option>Last 12 Months</option>
-            <option>Last 16 Months</option>
-            <option>Last 24 Months</option>
-            <option>Last 5 year</option>
+            <option>Son 1 ay</option>
+            <option>Son 2 ay</option>
+            <option>Son 3 ay</option>
+            <option>Son 4 ay</option>
+            <option>Son 5 ay</option>
           </select>
         </div>
       </div>
@@ -27,16 +28,16 @@ const JobListingsTable = () => {
             <table className="default-table manage-job-table">
               <thead>
                 <tr>
-                  <th>Job Title</th>
-                  <th>Date Applied</th>
+                  <th>Ad</th>
+                  <th>Müraciət tarixi</th>
                   <th>Status</th>
-                  <th>Action</th>
+                  <th>Əməliyyat</th>
                 </tr>
               </thead>
 
               <tbody>
-                {jobs.slice(0, 4).map((item) => (
-                  <tr key={item.id}>
+                {myapplieds?.map((item) => (
+                  <tr key={item._id}>
                     <td>
                       {/* <!-- Job Block --> */}
                       <div className="job-block">
@@ -46,31 +47,31 @@ const JobListingsTable = () => {
                               <img
                                 width={50}
                                 height={49}
-                                src={item.logo}
+                                src={item?.companyLogo}
                                 alt="logo"
                               />
                             </span>
                             <h4>
-                              <Link to={`/vacancies-list/${item.id}`}>
-                                {item.jobTitle}
+                              <Link to={`/vacancies-list/${item?.jobId}`}>
+                                {item?.jobName}
                               </Link>
                             </h4>
                             <ul className="job-info">
-                              <li>
+                              <li title={item?.category}>
                                 <span className="icon flaticon-briefcase"></span>
-                                Segment
+                                {item?.category.slice(0,6)}
                               </li>
                               <li>
                                 <span className="icon flaticon-map-locator"></span>
-                                London, UK
+                               {item?.jobCity}
                               </li>
                             </ul>
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td>Dec 5, 2020</td>
-                    <td className="status">Active</td>
+                    <td>{item?.createdAt?.split("T")[0]}</td>
+                    <td style={{color:'red'}} className="status"><span style={{backgroundColor:'#C9F7F8',padding:"8px",borderRadius:'6px'}}>{item?.status}</span></td>
                     <td>
                       <div className="option-box">
                         <ul className="option-list">

@@ -24,6 +24,7 @@ const ExperienceLevel = () => {
                             checked={item.isChecked}
                             value={item.value}
                             onChange={(e) => experienceHandler(e, item.id)}
+                            
                         />
                         <span className="slider round"></span>
                         <span className="title">{item.name}</span>

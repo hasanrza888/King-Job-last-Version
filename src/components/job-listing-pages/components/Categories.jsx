@@ -23,6 +23,7 @@ const Categories = () => {
                 className="form-select"
                 value={jobList.category}
                 onChange={categoryHandler}
+                style={{border:'1px solid #4356ff',borderRadius:"15px"}}
             >
                 <option value="">Kategoriya</option>
                 {

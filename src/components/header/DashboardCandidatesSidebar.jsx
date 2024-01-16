@@ -6,35 +6,14 @@ import { isActiveLink } from "../../utils/linkActiveChecker";
 import {toast} from 'react-toastify'
 import { useDispatch, useSelector } from "react-redux";
 import { menuToggle } from "../../features/toggle/toggleSlice";
-import { clearUser } from "../../features/candidate/candidateSlice";
+import { clearUser } from "../../features/auth/authSlice";
 import { logout } from "../../services/api/auth_api";
+import useLogout from "../../hooks/logoutUser";
 const DashboardCandidatesSidebar = () => {
   const { menu } = useSelector((state) => state.toggle);
   const percentage = 30;
   const location = useLocation();
-  async function logoutUser() {
-    try {
-      const { data } = await logout();
-      dispatch(clearUser());
-      toast.success("Succesfully logged out",{
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          })
-    } catch (error) {
-      if(error.response.data){
-        toast.error(error.response.data.message)
-      }
-      else{
-        console.log(error)
-      }
-    }
-  }
+  const logoutUser = useLogout();
   const dispatch = useDispatch();
   // menu togggle handler
   const menuToggleHandler = () => {

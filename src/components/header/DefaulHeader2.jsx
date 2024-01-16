@@ -4,7 +4,7 @@ import HeaderNavContent from "./HeaderNavContent";
 import { useSelector } from "react-redux";
 const DefaulHeader2 = () => {
   const [navbar, setNavbar] = useState(false);
-  const {isLoggedIn,user} = useSelector(state=>state.candidate);
+  const {isLoggedIn,user} = useSelector(state=>state.auth);
   // console.log(user)
   // const { u_t_p } = user || {u_t_p:'x'};
   const u_t_p = user ? user.u_t_p : 'x'

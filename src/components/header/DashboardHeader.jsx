@@ -8,6 +8,7 @@ import defaultProfile  from '../../img/defaultcompanylogo.jpg'
 import { useSelector } from "react-redux";
 const DashboardHeader = () => {
     const {user,info} = useSelector(state=>state.candidate);
+    const {companyInfo} = useSelector(state=>state.employer)
     const u_t_p = user ? user.u_t_p : 'x'
     const ppphoto = {
         'u_s_r':info?.profilepic,
@@ -86,7 +87,7 @@ const DashboardHeader = () => {
                                 <img
                                     alt="avatar"
                                     className="thumb"
-                                    src={ppphoto[u_t_p] || defaultProfile}
+                                    src={companyInfo?.logo || defaultProfile}
                                     width={50}
                                     height={50}
                                 />

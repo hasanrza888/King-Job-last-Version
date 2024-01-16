@@ -1,6 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    companyInfo:{
+        applynum:0,
+        info:"",
+        createdAt:"",
+        isBlock:false,
+        levelofapplyers:[],
+        logo:"",
+        numberOfJobSharing:0,
+        originHistory:"",
+        subscription:"",
+        vacancynum:0,
+        workers:[]
+    },
     category: [
         {
             id: 1,
@@ -33,9 +46,12 @@ export const employerSlice = createSlice({
     reducers: {
         setCompanies: (state,{payload}) => {
             state.allCompanies = payload
+        },
+        setCompanyInfo: (state,{payload}) => {
+            state.companyInfo = payload
         }
     },
 });
 
-export const {setCompanies} = employerSlice.actions;
+export const {setCompanies,setCompanyInfo} = employerSlice.actions;
 export default employerSlice.reducer;

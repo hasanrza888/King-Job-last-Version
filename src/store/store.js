@@ -10,6 +10,7 @@ import shopSlice from "../features/shop/shopSlice";
 import categorySlice from "../features/category/categorySlice";
 import jobtypeSlice from "../features/jobtypes/jobtypeSlice"
 import loadingSlice from "../features/loading/loadingSlice";
+import authSlice from "../features/auth/authSlice";
 export const store = configureStore({
     reducer: {
         job: jobSlice,
@@ -22,7 +23,8 @@ export const store = configureStore({
         shop: shopSlice,
         category:categorySlice,
         jobtype:jobtypeSlice,
-        loading:loadingSlice
+        loading:loadingSlice,
+        auth:authSlice
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
 });

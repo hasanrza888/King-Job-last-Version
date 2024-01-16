@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    user:localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
-    isLoggedIn:!!localStorage.getItem('user'),
     info:{
         achievements:[],
         birthday:"",
@@ -29,6 +27,7 @@ const initialState = {
     },
     myapplieds:[],
     savedjobs:[],
+    numofactivesavedjobs:0,
     contacts:[],
     category: [
         {
@@ -155,16 +154,6 @@ export const candidateSlice = createSlice({
             const filtered = state.info.achievements.filter(ac=>ac._id.toString()!==payload);
             state.info.achievements = filtered;
         },
-        setUser : (state,{payload})=>{
-            state.user = payload;
-            localStorage.setItem('user',JSON.stringify(payload));
-            state.isLoggedIn = true
-        },
-        clearUser : (state,{payload})=>{
-            state.user = null;
-            localStorage.removeItem('user');
-            state.isLoggedIn = false;
-        },
         setApplieds:(state,{payload}) => {
             state.myapplieds = payload;
         },
@@ -176,6 +165,9 @@ export const candidateSlice = createSlice({
         },
         addJobToSaved:(state,{payload}) => {
             state.savedjobs = [...state.savedjobs,payload];
+        },
+        setNumOfActiveSavedJobs:(state,{payload})=>{
+            state.numofactivesavedjobs = payload
         },
         deleteJobFromSaved:(state,{payload}) => {
             console.log(payload);
@@ -259,8 +251,6 @@ export const {
     clearDatePost,
     clearExperience,
     clearQualification,
-    setUser,
-    clearUser,
     setInfo,
     addLink,
     setLinks,
@@ -275,6 +265,7 @@ export const {
     setSavedJobs,
     addJobToSaved,
     deleteJobFromSaved,
-    setContacts
+    setContacts,
+    setNumOfActiveSavedJobs
 } = candidateSlice.actions;
 export default candidateSlice.reducer;

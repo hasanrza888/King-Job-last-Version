@@ -4,8 +4,10 @@ import candidatesMenuData from "../../data/candidatesMenuData";
 import HeaderNavContent from "./HeaderNavContent";
 import { isActiveLink } from "../../utils/linkActiveChecker";
 import { useLocation } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 const DashboardCandidatesHeader = () => {
+    const {user,info} = useSelector(state=>state.candidate)
+    console.log(user)
     const [navbar, setNavbar] = useState(false);
     const location = useLocation();
 
@@ -76,11 +78,11 @@ const DashboardCandidatesHeader = () => {
                                 <img
                                     alt="avatar"
                                     className="thumb"
-                                    src="/images/resource/candidate-1.png"
+                                    src={info?.profilepic}
                                     width={50}
                                     height={50}
                                 />
-                                <span className="name">My Account</span>
+                                <span className="name">{user?.name}</span>
                             </a>
 
                             <ul className="dropdown-menu">

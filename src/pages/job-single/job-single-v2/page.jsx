@@ -19,6 +19,7 @@ import { updateJob } from "../../../features/job/jobSlice";
 import { increaseViews } from "../../../services/api/common_api";
 import { useEffect } from "react";
 import { handleApiError } from "../../../utils/apiErrorHandling";
+
 const JobSingleDynamicV2 = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -174,28 +175,28 @@ const JobSingleDynamicV2 = () => {
 
                   {/* <!-- Modal --> */}
                   {/* Your modal component */}
-      {isLoggedIn && (
-        <div className="modal fade" id="applyJobModal" tabIndex="-1" aria-hidden="true">
-          <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div className="apply-modal-content modal-content">
-              <div className="text-center">
-                <h3 className="title">Müraciət</h3>
-                <button
-                  type="button"
-                  className="closed-modal"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              {/* End modal-header */}
+                  {isLoggedIn && (
+                    <div className="modal fade" id="applyJobModal" tabIndex="-1" aria-hidden="true">
+                      <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div className="apply-modal-content modal-content">
+                          <div className="text-center">
+                            <h3 className="title">Müraciət</h3>
+                            <button
+                              type="button"
+                              className="closed-modal"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                          {/* End modal-header */}
 
-              <ApplyJobModalContent job={id} />
-              {/* End PrivateMessageBox */}
-            </div>
-            {/* End .send-private-message-wrapper */}
-          </div>
-        </div>
-      )}
+                          <ApplyJobModalContent job={id} />
+                          {/* End PrivateMessageBox */}
+                        </div>
+                        {/* End .send-private-message-wrapper */}
+                      </div>
+                    </div>
+                  )}
                   {/* End .modal */}
 
                   <div className="sidebar-widget">

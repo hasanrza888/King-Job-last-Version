@@ -9,7 +9,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import ScrollToTop from "./components/common/ScrollTop";
 import Home from './pages/home/home-1/page';
 import JobList from "./pages/job-list/job-list-v6/page.jsx";
-import JobSingleDynamicV2 from './pages/job-single/job-single-v2/page.jsx';
+import JobSingleDynamicV1 from './pages/job-single/job-single-v1/page.jsx';
 import EmployersList from "./pages/employers-list/employers-list-v3/page.jsx";
 import About from "./pages/others/about/page.jsx";
 import Contact from "./pages/others/contact/page.jsx";
@@ -147,7 +147,7 @@ function App() {
         
         <Route path='/' element={<Home numjob={alljobs?.length} />}/>
         <Route path='/vacancies-list' element={<JobList />}/>
-        <Route path='/vacancies-list/:id' element={<JobSingleDynamicV2 />}/>
+        <Route path='/vacancies-list/:id' element={<JobSingleDynamicV1 />}/>
         <Route path='/companies-list' element={<EmployersList />}/>
         <Route path='/companies-list/:id' element={<EmployersSingleV1 />}/>
         <Route path='/applicants-list/:id' element={<CandidateSingleDynamicV1 />}/>

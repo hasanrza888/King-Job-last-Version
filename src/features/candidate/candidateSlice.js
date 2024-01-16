@@ -3,7 +3,33 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     user:localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
     isLoggedIn:!!localStorage.getItem('user'),
-    info:null,
+    info:{
+        achievements:[],
+        birthday:"",
+        chancesForCoverLetter:0,
+        city:"",
+        coverletter:"",
+        createdAt:"",
+        educations:[],
+        experiences:[],
+        file:"",
+        links:[],
+        profilepic:"",
+        talks:[],
+        skills:[],
+        updatedAt:"",
+        jobTitle:"",
+        phone:"",
+        currentSalary:"",
+        expestedSalary:"",
+        experiencesYear:"",
+        age:"",
+        educationlevelNow:"",
+        languages:"",
+    },
+    myapplieds:[],
+    savedjobs:[],
+    contacts:[],
     category: [
         {
             id: 1,
@@ -102,6 +128,33 @@ export const candidateSlice = createSlice({
         setInfo:(state,{payload}) => {
             state.info = payload;
         },
+        addLink:(state,{payload}) => {
+            state.info.links = [...state.info.links, payload];
+        },
+        setLinks:(state,{payload}) => {
+            state.info.links = payload;
+        },
+        addEducation:(state,{payload}) => {
+            state.info.educations = [...state.info.educations,payload]
+        },
+        deleteEducation:(state,{payload}) => {
+            const filtered = state.info.educations.filter(educ=>educ._id.toString()!==payload);
+            state.info.educations = filtered;
+        },
+        addExperience:(state,{payload}) => {
+            state.info.experiences = [...state.info.experiences,payload]
+        },
+        deleteExperience:(state,{payload}) => {
+            const filtered = state.info.experiences.filter(ex=>ex._id.toString()!==payload);
+            state.info.experiences = filtered;
+        },
+        addAchievement:(state,{payload}) => {
+            state.info.achievements = [...state.info.achievements,payload]
+        },
+        deleteAchievement:(state,{payload}) => {
+            const filtered = state.info.achievements.filter(ac=>ac._id.toString()!==payload);
+            state.info.achievements = filtered;
+        },
         setUser : (state,{payload})=>{
             state.user = payload;
             localStorage.setItem('user',JSON.stringify(payload));
@@ -111,6 +164,27 @@ export const candidateSlice = createSlice({
             state.user = null;
             localStorage.removeItem('user');
             state.isLoggedIn = false;
+        },
+        setApplieds:(state,{payload}) => {
+            state.myapplieds = payload;
+        },
+        addAplied:(state,{payload}) => {
+            state.myapplieds = [...state.myapplieds,payload]
+        },
+        setSavedJobs:(state,{payload}) => {
+            state.savedjobs = payload;
+        },
+        addJobToSaved:(state,{payload}) => {
+            state.savedjobs = [...state.savedjobs,payload];
+        },
+        deleteJobFromSaved:(state,{payload}) => {
+            console.log(payload);
+            console.log(state.savedjobs)
+            const filtered = state.savedjobs.filter(sv=>sv.job.toString()!==payload);
+            state.savedjobs = filtered;
+        },
+        setContacts:(state,{payload}) => {
+            state.contacts = payload;
         },
         addDatePostCheck: (state, { payload }) => {
             state?.datePost?.map((item) => {
@@ -187,6 +261,20 @@ export const {
     clearQualification,
     setUser,
     clearUser,
-    setInfo
+    setInfo,
+    addLink,
+    setLinks,
+    addEducation,
+    deleteEducation,
+    addExperience,
+    deleteExperience,
+    addAchievement,
+    deleteAchievement,
+    setApplieds,
+    addAplied,
+    setSavedJobs,
+    addJobToSaved,
+    deleteJobFromSaved,
+    setContacts
 } = candidateSlice.actions;
 export default candidateSlice.reducer;

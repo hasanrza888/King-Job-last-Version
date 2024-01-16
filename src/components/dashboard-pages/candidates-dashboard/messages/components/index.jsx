@@ -41,7 +41,8 @@ const ChatBox = () => {
       {/* End chat_contact */}
 
       <div className=" col-xl-8 col-lg-7 col-md-12 col-sm-12 chat">
-        <ContentField />
+        <h2>Söhbət yoxdur!</h2>
+        {/* <ContentField /> */}
       </div>
       {/* chatbox-field-content */}
     </div>

@@ -17,6 +17,7 @@ import {
 //Services
 import { fetchcompanies } from "../../../services/api/common_api";
 import { setCompanies } from "../../../features/employer/employerSlice";
+import { handleApiError } from "../../../utils/apiErrorHandling";
 const FilterTopBox = () => {
   const {
     keyword,
@@ -37,21 +38,7 @@ const FilterTopBox = () => {
         console.log(data.data)
         dispatch(setCompanies(data.data));
       } catch (error) {
-        if(error.response.data){
-           toast.error(error.response.data.message,{
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          })
-        }
-        else{
-          console.log(error)
-        }
+        handleApiError(error)
       }
     }
 
@@ -134,9 +121,12 @@ const FilterTopBox = () => {
               </li>
             </ul>
           </div>
+          <ul className="flex-row">
+          <li className="job-type me-0">{company?.applynum} Müraciət</li>
+          <li className="job-type me-0">{company?.vacancynum} Vakansiya</li>
+          </ul>
 
-          <div className="job-type me-0">{company?.applynum} Müraciət</div>
-          <div className="job-type me-0">{company?.vacancynum} Vakansiya</div>
+          
         </div>
       </div>
     ));

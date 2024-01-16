@@ -1,11 +1,14 @@
-import { Link,useNavigate } from "react-router-dom";
+import { Link,useNavigate,useLocation } from "react-router-dom";
 import LoginWithSocial from "./LoginWithSocial";
 import { loginUser } from "../../../../services/api/auth_api";
 import {toast} from 'react-toastify';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser,setInfo } from "../../../../features/candidate/candidateSlice";
+import { setLoading } from "../../../../features/loading/loadingSlice";
+import { handleApiError } from "../../../../utils/apiErrorHandling";
 const FormContent2 = () => {
+  const location = useLocation();
   const nav = useNavigate();
   const dispatch = useDispatch();
   const tt = new Date();
@@ -25,10 +28,12 @@ const FormContent2 = () => {
 
   const login = async (e) => {
     e.preventDefault();
+    dispatch(setLoading(true))
     try {
       const {data} = await loginUser(userData);
       dispatch(setUser(data.user.modified));
       dispatch(setInfo(data.user.info))
+      dispatch(setLoading(false))
       console.log('logon',data.user.info)
       toast.success(data.message,{
         position: "top-right",
@@ -40,24 +45,11 @@ const FormContent2 = () => {
         progress: undefined,
         theme: "light",
         })
-        nav('/')
+        nav(location?.state?.prevUrl || '/')
       // console.log(data)
     } catch (error) {
-      if(error.response.data){
-        toast.error(error.response.data.message,{
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          })
-      }
-      else{
-        console.log(error)
-      }
+      dispatch(setLoading(false))
+      handleApiError(error);
     }
   }
 

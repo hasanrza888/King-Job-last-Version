@@ -9,15 +9,57 @@ import JobDetailsDescriptions from "../../../components/job-single-pages/shared-
 import Contact from "../../../components/job-single-pages/shared-components/Contact";
 import RelatedJobs3 from "../../../components/job-single-pages/related-jobs/RelatedJobs3";
 import ApplyJobModalContent from "../../../components/job-single-pages/shared-components/ApplyJobModalContent";
-import { useParams } from "react-router";
+import { Navigate,useLocation,useNavigate ,useParams} from "react-router-dom";
 import RelatedJobs from "../../../components/job-single-pages/related-jobs/RelatedJobs";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import DefaulHeader2 from "../../../components/header/DefaulHeader2";
+import {toast} from 'react-toastify'
+import {Modal} from "bootstrap";
+import { updateJob } from "../../../features/job/jobSlice";
+import { increaseViews } from "../../../services/api/common_api";
+import { useEffect } from "react";
+import { handleApiError } from "../../../utils/apiErrorHandling";
 const JobSingleDynamicV2 = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const {isLoggedIn} = useSelector(state=>state.candidate);
   const id = useParams().id;
-  const {alljobs} = useSelector(state=>state.job)
-  const job = alljobs.find((item) => item._id === id) || jobs[0];
-
+  const {alljobs,viewedJobs} = useSelector(state=>state.job)
+  let checker = viewedJobs.includes(id) ? 'second' : 'first';
+  const job = alljobs.find((item) => item._id === id);
+  useEffect(()=>{
+    const incrs = async () => {
+      try {
+        const {data} = await increaseViews(id,checker);
+        const { numberOfViews } = data.data;
+        dispatch(updateJob({...job,numberOfViews:numberOfViews}));
+        
+      } catch (error) {
+        handleApiError(error)
+      }
+    }
+    incrs();
+  },[checker,dispatch,id])
+  const openModal = () => {
+    console.log(isLoggedIn)
+    if(!isLoggedIn){
+      toast.info('Müraciət etmək üçün hesabınıza daxil olun',{
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        })
+      navigate('/login', { state: { prevUrl: location.pathname } });
+    }else{
+      const modal = new Modal(document.getElementById('applyJobModal'));
+      modal.show();
+    }
+  }
   return (
     <>
       {/* <!-- Header Span --> */}
@@ -33,7 +75,7 @@ const JobSingleDynamicV2 = () => {
       {/* End MobileMenu */}
 
       {/* <!-- Job Detail Section --> */}
-      <section className="job-detail-section">
+      {job ? <section className="job-detail-section">
         <div className="job-detail-outer">
           <div className="auto-container">
             <div className="row">
@@ -104,13 +146,9 @@ const JobSingleDynamicV2 = () => {
                 <div className="related-jobs">
                   <div className="title-box">
                     <h3>Əlaqədar Vakansiyalar</h3>
-                    <div className="text">
-                    202 Aktiv Vakansiya - 29 bugün əlavə olunub.
-                    </div>
                   </div>
                   {/* End title box */}
-
-                  <div className="row">
+                  <div data-aos="fade-up" className="row">
                     <RelatedJobs category={job?.category} id={job?._id} />
                   </div>
                   {/* End .row */}
@@ -121,15 +159,13 @@ const JobSingleDynamicV2 = () => {
 
               <div className="sidebar-column col-lg-4 col-md-12 col-sm-12">
                 <aside className="sidebar">
-                  <div className="btn-box">
-                    <a
-                      href="#"
+                  <div   className="btn-box">
+                    <button
                       className="theme-btn btn-style-one"
-                      data-bs-toggle="modal"
-                      data-bs-target="#applyJobModal"
+                      onClick={openModal}
                     >
                       Müraciət Et
-                    </a>
+                    </button>
                     <button className="bookmark-btn">
                       <i className="flaticon-bookmark"></i>
                     </button>
@@ -137,31 +173,29 @@ const JobSingleDynamicV2 = () => {
                   {/* End apply for job btn */}
 
                   {/* <!-- Modal --> */}
-                  <div
-                    className="modal fade"
-                    id="applyJobModal"
-                    tabIndex="-1"
-                    aria-hidden="true"
-                  >
-                    <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                      <div className="apply-modal-content modal-content">
-                        <div className="text-center">
-                          <h3 className="title">Müraciət</h3>
-                          <button
-                            type="button"
-                            className="closed-modal"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                          ></button>
-                        </div>
-                        {/* End modal-header */}
+                  {/* Your modal component */}
+      {isLoggedIn && (
+        <div className="modal fade" id="applyJobModal" tabIndex="-1" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div className="apply-modal-content modal-content">
+              <div className="text-center">
+                <h3 className="title">Müraciət</h3>
+                <button
+                  type="button"
+                  className="closed-modal"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              {/* End modal-header */}
 
-                        <ApplyJobModalContent />
-                        {/* End PrivateMessageBox */}
-                      </div>
-                      {/* End .send-private-message-wrapper */}
-                    </div>
-                  </div>
+              <ApplyJobModalContent job={id} />
+              {/* End PrivateMessageBox */}
+            </div>
+            {/* End .send-private-message-wrapper */}
+          </div>
+        </div>
+      )}
                   {/* End .modal */}
 
                   <div className="sidebar-widget">
@@ -216,6 +250,7 @@ const JobSingleDynamicV2 = () => {
         </div>
         {/* <!-- job-detail-outer--> */}
       </section>
+: (<h1 style={{height:'100vh'}}>Uyğun iş tapılmadı</h1>)}
       {/* <!-- End Job Detail Section --> */}
 
       <FooterDefault footerStyle="alternate5" />

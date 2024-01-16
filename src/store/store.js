@@ -7,7 +7,9 @@ import employerFilterSlice from "../features/filter/employerFilterSlice";
 import candidateSlice from "../features/candidate/candidateSlice";
 import candidateFilterSlice from "../features/filter/candidateFilterSlice";
 import shopSlice from "../features/shop/shopSlice";
-
+import categorySlice from "../features/category/categorySlice";
+import jobtypeSlice from "../features/jobtypes/jobtypeSlice"
+import loadingSlice from "../features/loading/loadingSlice";
 export const store = configureStore({
     reducer: {
         job: jobSlice,
@@ -18,6 +20,9 @@ export const store = configureStore({
         candidate: candidateSlice,
         candidateFilter: candidateFilterSlice,
         shop: shopSlice,
+        category:categorySlice,
+        jobtype:jobtypeSlice,
+        loading:loadingSlice
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
 });

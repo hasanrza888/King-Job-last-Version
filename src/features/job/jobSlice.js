@@ -4,6 +4,7 @@ const initialState = {
     alljobs:[],
     latestJob: ["full-time"],
     currentJob:null,
+    viewedJobs: localStorage.getItem('viewed') ? JSON.parse(localStorage.getItem('viewed')) : [],
     category: [
         {
             id: 1,
@@ -76,14 +77,38 @@ const initialState = {
         },
     ],
     experienceLavel: [
-        { id: 1, name: "Təcrübəsiz", value: "fresh", isChecked: false },
-        { id: 2, name: "1 il", value: "1-year", isChecked: false },
-        { id: 3, name: "2 il", value: "2-year", isChecked: false },
-        { id: 4, name: "3 il", value: "3-year", isChecked: false },
+        { id: 1, name: "Təcrübəsiz", value: "Təcrübəsiz", isChecked: false },
+        { id: 2, name: "Minimum 1 il", value: "Minimum 1 il", isChecked: false },
+        { id: 3, name: "Minimum 2 il", value: "Minimum 2 il", isChecked: false },
+        { id: 4, name: "Minimum 3 il", value: "Minimum 3 il", isChecked: false },
         {
             id: 5,
-            name: "4 il",
-            value: "4-year",
+            name: "Minimum 4 il",
+            value: "Minimum 4 il",
+            isChecked: false,
+        },
+        {
+            id: 6,
+            name: "Minimum 5 il",
+            value: "Minimum 5 il",
+            isChecked: false,
+        },
+        {
+            id: 7,
+            name: "Minimum 6 il",
+            value: "Minimum 6 il",
+            isChecked: false,
+        },
+        {
+            id: 8,
+            name: "Minimum 7 il",
+            value: "Minimum 7 il",
+            isChecked: false,
+        },
+        {
+            id: 9,
+            name: "7 il +",
+            value: "7 il +",
             isChecked: false,
         },
     ],
@@ -127,6 +152,17 @@ export const jobSlice = createSlice({
     reducers: {
         setJobs : (state, {payload}) => {
             state.alljobs = payload;
+        },
+        updateJob : (state,{payload}) => {
+            const index = state.alljobs.findIndex(job => job._id === payload._id);
+            // If the job is found, update it
+            if (index !== -1) {
+                state.viewedJobs = [...state.viewedJobs,payload._id];
+                localStorage.setItem('viewed',JSON.stringify(state.viewedJobs));
+                state.alljobs = state.alljobs.map((job, i) =>
+                    i === index ? { ...job, ...payload } : job
+                );
+            }
         },
         setCurrentJob:(state,{payload}) => {
             state.currentJob = payload;
@@ -216,6 +252,7 @@ export const {
     experienceLavelCheck,
     clearExperienceToggle,
     setJobs,
-    setCurrentJob
+    setCurrentJob,
+    updateJob
 } = jobSlice.actions;
 export default jobSlice.reducer;

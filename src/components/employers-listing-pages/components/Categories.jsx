@@ -19,6 +19,7 @@ const Categories = () => {
                 className="form-select"
                 onChange={categoryHandler}
                 value={getCategory}
+                style={{border:'1px solid #4356ff',borderRadius:"15px"}}
             >
                 <option value="">Kateqoriya</option>
                 {category?.map((item) => (

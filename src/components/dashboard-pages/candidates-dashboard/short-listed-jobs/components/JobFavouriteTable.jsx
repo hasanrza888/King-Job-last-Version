@@ -4,7 +4,7 @@ import { useSelector,useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { setLoading } from "../../../../../features/loading/loadingSlice.js";
 import { deleteJobFromSaved } from "../../../../../features/candidate/candidateSlice.js";
-import { addJobToSaved } from "../../../../../features/candidate/candidateSlice.js";
+import { addJobToSaved,setNumOfActiveSavedJobs } from "../../../../../features/candidate/candidateSlice.js";
 import { addjobtosaved } from "../../../../../services/api/candidate_api.js";
 import {toast} from 'react-toastify'
 import { handleApiError } from "../../../../../utils/apiErrorHandling.js";
@@ -25,6 +25,7 @@ const JobFavouriteTable = () => {
           }
         }
         setSv(sv);
+        dispatch(setNumOfActiveSavedJobs(sv.length))
         dispatch(setLoading(false))
     }
     modify();

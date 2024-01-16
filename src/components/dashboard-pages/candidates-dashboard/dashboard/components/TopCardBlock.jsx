@@ -1,9 +1,12 @@
+import { useSelector } from "react-redux";
 const TopCardBlock = () => {
+  const {myapplieds,savedjobs,numofactivesavedjobs} = useSelector(state=>state.candidate)
+  console.log(savedjobs)
   const cardContent = [
     {
       id: 1,
       icon: "flaticon-briefcase",
-      countNumber: "22",
+      countNumber: myapplieds?.length,
       metaName: "Müraciətlərim",
       uiClass: "ui-blue",
     },
@@ -24,10 +27,17 @@ const TopCardBlock = () => {
     {
       id: 4,
       icon: "la-bookmark-o",
-      countNumber: "32",
+      countNumber: savedjobs?.length,
       metaName: "Yadda saxlanmışlar",
       uiClass: "ui-green",
     },
+    // {
+    //   id: 4,
+    //   icon: "la-bookmark-o",
+    //   countNumber: "32",
+    //   metaName: "Yadda saxlanmışlar",
+    //   uiClass: "ui-green",
+    // },
   ];
 
   return (

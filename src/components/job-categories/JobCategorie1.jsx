@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 import jobCatContent from "../../data/job-catergories";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { addCategory } from "../../features/filter/filterSlice";
 const JobCategorie1 = () => {
-  const {categories} = useSelector(state=>state.category)
+  const dispatch = useDispatch();
+  const {categories} = useSelector(state=>state.category);
+  const categoryHandler = (ctg) => {
+    dispatch(addCategory(ctg));
+};
   return (
     <>
       {categories.map((item) => (
@@ -14,7 +19,7 @@ const JobCategorie1 = () => {
             <div className="content">
               <span className={`icon ${item.icon}`}></span>
               <h4>
-                <Link to="/vacancies-list">{item.name}</Link>
+                <Link onClick={()=>categoryHandler(item.name)} to="/vacancies-list">{item.name}</Link>
               </h4>
               <p>({2} Aktiv Vakansiya)</p>
             </div>

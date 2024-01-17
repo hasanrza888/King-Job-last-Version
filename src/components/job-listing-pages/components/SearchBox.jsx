@@ -24,7 +24,7 @@ const SearchBox = () => {
                 placeholder="Vakansiya adı"
                 value={getKeyWord}
                 onChange={keywordHandler}
-                style={{border:'1px solid #4356ff',borderRadius:"15px"}}
+                // style={{border:'1px solid #4356ff',borderRadius:"15px"}}
             />
             <span className="icon flaticon-search-3"></span>
         </>

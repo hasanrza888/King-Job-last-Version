@@ -87,7 +87,7 @@ export default function JobBox({item}) {
               </li>
               {/* time info */}
               <li>
-                <span className="icon flaticon-money"></span> {item?.agreedSalary ? "Razılaşma": item?.salary}
+                <span className="icon flaticon-money"></span> {item?.agreedSalary ? "Razılaşma": (item?.salary + ' AZN')}
               </li>
               {/* salary info */}
             </ul>

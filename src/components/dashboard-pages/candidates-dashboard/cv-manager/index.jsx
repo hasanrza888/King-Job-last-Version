@@ -28,12 +28,13 @@ const index = () => {
       {/* <!-- Dashboard --> */}
       <section className="user-dashboard">
         <div className="dashboard-outer">
-          <BreadCrumb title="CV Manager!" />
-          {/* breadCrumb */}
-
           <MenuToggler />
           {/* Collapsible sidebar button */}
 
+          <BreadCrumb title="CV Manager!" />
+          {/* breadCrumb */}
+
+          
           <div className="row">
             <div className="col-lg-12">
               {/* <!-- Ls widget --> */}

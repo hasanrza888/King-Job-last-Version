@@ -122,8 +122,8 @@ const FilterTopBox = () => {
             </ul>
           </div>
           <ul className="flex-row">
-          <li className="job-type me-0">{company?.applynum} Müraciət</li>
-          <li className="job-type me-0">{company?.vacancynum} Vakansiya</li>
+            <li className="job-type">{company?.applynum} Müraciət</li>
+            <li className="job-type me-0">{company?.vacancynum} Vakansiya</li>
           </ul>
 
           

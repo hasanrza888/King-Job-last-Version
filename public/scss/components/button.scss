@@ -40,6 +40,26 @@ Buttons Styles
   background-color: var(--primary-hover-bg-color);
 }
 
+.btn-style-one-bordered {
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--primary-color);
+  background-color: #fff;
+  font-size: 15px;
+  line-height: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--primary-color);
+  font-weight: 400;
+  padding: 18px 35px 15px 35px;
+  display: block;
+}
+
+.btn-style-one-bordered:hover {
+  color: #ffffff;
+  background-color: var(--primary-color);
+}
+
 /* Btn Style Two */
 .btn-style-two {
   position: relative;

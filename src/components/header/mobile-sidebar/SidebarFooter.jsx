@@ -1,4 +1,6 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
 
 const SidebarFooter = () => {
   const socialContent = [
@@ -7,12 +9,21 @@ const SidebarFooter = () => {
     { id: 3, icon: "fa-instagram", link: "https://www.instagram.com/the_king_job" },
     { id: 4, icon: "fa-linkedin-in", link: "https://az.linkedin.com/company/king-job" },
   ];
-
+  const {isLoggedIn,user} = useSelector(state=>state.candidate);
   return (
     <div className="mm-add-listing mm-listitem pro-footer">
-      <Link to="/subscriptions" className="theme-btn btn-style-one mm-listitem__text">
-        Abunəliklər
-      </Link>
+      { 
+      !isLoggedIn &&
+        <Link to="/Login" className="btn-style-one-bordered">
+          Daxil OL
+        </Link>
+      }
+      {
+        !isLoggedIn &&
+        <Link to="/register" className="theme-btn btn-style-one mm-listitem__text mt-3">
+          Qeydiyyat
+        </Link>
+      }
       {/* job post btn */}
 
       <div className="mm-listitem__text">

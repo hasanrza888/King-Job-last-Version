@@ -4,7 +4,9 @@ import { loginUser } from "../../../../services/api/auth_api";
 import {toast} from 'react-toastify';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setUser,setInfo } from "../../../../features/candidate/candidateSlice";
+import { setUser } from "../../../../features/auth/authSlice";
+import { setInfo } from "../../../../features/candidate/candidateSlice";
+import { setCompanyInfo } from "../../../../features/employer/employerSlice";
 import { setLoading } from "../../../../features/loading/loadingSlice";
 import { handleApiError } from "../../../../utils/apiErrorHandling";
 const FormContent2 = () => {
@@ -31,10 +33,10 @@ const FormContent2 = () => {
     dispatch(setLoading(true))
     try {
       const {data} = await loginUser(userData);
+      const {u_t_p} = data.user.modified;
       dispatch(setUser(data.user.modified));
-      dispatch(setInfo(data.user.info))
       dispatch(setLoading(false))
-      console.log('logon',data.user.info)
+      console.log('logon',data.user.modified)
       toast.success(data.message,{
         position: "top-right",
         autoClose: 2000,
@@ -45,6 +47,11 @@ const FormContent2 = () => {
         progress: undefined,
         theme: "light",
         })
+        if(u_t_p === 'u_s_r'){
+          dispatch(setInfo(data.user.info))
+        }else{
+          dispatch(setCompanyInfo(data.user.info))
+        }
         nav(location?.state?.prevUrl || '/')
       // console.log(data)
     } catch (error) {

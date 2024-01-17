@@ -167,7 +167,7 @@ const check = (id) => {
     ?.filter(experienceFilter)
     ?.filter(salaryFilter)
     ?.sort(sortFilter)
-    .slice(perPage.start, perPage.end !== 0 ? perPage.end : 16)
+    .slice(perPage.start, perPage.end !== 0 ? perPage.end : 20)
     ?.map((item) => (
       <JobBox item={item} />
       // End all jobs
@@ -215,9 +215,7 @@ const check = (id) => {
           experienceSelect !== "" ||
           salary?.min !== 0 ||
           salary?.max !== 20000 ||
-          sort !== "" ||
-          perPage.start !== 0 ||
-          perPage.end !== 0 ? (
+          sort !== ""? (
             <button
               onClick={clearAll}
               className="btn btn-danger text-nowrap me-2"
@@ -231,6 +229,7 @@ const check = (id) => {
             value={sort}
             className="chosen-single form-select"
             onChange={sortHandler}
+            style={{border:'1px solid #4356ff',borderRadius:"15px"}}
           >
             <option value="">Sıralama</option>
             <option value="asc">Newest</option>
@@ -238,7 +237,7 @@ const check = (id) => {
           </select>
           {/* End select */}
 
-          <select
+          {/* <select
             onChange={perPageHandler}
             className="chosen-single form-select ms-3 "
             value={JSON.stringify(perPage)}
@@ -254,28 +253,28 @@ const check = (id) => {
             <option
               value={JSON.stringify({
                 start: 0,
-                end: 10,
+                end: 3,
               })}
             >
-              Səhifədə 10 ədəd
+              Səhifədə 3 ədəd
             </option>
             <option
               value={JSON.stringify({
                 start: 0,
-                end: 20,
+                end: 6,
               })}
             >
-              Səhifədə 20 ədəd
+              Səhifədə 6 ədəd
             </option>
             <option
               value={JSON.stringify({
                 start: 0,
-                end: 30,
+                end: 9,
               })}
             >
-              Səhifədə 30 ədəd
+              Səhifədə 9 ədəd
             </option>
-          </select>
+          </select> */}
           {/* End select */}
         </div>
         {/* End sort by filter */}
@@ -285,7 +284,7 @@ const check = (id) => {
       <div className="row">{content}</div>
       {/* End .row with jobs */}
 
-      {/* <ListingShowing /> */}
+      <ListingShowing />
       {/* <!-- End Pagination --> */}
     </>
   );

@@ -26,7 +26,7 @@ const JobSingleDynamicV1 = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const {isLoggedIn} = useSelector(state=>state.candidate);
+  const {isLoggedIn} = useSelector(state=>state.auth);
   const id = useParams().id;
   const company = jobs.find((item) => item.id == id) || jobs[0];
   const {alljobs,viewedJobs} = useSelector(state=>state.job)

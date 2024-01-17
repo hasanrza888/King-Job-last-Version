@@ -3,6 +3,7 @@ import jobs from "../../../../../data/job-featured.js";
 import { useSelector } from "react-redux";
 const JobListingsTable = () => {
   const {myapplieds} = useSelector(state=>state.candidate)
+  console.log(myapplieds)
   return (
     <div className="tabs-box">
       <div className="widget-title">
@@ -71,7 +72,7 @@ const JobListingsTable = () => {
                       </div>
                     </td>
                     <td>{item?.createdAt?.split("T")[0]}</td>
-                    <td style={{color:'red'}} className="status"><span style={{backgroundColor:'#C9F7F8',padding:"8px",borderRadius:'6px'}}>{item?.status}</span></td>
+                    <td style={{color:item?.status?.color}} className="status"><span style={{backgroundColor:'#C9F7F8',padding:"8px",borderRadius:'6px'}}>{item?.status?.name}</span></td>
                     <td>
                       <div className="option-box">
                         <ul className="option-list">

@@ -23,34 +23,35 @@ const JobSearchForm = () => {
                     </div>
                     {/* <!-- Form Group --> */}
 
-                    <div className="form-group col-lg-3 col-md-12 col-sm-12 location">
+                    <div className="form-group col-lg-4 col-md-12 col-sm-12 location">
                         <LocationBox />
                     </div>
                     {/* <!-- Form Group --> */}
 
-                    <div className="form-group col-lg-3 col-md-12 col-sm-12 location">
+                    <div className="form-group col-lg-4 col-md-12 col-sm-12 location">
                         <Categories />
                     </div>
                     {/* <!-- Form Group --> */}
 
-                    <div className="form-group col-lg-2 col-md-12 col-sm-12 text-right">
+                    {/* <div className="form-group col-lg-2 col-md-12 col-sm-12 text-right">
                         <button
                             type="submit"
                             className="theme-btn btn-style-one"
                         >
                             Axtar
                         </button>
-                    </div>
+                    </div> */}
                     {/* <!-- Form Group --> */}
                 </div>
             </div>
 
-            <div className="top-filters">
+            {/* <div className="top-filters">
                 <div className="form-group">
                     <select
                         className="chosen-single form-select"
                         onChange={foundedHandler}
                         value={JSON.stringify(foundationDate)}
+                        style={{border:'1px solid #4356ff',borderRadius:"15px"}}
                     >
                         <option
                             value={JSON.stringify({
@@ -85,9 +86,9 @@ const JobSearchForm = () => {
                             2000 - 2028
                         </option>
                     </select>
-                </div>
+                </div> */}
                 {/* End founded date filter */}
-            </div>
+            {/* </div> */}
         </>
     );
 };

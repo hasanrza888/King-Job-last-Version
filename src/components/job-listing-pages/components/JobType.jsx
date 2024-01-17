@@ -15,7 +15,7 @@ const JobType = () => {
     };
 
     return (
-        <ul className="switchbox">
+        <ul className="switchbox" >
             {jobTypeList?.map((item) => (
                 <li key={item.id}>
                     <label className="switch">
@@ -24,6 +24,7 @@ const JobType = () => {
                             value={item.value}
                             checked={item.isChecked || false}
                             onChange={(e) => jobTypeHandler(e, item.id)}
+                            
                         />
                         <span className="slider round"></span>
                         <span className="title">{item.name}</span>

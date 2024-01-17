@@ -1,13 +1,16 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useNavigate } from "react-router-dom";
 import employerMenuData from "../../data/employerMenuData";
 import { isActiveLink } from "../../utils/linkActiveChecker";
 import { logout } from "../../services/api/auth_api";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUser } from "../../features/candidate/candidateSlice";
+import { clearUser } from "../../features/auth/authSlice";
 import { menuToggle } from "../../features/toggle/toggleSlice";
 import {toast} from 'react-toastify'
+import useLogout from "../../hooks/logoutUser";
 const DashboardEmployerSidebar = () => {
     const location = useLocation();
+    const nav = useNavigate();
+    const logoutUser = useLogout();
     const { menu } = useSelector((state) => state.toggle);
 
     const dispatch = useDispatch();
@@ -15,29 +18,7 @@ const DashboardEmployerSidebar = () => {
     const menuToggleHandler = () => {
         dispatch(menuToggle());
     };
-    async function logoutUser() {
-        try {
-          const { data } = await logout();
-          dispatch(clearUser());
-          toast.success("Succesfully logged out",{
-              position: "top-right",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "light",
-              })
-        } catch (error) {
-          if(error.response.data){
-            toast.error(error.response.data.message)
-          }
-          else{
-            console.log(error)
-          }
-        }
-      }
+    
 
     return (
         <div className={`user-sidebar ${menu ? "sidebar_open" : ""}`}>

@@ -48,12 +48,15 @@ import { setCategories } from './features/category/categorySlice.js';
 import PrivateRoutes from './routes/PrivateRoutes.js';
 import PublicRoutes from './routes/PublicRoutes.js';
 //Slices
-import { setUser,clearUser,setInfo,setApplieds,setSavedJobs,setContacts } from './features/candidate/candidateSlice.js';
+import {setInfo,setApplieds,setSavedJobs,setContacts } from './features/candidate/candidateSlice.js';
+import { setUser,clearUser } from './features/auth/authSlice.js';
+import { setCompanyInfo } from './features/employer/employerSlice.js';
 import { setJobtypes } from './features/jobtypes/jobtypeSlice.js';
 import { handleApiError } from './utils/apiErrorHandling.js';
 function App() {
   const dispatch = useDispatch();
-  const { user, info, isLoggedIn } = useSelector(state => state.candidate);
+  const { info } = useSelector(state => state.candidate);
+  const { user, isLoggedIn } = useSelector(state => state.auth);
   const { alljobs } = useSelector(state => state.job);
   const { loading } = useSelector(state => state.loading);
 
@@ -80,7 +83,7 @@ function App() {
         dispatch(setCategories(categoriesResponse.data.data));
         dispatch(setJobtypes(jobTypesResponse.data.data));
 
-        if (isLoggedIn) {
+        if (isLoggedIn && user?.u_t_p === 'u_s_r') {
           // Fetch additional data for logged-in users
           const [appliedsResponse, savedJobsResponse, contactsResponse] = await Promise.all([
             getuserapplys(),
@@ -128,10 +131,14 @@ function App() {
             // console.log("okkkokokok")
             return logoutUser();
           }
+          else{
+            dispatch(setCompanyInfo(data?.user?.info))
+          }
+        }
+        else{
+          dispatch(setInfo(data?.user?.info));
         }
         dispatch(setUser(data?.user?.returnedData));
-        dispatch(setInfo(data?.user?.info));
-        console.log(data?.user?.info);
       } catch (error) {
         dispatch(clearUser());
       }
@@ -162,26 +169,31 @@ function App() {
         </Route>
                 
         <Route element={<PrivateRoutes />}>
-          {/* company dashboard pages */}
-          <Route path='/company-dashboard/dashboard' element={<DashboadHome />} />
-          <Route path='/company-dashboard/company-profile' element={<CompanyProfile />} />
-          <Route path='/company-dashboard/post-vacancy' element={<PostJob />} />
-          <Route path='/company-dashboard/manage-vacancies' element={<ManageJobs />} />
-          <Route path='/company-dashboard/all-applicants' element={<AllApplicants />} />
-          <Route path='/company-dashboard/chosen-applicants' element={<ShortlistedResumes />} />
-          <Route path='/company-dashboard/subscriptions' element={<Packages />} />
-          <Route path='/company-dashboard/messages' element={<Messages />} />
-          <Route path='/company-dashboard/change-password' element={<ChangePassword />} />
-          
-          {/* candidate dashboard pages */}
-          <Route path='/applicants-dashboard/dashboard' element={<ApplicantDashboard />} />
-          <Route path='/applicants-dashboard/my-profile' element={<MyProfile />} />
-          <Route path='/applicants-dashboard/my-resume' element={<MyResume />} />
-          <Route path='/applicants-dashboard/applies' element={<AppliedJobs />} />
-          <Route path='/applicants-dashboard/feedbacks' element={<JobAlerts />} />
-          <Route path='/applicants-dashboard/saved-vacancies' element={<ShortListedJobs />} />
-          <Route path='/applicants-dashboard/messages' element={<MessagesCandidates />} />
-          <Route path='/applicants-dashboard/change-password' element={<ChangePasswordCandidate />} />
+          { user?.u_t_p ==='c_m_p' && (
+            <>
+              <Route path='/company-dashboard/dashboard' element={<DashboadHome />} />
+              <Route path='/company-dashboard/company-profile' element={<CompanyProfile />} />
+              <Route path='/company-dashboard/post-vacancy' element={<PostJob />} />
+              <Route path='/company-dashboard/manage-vacancies' element={<ManageJobs />} />
+              <Route path='/company-dashboard/all-applicants' element={<AllApplicants />} />
+              <Route path='/company-dashboard/chosen-applicants' element={<ShortlistedResumes />} />
+              <Route path='/company-dashboard/subscriptions' element={<Packages />} />
+              <Route path='/company-dashboard/messages' element={<Messages />} />
+              <Route path='/company-dashboard/change-password' element={<ChangePassword />} />
+              </>
+                )}
+              {/* candidate dashboard pages */}
+              {user?.u_t_p === 'u_s_r' && (<>
+              <Route path='/applicants-dashboard/dashboard' element={<ApplicantDashboard />} />
+              <Route path='/applicants-dashboard/my-profile' element={<MyProfile />} />
+              <Route path='/applicants-dashboard/my-resume' element={<MyResume />} />
+              <Route path='/applicants-dashboard/applies' element={<AppliedJobs />} />
+              <Route path='/applicants-dashboard/feedbacks' element={<JobAlerts />} />
+              <Route path='/applicants-dashboard/saved-vacancies' element={<ShortListedJobs />} />
+              <Route path='/applicants-dashboard/messages' element={<MessagesCandidates />} />
+              <Route path='/applicants-dashboard/change-password' element={<ChangePasswordCandidate />} />
+            </>)
+          }
         </Route>
 
       </Routes>

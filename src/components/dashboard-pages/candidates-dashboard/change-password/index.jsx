@@ -28,11 +28,13 @@ const index = () => {
       {/* <!-- Dashboard --> */}
       <section className="user-dashboard">
         <div className="dashboard-outer">
+          <MenuToggler />
+          {/* Collapsible sidebar button */}
+
           <BreadCrumb title="Change Password!" />
           {/* breadCrumb */}
 
-          <MenuToggler />
-          {/* Collapsible sidebar button */}
+          
 
           <div className="ls-widget">
             <div className="widget-title">

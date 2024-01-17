@@ -1804,10 +1804,10 @@
 		margin-left: -70px;
 	}
 
-	.job-block-two .bookmark-btn,
-	.job-block .bookmark-btn {
-		display: none;
-	}
+	// .job-block-two .bookmark-btn,
+	// .job-block .bookmark-btn {
+	// 	display: none;
+	// }
 
 	.banner-section-two .count-employers {
 		display: none;
@@ -2110,6 +2110,7 @@
 
 			img {
 				width: auto;
+				max-width: 54px;
 			}
 		}
 	}

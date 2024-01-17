@@ -164,37 +164,38 @@ function App() {
         <Route path='/terms' element={<Terms />}/>
         <Route path='*' element={<Notfound />} />
         <Route element={<PublicRoutes />}>
-        <Route path='/login' element={<LogIn />} />
-        <Route path='/register' element={<RegisterForm />} />
+          <Route path='/login' element={<LogIn />} />
+          <Route path='/register' element={<RegisterForm />} />
         </Route>
-        
-        {/* company dashboard pages */}
+                
         <Route element={<PrivateRoutes />}>
           { user?.u_t_p ==='c_m_p' && (
             <>
-        <Route path='/company-dashboard/dashboard' element={<DashboadHome />} />
-        <Route path='/company-dashboard/company-profile' element={<CompanyProfile />} />
-        <Route path='/company-dashboard/post-vacancy' element={<PostJob />} />
-        <Route path='/company-dashboard/manage-vacancies' element={<ManageJobs />} />
-        <Route path='/company-dashboard/all-applicants' element={<AllApplicants />} />
-        <Route path='/company-dashboard/chosen-applicants' element={<ShortlistedResumes />} />
-        <Route path='/company-dashboard/subscriptions' element={<Packages />} />
-        <Route path='/company-dashboard/messages' element={<Messages />} />
-        <Route path='/company-dashboard/change-password' element={<ChangePassword />} />
-        </>
-          )}
-        {/* candidate dashboard pages */}
-        {user?.u_t_p === 'u_s_r' && (<>
-        <Route path='/applicants-dashboard/dashboard' element={<ApplicantDashboard />} />
-        <Route path='/applicants-dashboard/my-profile' element={<MyProfile />} />
-        <Route path='/applicants-dashboard/my-resume' element={<MyResume />} />
-        <Route path='/applicants-dashboard/applies' element={<AppliedJobs />} />
-        <Route path='/applicants-dashboard/feedbacks' element={<JobAlerts />} />
-        <Route path='/applicants-dashboard/saved-vacancies' element={<ShortListedJobs />} />
-        <Route path='/applicants-dashboard/messages' element={<MessagesCandidates />} />
-        <Route path='/applicants-dashboard/change-password' element={<ChangePasswordCandidate />} />
-        </>)}
+              <Route path='/company-dashboard/dashboard' element={<DashboadHome />} />
+              <Route path='/company-dashboard/company-profile' element={<CompanyProfile />} />
+              <Route path='/company-dashboard/post-vacancy' element={<PostJob />} />
+              <Route path='/company-dashboard/manage-vacancies' element={<ManageJobs />} />
+              <Route path='/company-dashboard/all-applicants' element={<AllApplicants />} />
+              <Route path='/company-dashboard/chosen-applicants' element={<ShortlistedResumes />} />
+              <Route path='/company-dashboard/subscriptions' element={<Packages />} />
+              <Route path='/company-dashboard/messages' element={<Messages />} />
+              <Route path='/company-dashboard/change-password' element={<ChangePassword />} />
+              </>
+                )}
+              {/* candidate dashboard pages */}
+              {user?.u_t_p === 'u_s_r' && (<>
+              <Route path='/applicants-dashboard/dashboard' element={<ApplicantDashboard />} />
+              <Route path='/applicants-dashboard/my-profile' element={<MyProfile />} />
+              <Route path='/applicants-dashboard/my-resume' element={<MyResume />} />
+              <Route path='/applicants-dashboard/applies' element={<AppliedJobs />} />
+              <Route path='/applicants-dashboard/feedbacks' element={<JobAlerts />} />
+              <Route path='/applicants-dashboard/saved-vacancies' element={<ShortListedJobs />} />
+              <Route path='/applicants-dashboard/messages' element={<MessagesCandidates />} />
+              <Route path='/applicants-dashboard/change-password' element={<ChangePasswordCandidate />} />
+            </>)
+          }
         </Route>
+
       </Routes>
 
       {/* Toast notification container */}

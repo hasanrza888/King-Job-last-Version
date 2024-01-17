@@ -31,11 +31,11 @@ const Index = () => {
       {/* <!-- Dashboard --> */}
       <section className="user-dashboard">
         <div className="dashboard-outer">
-          <BreadCrumb title="Salam, Şıxkərim!" />
-          {/* breadCrumb */}
-
           <MenuToggler />
           {/* Collapsible sidebar button */}
+
+          <BreadCrumb title="Salam, Şıxkərim!" />
+          {/* breadCrumb */}
 
           <div className="row">
             <TopCardBlock />

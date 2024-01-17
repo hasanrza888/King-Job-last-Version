@@ -117,7 +117,7 @@ const JobSingleDynamicV1 = () => {
                         {/* time info */}
                         <li>
                           <span className="icon flaticon-money"></span>{" "}
-                          {job?.agreedSalary ? 'Razilasma' :job?.salary}
+                          {job?.agreedSalary ? 'Razılaşma' :job?.salary}
                         </li>
                         {/* salary info */}
                       </ul>
@@ -198,17 +198,7 @@ const JobSingleDynamicV1 = () => {
                     </div> */}
                     {/* <!-- Other Options --> */}
 
-                    <div className="related-jobs">
-                      <div className="title-box">
-                        <h3>Əlaqədar Vakansiyalar</h3>
-                        {/* <div className="text">
-                          2020 jobs live - 293 added today.
-                        </div> */}
-                      </div>
-                      {/* End title box */}
-
-                      <RelatedJobs category={job?.category} id={job?._id} />
-                    </div>
+                    
                     {/* <!-- Related Jobs --> */}
                   </div>
                   {/* End .content-column */}
@@ -277,6 +267,13 @@ const JobSingleDynamicV1 = () => {
                     {/* End .sidebar */}
                   </div>
                   {/* End .sidebar-column */}
+                </div>
+                <div className="related-jobs">
+                  {/* <div className="title-box">
+                    <h3>Əlaqədar Vakansiyalar</h3>
+                  </div> */}
+                  {/* End title box */}
+                  <RelatedJobs category={job?.category} id={job?._id} />
                 </div>
               </div>
             </div>

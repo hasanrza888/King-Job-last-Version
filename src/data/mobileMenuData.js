@@ -206,32 +206,33 @@ module.exports = [
       },
     ],
   },
-  // {
-  //   id: 6,
-  //   label: "Candidates List",
-  //   items: [
-  //     {
-  //       name: "Candidates List V1",
-  //       routePath: "/candidates-list-v1",
-  //     },
-  //     {
-  //       name: "Candidates List V2",
-  //       routePath: "/candidates-list-v2",
-  //     },
-  //     {
-  //       name: "Candidates List V3",
-  //       routePath: "/candidates-list-v3",
-  //     },
-  //     {
-  //       name: "Candidates List V4",
-  //       routePath: "/candidates-list-v4",
-  //     },
-  //     {
-  //       name: "Candidates List V5",
-  //       routePath: "/candidates-list-v5",
-  //     },
-  //   ],
-  // },
+  {
+    id: 6,
+    label: "Abunəliklər",
+    routePath: '/subscriptions',
+    items: [
+      {
+        name: "Candidates List V1",
+        routePath: "/candidates-list-v1",
+      },
+      {
+        name: "Candidates List V2",
+        routePath: "/candidates-list-v2",
+      },
+      {
+        name: "Candidates List V3",
+        routePath: "/candidates-list-v3",
+      },
+      {
+        name: "Candidates List V4",
+        routePath: "/candidates-list-v4",
+      },
+      {
+        name: "Candidates List V5",
+        routePath: "/candidates-list-v5",
+      },
+    ],
+  },
   // {
   //   id: 7,
   //   label: "Candidates Single",

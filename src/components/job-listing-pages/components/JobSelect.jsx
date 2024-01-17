@@ -41,8 +41,8 @@ export default function JobSelect() {
     return (
         <>
             <div className="showing-result">
-                <div className="top-filters">
-                    <div className="form-group">
+                <div className="top-filters col-md-6 mx-auto d-flex">
+                    <div className="form-group col-lg-3 col-md-12 col-sm-12">
                         <select
                             onChange={jobTypeHandler}
                             className="chosen-single form-select"
@@ -74,7 +74,7 @@ export default function JobSelect() {
                     </div> */}
                     {/* End date posted filter */}
 
-                    <div className="form-group">
+                    <div className="form-group col-lg-3 col-md-12 col-sm-12">
                         <select
                             onChange={experienceHandler}
                             className="chosen-single form-select"
@@ -91,7 +91,7 @@ export default function JobSelect() {
                     </div>
                     {/* End ecperience level filter */}
 
-                    <div className="form-group">
+                    <div className="form-group col-lg-3 col-md-12 col-sm-12">
                         <select
                             onChange={salaryHandler}
                             className="chosen-single form-select"

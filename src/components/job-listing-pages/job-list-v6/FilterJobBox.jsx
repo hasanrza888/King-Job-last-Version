@@ -229,11 +229,11 @@ const check = (id) => {
             value={sort}
             className="chosen-single form-select"
             onChange={sortHandler}
-            style={{border:'1px solid #4356ff',borderRadius:"15px"}}
+            // style={{border:'1px solid #4356ff',borderRadius:"15px"}}
           >
             <option value="">Sıralama</option>
-            <option value="asc">Newest</option>
-            <option value="des">Oldest</option>
+            <option value="asc">Ən son</option>
+            <option value="des">İlk</option>
           </select>
           {/* End select */}
 

@@ -27,7 +27,7 @@ const LocationBox = () => {
                 placeholder="Şəhər"
                 value={getLocation}
                 onChange={locationHandler}
-                style={{border:'1px solid #4356ff',borderRadius:"15px"}}
+                // style={{border:'1px solid #4356ff',borderRadius:"15px"}}
             />
             <span className="icon flaticon-map-locator"></span>
         </>

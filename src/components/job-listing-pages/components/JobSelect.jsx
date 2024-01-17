@@ -47,7 +47,7 @@ export default function JobSelect() {
                             onChange={jobTypeHandler}
                             className="chosen-single form-select"
                             value={jobList?.jobTypeSelect}
-                            style={{border:'1px solid #4356ff',borderRadius:"15px"}}
+                            // style={{border:'1px solid #4356ff',borderRadius:"15px"}}
                         >
                             <option value="">İş qrafiki</option>
                             {jobtypes?.map((item) => (
@@ -79,7 +79,7 @@ export default function JobSelect() {
                             onChange={experienceHandler}
                             className="chosen-single form-select"
                             value={jobList?.experienceSelect}
-                            style={{border:'1px solid #4356ff',borderRadius:"15px"}}
+                            // style={{border:'1px solid #4356ff',borderRadius:"15px"}}
                         >
                             <option>Təcrübə</option>
                             {experienceLavel?.map((item) => (
@@ -96,7 +96,7 @@ export default function JobSelect() {
                             onChange={salaryHandler}
                             className="chosen-single form-select"
                             value={JSON.stringify(jobList.salary)}
-                            style={{border:'1px solid #4356ff',borderRadius:"15px"}}
+                            // style={{border:'1px solid #4356ff',borderRadius:"15px"}}
                         >
                             <option
                                 value={JSON.stringify({

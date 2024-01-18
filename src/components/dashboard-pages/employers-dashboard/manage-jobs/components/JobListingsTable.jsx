@@ -1,9 +1,28 @@
 import { Link } from "react-router-dom";
 import jobs from "../../../../../data/job-featured.js";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { deactivatevacancy } from "../../../../../services/api/company_api.js";
+import { updateVacancy } from "../../../../../features/employer/employerSlice.js";
+import { handleApiError } from "../../../../../utils/apiErrorHandling.js";
+import {toast} from 'react-toastify'
 const JobListingsTable = () => {
+  const dispatch = useDispatch();
   const {vacancies,companyInfo} = useSelector(state=>state.employer);
-  console.log(vacancies)
+  console.log(vacancies);
+
+  const deactivate = async (vacancy) => {
+    const {active} = vacancy;
+    try {
+      const {data} = await deactivatevacancy(vacancy?._id);
+      dispatch(updateVacancy({...vacancy,active:!active}));
+      toast.success(data.message,{
+        autoClose:2000,
+        position:'top-right'
+      })
+    } catch (error) {
+      handleApiError(error);
+    }
+  }
   return (
     <div className="tabs-box">
       <div className="widget-title">
@@ -83,8 +102,8 @@ const JobListingsTable = () => {
                     {item?.createdAt?.split('T')[0]} <br />
                     {item?.endTime?.split('T')[0]}
                   </td>
-                  <td className="status">
-                    {item?.active ? (<span style={{color:'green'}}>Aktiv</span>) : (<span style={{color:'red'}}>Deaktiv</span>)}
+                  <td onClick={()=>deactivate(item)} style={{cursor:'pointer'}} className="status">
+                    {item?.active ? (<span style={{color:'green',backgroundColor:'#C9F7F8',padding:"8px",borderRadius:'6px'}}>Aktiv</span>) : (<span style={{color:'red',backgroundColor:'#C9F7F8',padding:"8px",borderRadius:'6px'}}>Deaktiv</span>)}
                   </td>
                   <td>
                     <div className="option-box">

@@ -19,3 +19,19 @@ export const addjob = (data) => {
 export const getallvacancies = () => {
     return axiosInstance.get('/jobsEachCompany');
 }
+
+export const deactivatevacancy = (id) => {
+    return axiosInstance.put('/deactivate/'+id)
+}
+
+
+//APPLYERS
+export const getallapplyers = () => {
+    return axiosInstance.get('/getApplysForEachCompanyOnlyTestLevel')
+}
+export const getapplystatuses = () => {
+    return axiosInstance.get('/applystatuses')
+}
+export const getapplywithid = (id) => {
+    return axiosInstance.get('/apply/'+id);
+}

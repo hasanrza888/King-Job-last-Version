@@ -11,6 +11,7 @@ import categorySlice from "../features/category/categorySlice";
 import jobtypeSlice from "../features/jobtypes/jobtypeSlice"
 import loadingSlice from "../features/loading/loadingSlice";
 import authSlice from "../features/auth/authSlice";
+import applyerFilterSlice from "../features/filter/applyerFilterSlice";
 export const store = configureStore({
     reducer: {
         job: jobSlice,
@@ -24,7 +25,8 @@ export const store = configureStore({
         category:categorySlice,
         jobtype:jobtypeSlice,
         loading:loadingSlice,
-        auth:authSlice
+        auth:authSlice,
+        applyerfilter:applyerFilterSlice
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
 });

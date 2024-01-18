@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 import defaultProfile  from '../../img/defaultcompanylogo.jpg'
 import { useSelector } from "react-redux";
 const DashboardHeader = () => {
-    const {user,info} = useSelector(state=>state.candidate);
+    const {user,info} = useSelector(state=>state.auth);
     const {companyInfo} = useSelector(state=>state.employer)
     const u_t_p = user ? user.u_t_p : 'x'
     const ppphoto = {

@@ -1,10 +1,34 @@
-
-'use client'
-
 import Map from "../../../Map";
 import Select from "react-select";
-
+import { useSelector,useDispatch } from "react-redux";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { useState } from "react";
+import { addjob } from "../../../../../services/api/company_api";
+import { handleApiError } from "../../../../../utils/apiErrorHandling";
+import {toast} from 'react-toastify';
+import { setLoading } from "../../../../../features/loading/loadingSlice";
+import { addVacancy } from "../../../../../features/employer/employerSlice";
 const PostBoxForm = () => {
+  const dispatch = useDispatch();
+  const {categories} = useSelector(state=>state.category);
+  const {jobtypes}= useSelector(state=>state.jobtype);
+  const { jobTypeList, datePost, experienceLavel } = useSelector(
+    (state) => state.job
+);
+const modules = {
+  toolbar: [
+    // [{ 'header': '1' }, { 'header': '2' }],
+    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+    [{ 'size': ['small', false, 'large', 'huge'] }],
+    ['bold', 'italic', 'underline'],
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    [{ 'script': 'sub'}, { 'script': 'super' }],
+    [{ 'indent': '-1'}, { 'indent': '+1' }],  
+    [{ 'align': [] }],
+    ['clean'] 
+  ],
+};
   const specialisms = [
     { value: "Banking", label: "Banking" },
     { value: "Digital & Creative", label: "Digital & Creative" },
@@ -15,209 +39,168 @@ const PostBoxForm = () => {
     { value: "Digital", label: "Digital" },
     { value: "Creative Art", label: "Creative Art" },
   ];
+  const [formData, setFormData] = useState({
+    category: "",
+    name: "",
+    city: "",
+    type: "",
+    experience: "",
+    education: "",
+    age: "",
+    skills: [],
+    descriptionOfVacancy: "",
+    salary: "",
+    agreedSalary: false,
+    endTime: "",
+  });
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
+  const handleSkillsChange = (selectedOptions) => {
+    const skills = selectedOptions.map((option) => option.value);
+    setFormData((prevData) => ({ ...prevData, skills }));
+  };
 
+  const handleDescriptionChange = (content) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      descriptionOfVacancy: content,
+    }));
+  };
+
+  const handleSubmit  = async (e) => {
+    e.preventDefault();
+    try {
+      if(window.confirm("Paylaşmaqa əminsizmi?")){
+        dispatch(setLoading(true));
+        const {data} = await addjob(formData);
+        dispatch(addVacancy(data.data))
+        dispatch(setLoading(false));
+        toast.success(data.message, {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+      else{
+        toast.success("Uğurla ləğv olundu", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+      
+    } catch (error) {
+      dispatch(setLoading(false));
+      handleApiError(error);
+    }
+  }
   return (
-    <form className="default-form">
+    <form onSubmit={handleSubmit} className="default-form">
       <div className="row">
+      <div className="form-group col-lg-6 col-md-12">
+          <label>Kateqoriya</label>
+          
+          <select required onChange={handleChange} name="category" className="chosen-single form-select">
+          <option value={""} >Kateqoriya</option>
+            {categories?.map((val)=>(
+             <option key={val?._id} value={val?._id}>{val?.name}</option>
+            ))}
+          </select>
+        </div>
         {/* <!-- Input --> */}
-        <div className="form-group col-lg-12 col-md-12">
-          <label>Job Title</label>
-          <input type="text" name="name" placeholder="Title" />
+        <div className="form-group col-lg-6 col-md-12">
+          <label>Vakansiya adı</label>
+          <input required onChange={handleChange} type="text" name="name" placeholder="məs: Java Developer" />
         </div>
 
+        <div className="form-group col-lg-6 col-md-12">
+          <label>Şəhər</label>
+          <select onChange={handleChange} name='city' className="chosen-single form-select">
+          <option value={""} >Şəhər</option>
+            {['Bakı']?.map((val)=>(
+             <option key={val} value={val}>{val}</option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group col-lg-6 col-md-12">
+          <label>İş qrafiki</label>
+          <select required onChange={handleChange} name='type' className="chosen-single form-select">
+          <option value={""}>İş qrafiki</option>
+            {jobtypes?.map((val)=>(
+             <option key={val?._id} value={val?._id}>{val?.name}</option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group col-lg-6 col-md-12">
+          <label>Təcrübə</label>
+          <select onChange={handleChange} name='experience' className="chosen-single form-select">
+          <option value={""}>İş qrafiki</option>
+            {experienceLavel?.map((val)=>(
+             <option key={val?.id} value={val?.value}>{val?.name}</option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group col-lg-6 col-md-12">
+          <label>Yaş</label>
+          <input onChange={handleChange} type="text" name="age" placeholder="məs: 18-25" />
+        </div>
+        <div className="form-group col-lg-6 col-md-12">
+          <label>Təhsil səviyyəsi</label>
+          <select onChange={handleChange} name='education' className="chosen-single form-select">
+          <option value={""}>İş qrafiki</option>
+            {['Təhsilsiz','Orta','Ali']?.map((val)=>(
+             <option key={val} value={val}>{val}</option>
+            ))}
+          </select>
+        </div>
         {/* <!-- About Company --> */}
         <div className="form-group col-lg-12 col-md-12">
-          <label>Job Description</label>
-          <textarea placeholder="Spent several years working on sheep on Wall Street. Had moderate success investing in Yugo's on Wall Street. Managed a small team buying and selling Pogo sticks for farmers. Spent several years licensing licorice in West Palm Beach, FL. Developed several new methods for working it banjos in the aftermarket. Spent a weekend importing banjos in West Palm Beach, FL.In this position, the Software Engineer collaborates with Evention's Development team to continuously enhance our current software solutions as well as create new solutions to eliminate the back-office operations and management challenges present"></textarea>
+          <label>Vakansiyanın təsviri</label>
+          <ReactQuill required onChange={handleDescriptionChange} value={formData.descriptionOfVacancy}  theme="snow" modules={modules} style={{minHeight: '100px'}} />
         </div>
-
-        {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Email Address</label>
-          <input type="text" name="name" placeholder="" />
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Username</label>
-          <input type="text" name="name" placeholder="" />
-        </div>
-
-        {/* <!-- Search Select --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Specialisms </label>
+          <label>Xüsusi bacarıqlar </label>
           <Select
             defaultValue={[specialisms[2]]}
             isMulti
-            name="colors"
+            name="skills"
             options={specialisms}
             className="basic-multi-select"
             classNamePrefix="select"
-          />
-        </div>
-
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Job Type</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Banking</option>
-            <option>Digital & Creative</option>
-            <option>Retail</option>
-            <option>Human Resources</option>
-            <option>Management</option>
-          </select>
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Offered Salary</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>$1500</option>
-            <option>$2000</option>
-            <option>$2500</option>
-            <option>$3500</option>
-            <option>$4500</option>
-            <option>$5000</option>
-          </select>
-        </div>
-
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Career Level</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Banking</option>
-            <option>Digital & Creative</option>
-            <option>Retail</option>
-            <option>Human Resources</option>
-            <option>Management</option>
-          </select>
-        </div>
-
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Experience</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Banking</option>
-            <option>Digital & Creative</option>
-            <option>Retail</option>
-            <option>Human Resources</option>
-            <option>Management</option>
-          </select>
-        </div>
-
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Gender</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-          </select>
-        </div>
-
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Industry</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Banking</option>
-            <option>Digital & Creative</option>
-            <option>Retail</option>
-            <option>Human Resources</option>
-            <option>Management</option>
-          </select>
-        </div>
-
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Qualification</label>
-          <select className="chosen-single form-select">
-            <option>Select</option>
-            <option>Banking</option>
-            <option>Digital & Creative</option>
-            <option>Retail</option>
-            <option>Human Resources</option>
-            <option>Management</option>
-          </select>
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-12 col-md-12">
-          <label>Application Deadline Date</label>
-          <input type="text" name="name" placeholder="06.04.2020" />
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Country</label>
-          <select className="chosen-single form-select">
-            <option>Australia</option>
-            <option>Pakistan</option>
-            <option>Chaina</option>
-            <option>Japan</option>
-            <option>India</option>
-          </select>
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
-          <label>City</label>
-          <select className="chosen-single form-select">
-            <option>Melbourne</option>
-            <option>Pakistan</option>
-            <option>Chaina</option>
-            <option>Japan</option>
-            <option>India</option>
-          </select>
-        </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-12 col-md-12">
-          <label>Complete Address</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="329 Queensberry Street, North Melbourne VIC 3051, Australia."
+            onChange={handleSkillsChange}
           />
         </div>
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
-          <label>Find On Map</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="329 Queensberry Street, North Melbourne VIC 3051, Australia."
-          />
+          <label>Əmək haqqı</label>
+          <input onChange={handleChange} title="Əgər əmək haqqı daxil etməsəz Razılaşma kimi görünəcək" type="number" name="salary" placeholder="məs: 1000 və ya boş bıraxın" />
         </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-3 col-md-12">
-          <label>Latitude</label>
-          <input type="text" name="name" placeholder="Melbourne" />
+        <div className="form-group col-lg-6 col-md-12">
+          <label>Razılaşma?</label><br />
+          <input onChange={handleChange} type="checkbox" name="agreedSalary" />
         </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-3 col-md-12">
-          <label>Longitude</label>
-          <input type="text" name="name" placeholder="Melbourne" />
+        <div className="form-group col-lg-6 col-md-12">
+          <label>Bitmə tarixi</label><br />
+          <input required onChange={handleChange}  type="date" name="endTime" placeholder="məs: 1000 və ya boş bıraxın" />
         </div>
-
-        {/* <!-- Input --> */}
-        <div className="form-group col-lg-12 col-md-12">
-          <button className="theme-btn btn-style-three">Search Location</button>
-        </div>
-
-        <div className="form-group col-lg-12 col-md-12">
-          <div className="map-outer">
-            <div style={{ height: "420px", width: "100%" }}>
-              <Map />
-            </div>
-          </div>
-        </div>
-
-        {/* <!-- Input --> */}
         <div className="form-group col-lg-12 col-md-12 text-right">
-          <button className="theme-btn btn-style-one">Next</button>
+          <button className="theme-btn btn-style-one">Paylaş</button>
         </div>
       </div>
     </form>

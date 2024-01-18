@@ -9,11 +9,14 @@ const initialState = {
         levelofapplyers:[],
         logo:"",
         numberOfJobSharing:0,
-        originHistory:"",
         subscription:"",
         vacancynum:0,
-        workers:[]
+        workers:[],
+        categories:[],
+        phone:"",
+        website:""
     },
+    vacancies:[],
     category: [
         {
             id: 1,
@@ -49,9 +52,18 @@ export const employerSlice = createSlice({
         },
         setCompanyInfo: (state,{payload}) => {
             state.companyInfo = payload
+        },
+        setVacancies:(state,{payload}) => {
+            state.vacancies = payload;
+        },
+        addVacancy:(state,{payload}) => {
+            state.vacancies = [...state.vacancies,payload]
+        },
+        updateVacancy:(state,{payload}) => {
+
         }
     },
 });
 
-export const {setCompanies,setCompanyInfo} = employerSlice.actions;
+export const {setCompanies,setCompanyInfo,setVacancies,addVacancy} = employerSlice.actions;
 export default employerSlice.reducer;

@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import jobs from "../../../../../data/job-featured.js";
-
+import { useSelector } from "react-redux";
 const JobListingsTable = () => {
+  const {vacancies,companyInfo} = useSelector(state=>state.employer);
+  console.log(vacancies)
   return (
     <div className="tabs-box">
       <div className="widget-title">
@@ -26,17 +28,19 @@ const JobListingsTable = () => {
           <table className="default-table manage-job-table">
             <thead>
               <tr>
-                <th>Title</th>
-                <th>Applications</th>
-                <th>Created & Expired</th>
+                <th>Ad</th>
+                <th>Müraciət</th>
+                <th>Baxış</th>
+                <th>Yaranıb & Bitir</th>
                 <th>Status</th>
-                <th>Action</th>
+                <th>Əməliyat</th>
               </tr>
             </thead>
 
             <tbody>
-              {jobs.slice(0, 4).map((item) => (
-                <tr key={item.id}>
+              {vacancies?.map((item,x) => (
+                
+                <tr key={item._id}>
                   <td>
                     {/* <!-- Job Block --> */}
                     <div className="job-block">
@@ -46,23 +50,23 @@ const JobListingsTable = () => {
                             <img
                               width={50}
                               height={49}
-                              src={item.logo}
+                              src={companyInfo?.logo}
                               alt="logo"
                             />
                           </span>
-                          <h4>
-                            <Link to={`/job-single-v3/${item.id}`}>
-                              {item.jobTitle}
+                          <h4 title={item?.name}>
+                            <Link to={`/vacancies-list/${item?._id}`}>
+                              {item?.name?.slice(0,10)}
                             </Link>
                           </h4>
                           <ul className="job-info">
-                            <li>
+                            <li title={item?.categoryInfo?.name}>
                               <span className="icon flaticon-briefcase"></span>
-                              Segment
+                              {item?.categoryInfo?.name?.slice(0,6)}
                             </li>
                             <li>
                               <span className="icon flaticon-map-locator"></span>
-                              London, UK
+                              {item?.city}
                             </li>
                           </ul>
                         </div>
@@ -70,13 +74,18 @@ const JobListingsTable = () => {
                     </div>
                   </td>
                   <td className="applied">
-                    <a href="#">3+ Applied</a>
+                    {item?.numberOfApplys}
+                  </td>
+                  <td className="applied">
+                    {item?.numberOfViews}
                   </td>
                   <td>
-                    October 27, 2017 <br />
-                    April 25, 2011
+                    {item?.createdAt?.split('T')[0]} <br />
+                    {item?.endTime?.split('T')[0]}
                   </td>
-                  <td className="status">Active</td>
+                  <td className="status">
+                    {item?.active ? (<span style={{color:'green'}}>Aktiv</span>) : (<span style={{color:'red'}}>Deaktiv</span>)}
+                  </td>
                   <td>
                     <div className="option-box">
                       <ul className="option-list">

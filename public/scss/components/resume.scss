@@ -95,7 +95,14 @@
 .widget-content .default-form .form-group {
   margin-bottom: 30px;
 }
-// .widget-content .default-form .form-group 
+.widget-content .default-form .form-group.quiz-var{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+} 
+.widget-content .default-form .form-group.quiz-var input[type="radio"]{
+  margin-right: 5px;
+}
 .widget-content .default-form textarea {
   min-height: 280px;
   padding: 30px;

@@ -49,6 +49,22 @@ module.exports = [
   },
   {
     id: 7,
+    name: "Tapşırıqlarım",
+    icon: "la-book",
+    routePath: "/company-dashboard/my-tasks",
+    active: "",
+    onClick:""
+  },
+  {
+    id: 8,
+    name: "Tapşırıq yarat",
+    icon: "la-pen",
+    routePath: "/company-dashboard/create-task",
+    active: "",
+    onClick:""
+  },
+  {
+    id: 9,
     name: "Abunəliklər",
     icon: "la-box",
     routePath: "/company-dashboard/subscriptions",
@@ -56,22 +72,15 @@ module.exports = [
     onClick:""
   },
   {
-    id: 8,
+    id: 10,
     name: "Mesajlar",
     icon: "la-comment-o",
     routePath: "/company-dashboard/messages",
     active: "",
     onClick:""
   },
-  // {
-  //   id: 9,
-  //   name: "Resume Alerts",
-  //   icon: "la-bell",
-  //   routePath: "/company-dashboard/resume-alerts",
-  //   active: "",
-  // },
   {
-    id: 10,
+    id: 11,
     name: "Şifrəni Dəyiş",
     icon: "la-lock",
     routePath: "/company-dashboard/change-password",
@@ -79,18 +88,11 @@ module.exports = [
     onClick:""
   },
   {
-    id: 11,
+    id: 12,
     name: "Çıxış",
     icon: "la-sign-out",
     routePath: "/login",
     active: "",
     onClick:"ok"
   },
-  // {
-  //   id: 12,
-  //   name: "Delete Profile",
-  //   icon: "la-trash",
-  //   routePath: "/",
-  //   active: "",
-  // },
 ];

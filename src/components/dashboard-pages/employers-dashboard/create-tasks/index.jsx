@@ -4,8 +4,8 @@ import LoginPopup from "../../../common/form/login/LoginPopup";
 import DashboardEmployerSidebar from "../../../header/DashboardEmployerSidebar";
 import BreadCrumb from "../../BreadCrumb";
 import CopyrightFooter from "../../CopyrightFooter";
-import WidgetToFilterBox from "./components/WidgetToFilterBox";
-import WidgetContentBox from "./components/WidgetContentBox";
+import AboutTask from "./components/AboutTask";
+import CreateQuestion from "./components/CreateQuestion";
 import MenuToggler from "../../MenuToggler";
 
 const index = () => {
@@ -29,7 +29,7 @@ const index = () => {
       {/* <!-- Dashboard --> */}
       <section className="user-dashboard">
         <div className="dashboard-outer">
-          <BreadCrumb title="Seçilmiş müraciətlər" />
+          <BreadCrumb title="Tapşırıq yarat" />
           {/* breadCrumb */}
 
           <MenuToggler />
@@ -37,15 +37,35 @@ const index = () => {
 
           <div className="row">
             <div className="col-lg-12">
-              <div className="applicants-widget ls-widget">
-                <div className="widget-title">
-                  <h4>Seçilmiş müraciətlər</h4>
-                  <WidgetToFilterBox />
+              {/* <!-- Ls widget --> */}
+              <div className="ls-widget">
+                <div className="tabs-box">
+                  <div className="widget-title">
+                    <h4>Tapşırıq haqqında</h4>
+                  </div>
+
+                  <div className="widget-content pt-0">
+                    <AboutTask />
+                    {/* End post box form */}
+                  </div>
                 </div>
-                {/* End widget top filter box */}
-                <WidgetContentBox />
               </div>
-              {/* <!-- applicants Widget --> */}
+              {/* <!-- Ls widget --> */}
+              <div className="ls-widget">
+                <div className="tabs-box">
+                  <div className="widget-title">
+                    <h4>Suallar yarat</h4>
+                  </div>
+                </div>
+              </div>
+              <div className="ls-widget">
+                <div className="tabs-box">
+                  <div className="widget-content">
+                    <CreateQuestion />
+                    {/* End post box form */}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           {/* End .row */}

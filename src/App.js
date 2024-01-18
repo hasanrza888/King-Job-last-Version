@@ -29,6 +29,8 @@ import Messages from './pages/employers-dashboard/messages/page.jsx';
 import Pricing from './pages/others/pricing/page.jsx';
 import Terms from './pages/others/terms/page.jsx';
 import ChangePassword from './pages/employers-dashboard/change-password/page.jsx';
+import MyTasks from './pages/employers-dashboard/my-tasks/page.jsx';
+import CreateTask from './pages/employers-dashboard/create-task/page.jsx'
 import ApplicantDashboard from './pages/candidates-dashboard/dashboard/page.jsx';
 import MyProfile from './pages/candidates-dashboard/my-profile/page.jsx';
 import MyResume from './pages/candidates-dashboard/my-resume/page.jsx';
@@ -86,6 +88,8 @@ function App() {
               <Route path='/company-dashboard/manage-vacancies' element={<ManageJobs />} />
               <Route path='/company-dashboard/all-applicants' element={<AllApplicants />} />
               <Route path='/company-dashboard/chosen-applicants' element={<ShortlistedResumes />} />
+              <Route path='/company-dashboard/my-tasks' element={<MyTasks />} />
+              <Route path='/company-dashboard/create-task' element={<CreateTask />} />
               <Route path='/company-dashboard/subscriptions' element={<Packages />} />
               <Route path='/company-dashboard/messages' element={<Messages />} />
               <Route path='/company-dashboard/change-password' element={<ChangePassword />} />

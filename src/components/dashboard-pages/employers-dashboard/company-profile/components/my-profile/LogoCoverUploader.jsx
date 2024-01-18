@@ -1,21 +1,45 @@
-
-'use client'
-
 import { useState } from "react";
-
+import { updatecompanyinfo } from "../../../../../../services/api/company_api";
+import { useDispatch,useSelector } from "react-redux";
+import { setLoading } from "../../../../../../features/loading/loadingSlice";
+import { setCompanyInfo } from "../../../../../../features/employer/employerSlice";
+import {toast} from 'react-toastify'
+import { handleApiError } from "../../../../../../utils/apiErrorHandling";
 const LogoCoverUploader = () => {
+    const dispatch = useDispatch();
     const [logoImg, setLogoImg] = useState("");
-    const [converImg, setCoverImg] = useState("");
-
+    const {companyInfo} = useSelector(state=>state.employer);
     // logo image
     const logoHandler = (file) => {
         setLogoImg(file);
     };
 
-    // cover image
-    const coverHandler = (file) => {
-        setCoverImg(file);
-    };
+    const logoImgHandler = async (e) => {
+        const file = e.target.files[0];
+    
+        try {
+          const formData = new FormData();
+          formData.append("file", file);
+          dispatch(setLoading(true))
+          const { data } = await updatecompanyinfo(formData);
+          // Assuming your API response contains the updated user info
+          dispatch(setCompanyInfo(data.data));
+          dispatch(setLoading(false))
+          toast.success(data.message, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          });
+        } catch (error) {
+          dispatch(setLoading(false))
+          handleApiError(error);
+        }
+      };
 
     return (
         <>
@@ -27,44 +51,26 @@ const LogoCoverUploader = () => {
                         name="attachments[]"
                         accept="image/*"
                         id="upload"
-                        required
-                        onChange={(e) => logoHandler(e.target.files[0])}
+                        onChange={logoImgHandler}
                     />
                     <label
+                    style={{
+                        backgroundImage: `url(${companyInfo?.logo})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        width: "150px",
+                        height: "130px", // Set a fixed height or adjust according to your design
+                      }}
                         className="uploadButton-button ripple-effect"
                         htmlFor="upload"
                     >
-                        {logoImg !== "" ? logoImg?.name : " Browse Logo"}
+                        Şəkil yüklə
                     </label>
                     <span className="uploadButton-file-name"></span>
                 </div>
                 <div className="text">
-                    Max file size is 1MB, Minimum dimension: 330x300 And
-                    Suitable files are .jpg & .png
-                </div>
-            </div>
-
-            <div className="uploading-outer">
-                <div className="uploadButton">
-                    <input
-                        className="uploadButton-input"
-                        type="file"
-                        name="attachments[]"
-                        accept="image/*, application/pdf"
-                        id="upload_cover"
-                        onChange={(e) => coverHandler(e.target.files[0])}
-                    />
-                    <label
-                        className="uploadButton-button ripple-effect"
-                        htmlFor="upload_cover"
-                    >
-                        {converImg !== "" ? converImg?.name : "Browse Cover"}
-                    </label>
-                    <span className="uploadButton-file-name"></span>
-                </div>
-                <div className="text">
-                    Max file size is 1MB, Minimum dimension: 330x300 And
-                    Suitable files are .jpg & .png
+                    Şəkil həcmi ən çox 1mb.
+                    Yalnız .jpg & .png
                 </div>
             </div>
         </>

@@ -25,6 +25,7 @@
     "react-parallax-tilt": "^1.7.179",
     "react-photoswipe-gallery": "^3.0.1",
     "react-pro-sidebar": "^1.1.0-alpha.1",
+    "react-quill": "^2.0.0",
     "react-redux": "^9.0.4",
     "react-router": "^6.21.1",
     "react-router-dom": "^6.21.1",

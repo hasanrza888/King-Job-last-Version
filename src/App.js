@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router';
 import './App.css';
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer,toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from 'react';
@@ -38,21 +38,11 @@ import ShortListedJobs from './pages/candidates-dashboard/short-listed-jobs/page
 import MessagesCandidates from './pages/candidates-dashboard/messages/page.jsx';
 import ChangePasswordCandidate from './pages/candidates-dashboard/change-password/page.jsx';
 import Loading from './components/common/Loading/Loading.jsx';
-//Services
-import { fetchjobsandsearch,getCategories,getjobTypes } from './services/api/common_api.js';
-import { getuserapplys,getsavedjobs,getallcontacts } from './services/api/candidate_api.js';
-import { setJobs } from './features/job/jobSlice.js';
-import { loggedin,logout } from './services/api/auth_api.js';
-import { setCategories } from './features/category/categorySlice.js';
 //Protected
 import PrivateRoutes from './routes/PrivateRoutes.js';
 import PublicRoutes from './routes/PublicRoutes.js';
-//Slices
-import {setInfo,setApplieds,setSavedJobs,setContacts } from './features/candidate/candidateSlice.js';
-import { setUser,clearUser } from './features/auth/authSlice.js';
-import { setCompanyInfo } from './features/employer/employerSlice.js';
-import { setJobtypes } from './features/jobtypes/jobtypeSlice.js';
-import { handleApiError } from './utils/apiErrorHandling.js';
+//HOOKS
+import useDataFetching from './hooks/dataFetching.js';
 function App() {
   const dispatch = useDispatch();
   const { info } = useSelector(state => state.candidate);
@@ -67,91 +57,12 @@ function App() {
       once: true,
     });
   }, []);
-
-  // useEffect for fetching data
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch jobs, categories, job types, etc.
-        const [jobsResponse, categoriesResponse, jobTypesResponse] = await Promise.all([
-          fetchjobsandsearch(),
-          getCategories(),
-          getjobTypes()
-        ]);
-
-        dispatch(setJobs(jobsResponse.data.data));
-        dispatch(setCategories(categoriesResponse.data.data));
-        dispatch(setJobtypes(jobTypesResponse.data.data));
-
-        if (isLoggedIn && user?.u_t_p === 'u_s_r') {
-          // Fetch additional data for logged-in users
-          const [appliedsResponse, savedJobsResponse, contactsResponse] = await Promise.all([
-            getuserapplys(),
-            getsavedjobs(),
-            getallcontacts()
-          ]);
-
-          dispatch(setApplieds(appliedsResponse.data.data));
-          dispatch(setSavedJobs(savedJobsResponse.data.data));
-          dispatch(setContacts(contactsResponse.data.data));
-        }
-      } catch (error) {
-        handleApiError(error);
-      }
-    };
-
-    fetchData();
-  }, [dispatch, isLoggedIn]);
-
-  // useEffect for checking user authentication
-  useEffect(() => {
-    const logoutUser = async () => {
-      try {
-        const { data } = await logout();
-        dispatch(clearUser());
-        toast.success("Successfully logged out", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      } catch (error) {
-        handleApiError(error)
-      }
-    };
-    const checkLoggedIn = async () => {
-      try {
-        const { data } = await loggedin();
-        if (data.user.returnedData.u_t_p === 'c_m_p') {
-          if (data.user.info.isBlock) {
-            // console.log("okkkokokok")
-            return logoutUser();
-          }
-          else{
-            dispatch(setCompanyInfo(data?.user?.info))
-          }
-        }
-        else{
-          dispatch(setInfo(data?.user?.info));
-        }
-        dispatch(setUser(data?.user?.returnedData));
-      } catch (error) {
-        dispatch(clearUser());
-      }
-    };
-
-    checkLoggedIn();
-  }, [dispatch]);
+  useDataFetching();
   return (
     <div className="page-wrapper">
       <Loading show={loading} />
       {/* _____________________ Routers _______________________ */}
       <Routes>
-        
         <Route path='/' element={<Home numjob={alljobs?.length} />}/>
         <Route path='/vacancies-list' element={<JobList />}/>
         <Route path='/vacancies-list/:id' element={<JobSingleDynamicV1 />}/>
@@ -166,8 +77,7 @@ function App() {
         <Route element={<PublicRoutes />}>
           <Route path='/login' element={<LogIn />} />
           <Route path='/register' element={<RegisterForm />} />
-        </Route>
-                
+        </Route>    
         <Route element={<PrivateRoutes />}>
           { user?.u_t_p ==='c_m_p' && (
             <>

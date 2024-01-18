@@ -40,12 +40,12 @@ const index = () => {
               {/* <!-- Ls widget --> */}
               <div className="ls-widget">
                 <div className="tabs-box">
-                  <div className="widget-title">
+                  {/* <div className="widget-title">
                     <h4>Vakansiya paylaş</h4>
-                  </div>
+                  </div> */}
 
                   <div className="widget-content">
-                    <PostJobSteps />
+                    {/* <PostJobSteps /> */}
                     {/* End job steps form */}
                     <PostBoxForm />
                     {/* End post box form */}

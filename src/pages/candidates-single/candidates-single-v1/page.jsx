@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { handleApiError } from "../../../utils/apiErrorHandling";
 import defaultProfile  from '../../../img/defaultcompanylogo.jpg'
 import { useSelector } from "react-redux";
+import DashboardHeader from "../../../components/header/DashboardHeader";
 const CandidateSingleDynamicV1 = () => {
   const id = useParams().id;
   const candidate = candidates.find((item) => item.id === id) || candidates[0];
@@ -40,7 +41,7 @@ const CandidateSingleDynamicV1 = () => {
       <LoginPopup />
       {/* End Login Popup Modal */}
 
-      <DefaulHeader />
+      <DashboardHeader />
       {/* <!--End Main Header --> */}
 
       <MobileMenu />
@@ -121,6 +122,7 @@ const CandidateSingleDynamicV1 = () => {
                   <div className="video-outer">
                     <h4>Müraciətçi haqqında</h4>
                     {false && <AboutVideo />}
+
                   </div>
                   {/* <!-- About Video Box --> */}
                   <p>

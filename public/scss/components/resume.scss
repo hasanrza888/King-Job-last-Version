@@ -95,12 +95,31 @@
 .widget-content .default-form .form-group {
   margin-bottom: 30px;
 }
-
+// .widget-content .default-form .form-group 
 .widget-content .default-form textarea {
   min-height: 280px;
   padding: 30px;
 }
-
+.ql-container .ql-editor{
+  min-height: 200px;
+}
+.ql-toolbar.ql-snow{
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  color: #696969;
+  background-color: #f0f5f7;
+  border: 1px solid #f0f5f7 !important;
+}
+.ql-container.ql-snow{
+  border: 1px solid #dcdcdc !important;
+  border-top: 0px !important;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  color: #696969;
+}
+.ql-toolbar.ql-snow svg{
+  color: #696969;
+}
 .post-job-steps {
   position: relative;
   display: -webkit-box;

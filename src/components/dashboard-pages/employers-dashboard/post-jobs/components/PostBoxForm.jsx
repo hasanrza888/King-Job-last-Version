@@ -112,7 +112,7 @@ const modules = {
   return (
     <form onSubmit={handleSubmit} className="default-form">
       <div className="row">
-      <div className="form-group col-lg-6 col-md-12">
+        <div className="form-group col-lg-6 col-md-12">
           <label>Kateqoriya</label>
           
           <select required onChange={handleChange} name="category" className="chosen-single form-select">
@@ -188,16 +188,23 @@ const modules = {
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
+          <label>Bitmə tarixi</label><br />
+          <input required onChange={handleChange}  type="date" name="endTime" title="Gün-Ay-İl formatında" />
+        </div>
+        <div className="form-group col-lg-6 col-md-12">
           <label>Əmək haqqı</label>
           <input onChange={handleChange} title="Əgər əmək haqqı daxil etməsəz Razılaşma kimi görünəcək" type="number" name="salary" placeholder="məs: 1000 və ya boş bıraxın" />
         </div>
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Razılaşma?</label><br />
-          <input onChange={handleChange} type="checkbox" name="agreedSalary" />
-        </div>
-        <div className="form-group col-lg-6 col-md-12">
-          <label>Bitmə tarixi</label><br />
-          <input required onChange={handleChange}  type="date" name="endTime" placeholder="məs: 1000 və ya boş bıraxın" />
+        <div className="form-group col-lg-6 col-md-12 checkboxes square px-2">
+          <div className="input-group checkboxes square mt-5">
+            <input type="checkbox" onChange={handleChange} name="agreedSalary" id="agreedSalary" />
+            <label htmlFor="agreedSalary" className="remember">
+              <span className="custom-checkbox"></span>
+              <span>
+                Əmək haqqı razılaşma ilə ?
+              </span>
+            </label>
+          </div>
         </div>
         <div className="form-group col-lg-12 col-md-12 text-right">
           <button className="theme-btn btn-style-one">Paylaş</button>

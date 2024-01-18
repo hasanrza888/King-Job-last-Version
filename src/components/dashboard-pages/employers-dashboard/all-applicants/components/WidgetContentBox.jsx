@@ -1,29 +1,52 @@
 import candidatesData from "../../../../../data/candidates";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { Link } from "react-router-dom";
-
+import defaultProfile  from '../../../../../img/defaultcompanylogo.jpg'
+import { useSelector } from "react-redux";
 const WidgetContentBox = () => {
+  const {applyerlist,applyerSort} = useSelector(state=>state.applyerfilter)
+  const {allapplyers,applystatuses} = useSelector(state=>state.employer)
+  console.log(allapplyers)
+  const jobNameFilter = (item) =>
+    applyerlist.jobName !== ""
+      ? item?.jobName?.toLocaleLowerCase() === applyerlist.jobName?.toLocaleLowerCase()
+      : item;
+  const statusFilter = (item) =>
+    applyerlist.status !== ""
+      ? item?.status?.name === applyerlist.status
+      : item;  
+  const percentageFilter = (item) =>
+    (applyerlist.percentageOfCv.max !== 0)
+      ? (item?.percentageOfCv >= applyerlist.percentageOfCv.min && item?.percentageOfCv <= applyerlist.percentageOfCv.max)
+      : item;   
+  let endData = allapplyers
+  ?.filter(jobNameFilter)
+  ?.filter(statusFilter)
+  ?.filter(percentageFilter)
   return (
     <div className="widget-content">
       <div className="tabs-box">
         <Tabs>
           <div className="aplicants-upper-bar">
-            <h6>Senior Product Designer</h6>
+            <h6>{applyerlist?.jobName || 'Hamsı'}</h6>
 
             <TabList className="aplicantion-status tab-buttons clearfix">
-              <Tab className="tab-btn totals"> Total(s): 6</Tab>
-              <Tab className="tab-btn approved"> Approved: 2</Tab>
-              <Tab className="tab-btn rejected"> Rejected(s): 4</Tab>
+              <Tab className="tab-btn totals"> Ümumi(s): {endData?.length}</Tab>
+              {/* <Tab className="tab-btn approved"> Approved: 2</Tab>
+              <Tab className="tab-btn rejected"> Rejected(s): 4</Tab> */}
             </TabList>
           </div>
 
           <div className="tabs-content">
             <TabPanel>
               <div className="row">
-                {candidatesData.slice(17, 23).map((candidate) => (
+                {endData
+                ?.slice(applyerSort?.perPage?.start,applyerSort?.perPage?.end)
+                ?.sort((a,b)=>b?.percentageOfCv-a?.percentageOfCv)
+                ?.map((candidate) => (
                   <div
                     className="candidate-block-three col-lg-6 col-md-12 col-sm-12"
-                    key={candidate.id}
+                    key={candidate?._id}
                   >
                     <div className="inner-box">
                       <div className="content">
@@ -31,33 +54,36 @@ const WidgetContentBox = () => {
                           <img
                             width={90}
                             height={90}
-                            src={candidate.avatar}
+                            src={candidate?.profilepic || defaultProfile }
                             alt="candidates"
                           />
                         </figure>
                         <h4 className="name">
-                          <Link to={`/applicants-list/${candidate.id}`}>
-                            {candidate.name}
+                          <Link to={`/company-dashboard/applicant/`+candidate._id}>
+                            {candidate?.userName || "Yoxdur"}
                           </Link>
                         </h4>
 
                         <ul className="candidate-info">
                           <li className="designation">
-                            {candidate.designation}
+                            {candidate?.jobTitle || 'Yoxdur'}
                           </li>
                           <li>
-                            <span className="icon flaticon-map-locator"></span>{" "}
-                            {candidate.location}
+                            <span style={{color:candidate?.status?.color}} className={"icon "+candidate?.status?.icon}>
+                              
+                            </span>
+                            <span style={{color:candidate?.status?.color,backgroundColor:'#C9F7F8',padding:"8px",borderRadius:'6px'}}> {candidate?.status?.name}</span>
+                           
                           </li>
                           <li>
-                            <span className="icon flaticon-money"></span> $
-                            {candidate.hourlyRate} / hour
+                            <span className="icon las la-percent"></span>
+                            {candidate?.percentageOfCv}
                           </li>
                         </ul>
                         {/* End candidate-info */}
 
                         <ul className="post-tags">
-                          {candidate.tags.map((val, i) => (
+                          {candidate?.skills?.map((val, i) => (
                             <li key={i}>
                               <a href="#">{val}</a>
                             </li>
@@ -69,22 +95,22 @@ const WidgetContentBox = () => {
                       <div className="option-box">
                         <ul className="option-list">
                           <li>
-                            <button data-text="View Aplication">
-                              <span className="la la-eye"></span>
+                            <button  data-text="Müraciətə ətraflı bax">
+                              <Link  to={`/company-dashboard/applicant/`+candidate._id}><span className="la la-eye"></span></Link>
                             </button>
                           </li>
                           <li>
-                            <button data-text="Approve Aplication">
+                            <button data-text="Birbaşa qəbul et">
                               <span className="la la-check"></span>
                             </button>
                           </li>
                           <li>
-                            <button data-text="Reject Aplication">
+                            <button data-text="Birbaşa ləğv et">
                               <span className="la la-times-circle"></span>
                             </button>
                           </li>
                           <li>
-                            <button data-text="Delete Aplication">
+                            <button data-text="Müraciəti sil">
                               <span className="la la-trash"></span>
                             </button>
                           </li>
@@ -96,167 +122,6 @@ const WidgetContentBox = () => {
                 ))}
               </div>
             </TabPanel>
-            {/* End total applicants */}
-
-            <TabPanel>
-              <div className="row">
-                {candidatesData.slice(17, 19).map((candidate) => (
-                  <div
-                    className="candidate-block-three col-lg-6 col-md-12 col-sm-12"
-                    key={candidate.id}
-                  >
-                    <div className="inner-box">
-                      <div className="content">
-                        <figure className="image">
-                          <img
-                            width={90}
-                            height={90}
-                            src={candidate.avatar}
-                            alt="candidates"
-                          />
-                        </figure>
-                        <h4 className="name">
-                          <Link to={`/applicants-list/${candidate.id}`}>
-                            {candidate.name}
-                          </Link>
-                        </h4>
-
-                        <ul className="candidate-info">
-                          <li className="designation">
-                            {candidate.designation}
-                          </li>
-                          <li>
-                            <span className="icon flaticon-map-locator"></span>{" "}
-                            {candidate.location}
-                          </li>
-                          <li>
-                            <span className="icon flaticon-money"></span> $
-                            {candidate.hourlyRate} / hour
-                          </li>
-                        </ul>
-                        {/* End candidate-info */}
-
-                        <ul className="post-tags">
-                          {candidate.tags.map((val, i) => (
-                            <li key={i}>
-                              <a href="#">{val}</a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      {/* End content */}
-
-                      <div className="option-box">
-                        <ul className="option-list">
-                          <li>
-                            <button data-text="View Aplication">
-                              <span className="la la-eye"></span>
-                            </button>
-                          </li>
-                          <li>
-                            <button data-text="Approve Aplication">
-                              <span className="la la-check"></span>
-                            </button>
-                          </li>
-                          <li>
-                            <button data-text="Reject Aplication">
-                              <span className="la la-times-circle"></span>
-                            </button>
-                          </li>
-                          <li>
-                            <button data-text="Delete Aplication">
-                              <span className="la la-trash"></span>
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
-                      {/* End admin options box */}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </TabPanel>
-            {/* End approved applicants */}
-
-            <TabPanel>
-              <div className="row">
-                {candidatesData.slice(17, 21).map((candidate) => (
-                  <div
-                    className="candidate-block-three col-lg-6 col-md-12 col-sm-12"
-                    key={candidate.id}
-                  >
-                    <div className="inner-box">
-                      <div className="content">
-                        <figure className="image">
-                          <img
-                            width={90}
-                            height={90}
-                            src={candidate.avatar}
-                            alt="candidates"
-                          />
-                        </figure>
-                        <h4 className="name">
-                          <Link to={`/applicants-list/${candidate.id}`}>
-                            {candidate.name}
-                          </Link>
-                        </h4>
-
-                        <ul className="candidate-info">
-                          <li className="designation">
-                            {candidate.designation}
-                          </li>
-                          <li>
-                            <span className="icon flaticon-map-locator"></span>{" "}
-                            {candidate.location}
-                          </li>
-                          <li>
-                            <span className="icon flaticon-money"></span> $
-                            {candidate.hourlyRate} / hour
-                          </li>
-                        </ul>
-                        {/* End candidate-info */}
-
-                        <ul className="post-tags">
-                          {candidate.tags.map((val, i) => (
-                            <li key={i}>
-                              <a href="#">{val}</a>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      {/* End content */}
-
-                      <div className="option-box">
-                        <ul className="option-list">
-                          <li>
-                            <button data-text="View Aplication">
-                              <span className="la la-eye"></span>
-                            </button>
-                          </li>
-                          <li>
-                            <button data-text="Approve Aplication">
-                              <span className="la la-check"></span>
-                            </button>
-                          </li>
-                          <li>
-                            <button data-text="Reject Aplication">
-                              <span className="la la-times-circle"></span>
-                            </button>
-                          </li>
-                          <li>
-                            <button data-text="Delete Aplication">
-                              <span className="la la-trash"></span>
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
-                      {/* End admin options box */}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </TabPanel>
-            {/* End rejected applicants */}
           </div>
         </Tabs>
       </div>

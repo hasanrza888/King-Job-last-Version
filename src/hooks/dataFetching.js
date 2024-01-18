@@ -9,9 +9,9 @@ import { setJobs } from '../features/job/jobSlice.js';
 import { setCategories } from '../features/category/categorySlice.js';
 import { setJobtypes } from '../features/jobtypes/jobtypeSlice.js';
 import { setApplieds, setSavedJobs, setContacts,setInfo } from '../features/candidate/candidateSlice.js';
-import { setCompanyInfo,setVacancies } from '../features/employer/employerSlice.js';
+import { setCompanyInfo,setVacancies,setApplyers,setApplyStatuses } from '../features/employer/employerSlice.js';
 import { handleApiError } from '../utils/apiErrorHandling.js';
-import { getallvacancies } from '../services/api/company_api.js';
+import { getallvacancies,getallapplyers,getapplystatuses } from '../services/api/company_api.js';
 import {toast} from 'react-toastify'
 const useDataFetching = () => {
   const dispatch = useDispatch();
@@ -41,10 +41,15 @@ const useDataFetching = () => {
           return
         }
         if(isLoggedIn && user?.u_t_p === 'c_m_p'){
-            const [vacanciesResponse] = await Promise.all([
+            const [vacanciesResponse,applyerResponse,applystatusesResponse] = await Promise.all([
                 getallvacancies(),
+                getallapplyers(),
+                getapplystatuses(),
             ]);
-            dispatch(setVacancies(vacanciesResponse.data.data))
+            // console.log(applyerResponse.data)
+            dispatch(setVacancies(vacanciesResponse.data.data));
+            dispatch(setApplyers(applyerResponse.data.data))
+            dispatch(setApplyStatuses(applystatusesResponse.data.data))
         }
       } catch (error) {
         handleApiError(error);

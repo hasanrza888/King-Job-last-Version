@@ -70,7 +70,6 @@ function App() {
         <Route path='/vacancies-list/:id' element={<JobSingleDynamicV1 />}/>
         <Route path='/companies-list' element={<EmployersList />}/>
         <Route path='/companies-list/:id' element={<EmployersSingleV1 />}/>
-        <Route path='/applicants-list/:id' element={<CandidateSingleDynamicV1 />}/>
         <Route path='/about' element={<About />}/>
         <Route path='/contact' element={<Contact />}/>
         <Route path='/subscriptions' element={<Pricing />}/>
@@ -94,6 +93,7 @@ function App() {
               <Route path='/company-dashboard/subscriptions' element={<Packages />} />
               <Route path='/company-dashboard/messages' element={<Messages />} />
               <Route path='/company-dashboard/change-password' element={<ChangePassword />} />
+              <Route path='/company-dashboard/applicant/:id' element={<CandidateSingleDynamicV1 />}/>
               </>
                 )}
               {/* candidate dashboard pages */}

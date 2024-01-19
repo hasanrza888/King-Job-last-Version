@@ -17,6 +17,7 @@ const initialState = {
     website: "",
   },
   vacancies: [],
+  companycontacts:[],
   category: [
     {
       id: 1,
@@ -86,10 +87,13 @@ export const employerSlice = createSlice({
     },
     setApplyStatuses:(state,{payload})=>{
         state.applystatuses = payload;
+    },
+    setCompanyContacts:(state,{payload}) => {
+      state.companycontacts = payload;
     }
   },
 });
 
-export const { setCompanies, setCompanyInfo, setVacancies, addVacancy,updateVacancy,setApplyers,updateApplyer,setApplyStatuses } =
+export const { setCompanies, setCompanyInfo, setVacancies, addVacancy,updateVacancy,setApplyers,updateApplyer,setApplyStatuses,setCompanyContacts } =
   employerSlice.actions;
 export default employerSlice.reducer;

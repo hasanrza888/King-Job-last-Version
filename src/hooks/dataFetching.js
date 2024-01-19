@@ -11,8 +11,9 @@ import { setJobtypes } from '../features/jobtypes/jobtypeSlice.js';
 import { setApplieds, setSavedJobs, setContacts,setInfo } from '../features/candidate/candidateSlice.js';
 import { setCompanyInfo,setVacancies,setApplyers,setApplyStatuses } from '../features/employer/employerSlice.js';
 import { handleApiError } from '../utils/apiErrorHandling.js';
-import { getallvacancies,getallapplyers,getapplystatuses } from '../services/api/company_api.js';
+import { getallvacancies,getallapplyers,getapplystatuses,getallfolders } from '../services/api/company_api.js';
 import {toast} from 'react-toastify'
+import { setFolders } from '../features/task/taskSlice.js';
 const useDataFetching = () => {
   const dispatch = useDispatch();
   const { isLoggedIn,user } = useSelector(state => state.auth);
@@ -41,15 +42,17 @@ const useDataFetching = () => {
           return
         }
         if(isLoggedIn && user?.u_t_p === 'c_m_p'){
-            const [vacanciesResponse,applyerResponse,applystatusesResponse] = await Promise.all([
+            const [vacanciesResponse,applyerResponse,applystatusesResponse,folderResponse] = await Promise.all([
                 getallvacancies(),
                 getallapplyers(),
                 getapplystatuses(),
+                getallfolders(),
             ]);
             // console.log(applyerResponse.data)
             dispatch(setVacancies(vacanciesResponse.data.data));
             dispatch(setApplyers(applyerResponse.data.data))
-            dispatch(setApplyStatuses(applystatusesResponse.data.data))
+            dispatch(setApplyStatuses(applystatusesResponse.data.data));
+            dispatch(setFolders(folderResponse.data.data))
         }
       } catch (error) {
         handleApiError(error);

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import axiosInstance from '../axiosInstances';
 
 export const registerCompany = (userData) => {
@@ -34,4 +35,30 @@ export const getapplystatuses = () => {
 }
 export const getapplywithid = (id) => {
     return axiosInstance.get('/apply/'+id);
+}
+
+
+//TASKS
+export const getallfolders = () => {
+    return axiosInstance.get('/folders');
+}
+export const creatfolder = (data) => {
+    return axiosInstance.post('/creatfolder',data)
+}
+export const addquestion = (data) => {
+    return axiosInstance.post('/creattask',data)
+}
+
+
+
+//MESSAGING
+export const getallcompanycontact = () => {
+    return axiosInstance.get('/companymessagers')
+}
+
+export const getcurrentchat = (id) => {
+    return axiosInstance.get('/chatmessages/'+id)
+}
+export const sendmessage = (id,data) => {
+    return axiosInstance.post('/usersendmessage/'+id,data)
 }

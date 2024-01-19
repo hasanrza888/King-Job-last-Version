@@ -5,8 +5,13 @@ import { useState } from "react";
 import { handleApiError } from "../../../../../utils/apiErrorHandling";
 import {toast} from 'react-toastify';
 import { setLoading } from "../../../../../features/loading/loadingSlice";
+import { setQuestionData,updateOption,addOption,handleCorrectOptionChange } from "../../../../../features/question/questionSlice";
+import { updateFolder } from "../../../../../features/task/taskSlice";
+import { addquestion } from "../../../../../services/api/company_api";
 const CreateQuestion = () => {
   const dispatch = useDispatch();
+  const {formData} = useSelector(state=>state.question)
+  console.log(formData)
   const modules = {
     toolbar: [
       // [{ 'header': '1' }, { 'header': '2' }],
@@ -20,47 +25,44 @@ const CreateQuestion = () => {
       ['clean'] 
     ],
   };
-  const [formData, setFormData] = useState({
-    name: "",
-    descriptionOfTask: "",
-  });
-  const handleChange = (e) => {
-    const { name} = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: name,
-    }));
+  // const [formData, setFormData] = useState({
+  //   name: "",
+  //   descriptionOfTask: "",
+  //   options: [{ans: "", isCorrect: false }],
+  // });
+
+  const handleChange = (value) => {
+    dispatch(setQuestionData({ ...formData, question: value }));
   };
 
+  // const handleDescriptionChange = (content) => {
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     descriptionOfTask: content,
+  //   }));
+  // };
 
-  const handleDescriptionChange = (content) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      descriptionOfTask: content,
-    }));
+  const handleOptionChange = (index, value) => {
+    dispatch(updateOption({ index, value }));
   };
 
-  const handleSubmit  = async (e) => {
+  const handleCorrectOptionChanges = (index) => {
+    dispatch(handleCorrectOptionChange({index}))
+  };
+
+  const addOptions = (e) => {
     e.preventDefault();
+    dispatch(addOption());
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    dispatch(setLoading(true));
     try {
-      if(window.confirm("Paylaşmaqa əminsizmi?")){
-        dispatch(setLoading(true));
-        // const {data} = await addjob(formData);
-        // dispatch(addVacancy(data.data))
+        const {data} = await addquestion(formData);
+        dispatch(updateFolder(data.data))
         dispatch(setLoading(false));
-        // toast.success(data.message, {
-        //   position: "top-right",
-        //   autoClose: 2000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: "light",
-        // });
-      }
-      else{
-        toast.success("Uğurla ləğv olundu", {
+        toast.success(data.message, {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: false,
@@ -70,49 +72,47 @@ const CreateQuestion = () => {
           progress: undefined,
           theme: "light",
         });
-      }
-      
     } catch (error) {
       dispatch(setLoading(false));
       handleApiError(error);
     }
-  }
+  };
   return (
     <form onSubmit={handleSubmit} className="default-form">
       <div className="row">
-        <div className="widget-title pl-1">
-          <h4 className="text-center">Sual 1</h4>
-        </div>
+        {/* <div className="widget-title pl-1">
+          <h4 className="text-center">Sual</h4>
+        </div> */}
         {/* <!-- Input task name --> */}
         <div className="form-group col-lg-12 col-md-12">
-          <label>Sual adı</label>
-          <input required onChange={handleChange} type="text" name="name" placeholder="Sual" />
+          <label>Sualın təsviri</label>
+          <ReactQuill required onChange={handleChange} value={formData.question}  theme="snow" modules={modules} style={{minHeight: '100px'}} />
         </div>
         {/* task description */}
         <div className="row">
-          <div className="form-group col-lg-6 col-md-12 quiz-var">
-            <input type="radio" name="question-1" id="q1"/>
-            <input onChange={handleChange} type="text" name="variant-1" placeholder="Variant" />
-          </div>
-          <div className="form-group col-lg-6 col-md-12 quiz-var">
-            <input type="radio" name="question-1" id="q2"/>
-            <input onChange={handleChange} type="text" name="variant-2" placeholder="Variant" />
-          </div>
-          {/* <div className="form-group col-lg-6 col-md-12 quiz-var">
-            <input type="radio" name="question-1" id="q3"/>
-            <input onChange={handleChange} type="text" name="variant-3" placeholder="Variant" />
-          </div> */}
+          {
+            formData?.options.map((option,index)=>(
+
+            <div className="form-group col-lg-6 col-md-12 quiz-var">
+              <input type="radio" name='isCorrect' id="q1" checked={option.isCorrect}
+            onChange={() => handleCorrectOptionChanges(index)}/>
+              <input  onChange={(e) => handleOptionChange(index, e.target.value)}
+              type="text"
+              name='ans'
+              placeholder="Variant"
+              value={option.ans} />
+            </div>
+
+            ))
+          }
           <div className="form-group col-lg-2 col-md-12 text-right">
-            <button className="theme-btn btn-style-eight" title="Sual Əlavə Et">Variant əlavə et</button>
+            <button onClick={(e)=>addOptions(e)} className="theme-btn btn-style-eight" title="Sual Əlavə Et">Add option</button>
           </div> 
         </div>
         <div className="row d-flex justify-content-between mt-4">
           <div className="form-group col-lg-6 col-md-12 text-right">
             <button className="theme-btn btn-style-one">Yadda Saxla</button>
           </div>
-          <div className="form-group col-lg-2 col-md-12 text-right">
-            <button className="theme-btn btn-style-three" title="Sual Əlavə Et">+</button>
-          </div>  
         </div>
         
       </div>

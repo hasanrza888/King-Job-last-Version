@@ -12,6 +12,9 @@ import jobtypeSlice from "../features/jobtypes/jobtypeSlice"
 import loadingSlice from "../features/loading/loadingSlice";
 import authSlice from "../features/auth/authSlice";
 import applyerFilterSlice from "../features/filter/applyerFilterSlice";
+import taskSlice from "../features/task/taskSlice";
+import questionSlice from "../features/question/questionSlice";
+import messageSlice from "../features/message/messageSlice";
 export const store = configureStore({
     reducer: {
         job: jobSlice,
@@ -26,7 +29,10 @@ export const store = configureStore({
         jobtype:jobtypeSlice,
         loading:loadingSlice,
         auth:authSlice,
-        applyerfilter:applyerFilterSlice
+        applyerfilter:applyerFilterSlice,
+        task:taskSlice,
+        question:questionSlice,
+        message:messageSlice
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
 });

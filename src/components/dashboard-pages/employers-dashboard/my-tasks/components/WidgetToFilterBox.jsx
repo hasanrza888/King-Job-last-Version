@@ -1,4 +1,7 @@
+import { useState } from "react";
+import AboutTask from "../../create-tasks/components/AboutTask";
 const WidgetToFilterBox = () => {
+  const [showModal, setShowModal] = useState(false);
   return (
     <div className="chosen-outer">
       {/* <!--search box--> */}
@@ -26,6 +29,12 @@ const WidgetToFilterBox = () => {
         <option>Memar</option>
         <option>Dizayn</option>
       </select>
+      <button onClick={()=>setShowModal(true)} className="chosen-single chosen-container">
+        Yeni tapşırıq +
+      </button>
+
+      
+    <AboutTask showModal={showModal} setShowModal={setShowModal} />
     </div>
   );
 };

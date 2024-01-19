@@ -7,6 +7,7 @@ import CopyrightFooter from "../../CopyrightFooter";
 import AboutTask from "./components/AboutTask";
 import CreateQuestion from "./components/CreateQuestion";
 import MenuToggler from "../../MenuToggler";
+import FilterTask from "./components/FilterTask";
 
 const index = () => {
   return (
@@ -41,23 +42,19 @@ const index = () => {
               <div className="ls-widget">
                 <div className="tabs-box">
                   <div className="widget-title">
-                    <h4>Tapşırıq haqqında</h4>
-                  </div>
-
-                  <div className="widget-content pt-0">
-                    <AboutTask />
-                    {/* End post box form */}
+                    <FilterTask />
                   </div>
                 </div>
               </div>
+              
               {/* <!-- Ls widget --> */}
-              <div className="ls-widget">
+              {/* <div className="ls-widget">
                 <div className="tabs-box">
                   <div className="widget-title">
                     <h4>Suallar yarat</h4>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="ls-widget">
                 <div className="tabs-box">
                   <div className="widget-content">

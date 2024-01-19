@@ -14,8 +14,8 @@ const initialState = {
         status:"",
         jobName:"",
         percentageOfCv:{
-            min:50,
-            max:100
+            min:0,
+            max:0
         },
     },
     applyerSort: {

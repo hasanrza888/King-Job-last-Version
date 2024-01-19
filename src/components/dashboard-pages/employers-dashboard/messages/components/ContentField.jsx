@@ -1,6 +1,35 @@
+import { handleApiError } from "../../../../../utils/apiErrorHandling";
 import ChatHamburger from "./ChatHamburger";
-
+import { useSelector,useDispatch } from "react-redux";
+import { addMessage } from "../../../../../features/message/messageSlice";
+import { sendmessage } from "../../../../../services/api/company_api";
+import { useState } from "react";
 const ChatBoxContentField = () => {
+  const dispatch = useDispatch();
+  const [content,setContent] = useState("")
+  const {currentChat} = useSelector(state=>state.message);
+  console.log(currentChat)
+  const {user} = useSelector(state=>state.auth);
+  const myid = user?._id;
+  const sendmsg = async (e) => {
+    e.preventDefault();
+    console.log(currentChat)
+    try {
+      const {data} = await sendmessage(currentChat?._id,{content});
+      dispatch(addMessage(data.data))
+    } catch (error) {
+      handleApiError(error);
+    }
+  }
+  if (!currentChat) {
+    return (
+      <div className="card message-card">
+        <div className="card-header msg_head">
+          <p>No Conversation</p>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="card message-card">
       <div className="card-header msg_head">
@@ -9,13 +38,13 @@ const ChatBoxContentField = () => {
             <img
               width={48}
               height={48}
-              src="/images/resource/candidate-8.png"
+              src={currentChat?.userprofilelogo || "/images/resource/candidate-8.png"}
               alt="candidates"
               className="rounded-circle user_img"
             />
           </div>
           <div className="user_info">
-            <span>Arlene McCoy</span>
+            <span>{currentChat?.userName}</span>
             <p>Active</p>
           </div>
         </div>
@@ -26,71 +55,41 @@ const ChatBoxContentField = () => {
         </div>
       </div>
       {/* End .cart-header */}
-
+      
       <div className="card-body msg_card_body">
-        <div className="d-flex justify-content-start mb-2">
+      {
+        currentChat?.messages?.map((message,index)=>(
+          
+          <div className={message?.sender === myid ?"d-flex justify-content-end mb-2 reply" :"d-flex justify-content-start mb-2"}>
           <div className="img_cont_msg">
             <img
               width={48}
               height={48}
-              src="/images/resource/candidate-3.png"
+              src={message?.sender === myid ? currentChat?.myprofilelogo || "/images/resource/candidate-3.png" : currentChat?.userprofilelogo || "/images/resource/candidate-3.png"}
               alt="candidates"
               className="rounded-circle user_img_msg"
             />
             <div className="name">
-              Albert Flores <span className="msg_time">35 mins</span>
+              {message?.sender === myid ? user?.name :currentChat?.userName} <span className="msg_time">35 mins</span>
             </div>
           </div>
           <div className="msg_cotainer">
-            How likely are you to recommend our company to your friends and
-            family?
+            {message?.text}
           </div>
         </div>
-
-        <div className="d-flex justify-content-end mb-2 reply">
-          <div className="img_cont_msg">
-            <img
-              width={48}
-              height={48}
-              src="/images/resource/candidate-6.png"
-              alt="candidate"
-              className="rounded-circle user_img_msg"
-            />
-            <div className="name">
-              You <span className="msg_time">35 mins</span>
-            </div>
-          </div>
-          <div className="msg_cotainer">
-            Hey there, we’re just writing to let you know that you’ve been
-            subscribed to a repository on GitHub.
-          </div>
-        </div>
-
-        <div className="d-flex justify-content-start">
-          <div className="img_cont_msg">
-            <img
-              width={48}
-              height={48}
-              src="/images/resource/candidate-3.png"
-              alt="candidate"
-              className="rounded-circle user_img_msg"
-            />
-            <div className="name">
-              Cameron Williamson <span className="msg_time">35 mins</span>
-            </div>
-          </div>
-          <div className="msg_cotainer">Ok, Understood!</div>
-        </div>
+        ))
+      }
       </div>
       {/* End .card-body */}
 
       <div className="card-footer">
         <div className="form-group mb-0">
-          <form>
+          <form onSubmit={sendmsg}>
             <textarea
               className="form-control type_msg"
               placeholder="Type a message..."
               required
+              onChange={(e)=>{setContent(e.target.value)}}
             ></textarea>
             <button
               type="submit"

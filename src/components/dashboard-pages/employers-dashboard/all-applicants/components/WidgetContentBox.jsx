@@ -65,8 +65,8 @@ const WidgetContentBox = () => {
                         </h4>
 
                         <ul className="candidate-info">
-                          <li className="designation">
-                            {candidate?.jobTitle || 'Yoxdur'}
+                          <li title={candidate?.jobTitle || 'Yoxdur'} className="designation">
+                            {candidate?.jobTitle?.slice(0,5) || 'Yoxdur'}
                           </li>
                           <li>
                             <span style={{color:candidate?.status?.color}} className={"icon "+candidate?.status?.icon}>

@@ -16,6 +16,13 @@ import { handleApiError } from "../../../utils/apiErrorHandling";
 import defaultProfile  from '../../../img/defaultcompanylogo.jpg'
 import { useSelector } from "react-redux";
 import DashboardHeader from "../../../components/header/DashboardHeader";
+import { pdfjs } from "react-pdf";
+import PdfComp from "./PdfComp";
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  "pdfjs-dist/build/pdf.worker.min.js",
+  import.meta.url
+).toString();
 const CandidateSingleDynamicV1 = () => {
   const id = useParams().id;
   const candidate = candidates.find((item) => item.id === id) || candidates[0];
@@ -122,6 +129,7 @@ const CandidateSingleDynamicV1 = () => {
                   <div className="video-outer">
                     <h4>Müraciətçi haqqında</h4>
                     {false && <AboutVideo />}
+                    {<PdfComp pdfFile={applyer?.file} />}
 
                   </div>
                   {/* <!-- About Video Box --> */}

@@ -3,7 +3,9 @@ import ChatHamburger from "./ChatHamburger";
 import { useSelector,useDispatch } from "react-redux";
 import { addMessage } from "../../../../../features/message/messageSlice";
 import { sendmessage } from "../../../../../services/api/company_api";
-import { useState } from "react";
+import { useEffect, useState,useRef } from "react";
+import socket from "../../../../../socket/socketService";
+import { calculateTimeDifference } from "../../../../../utils/calculateTimeDifference";
 const ChatBoxContentField = () => {
   const dispatch = useDispatch();
   const [content,setContent] = useState("")
@@ -11,16 +13,42 @@ const ChatBoxContentField = () => {
   console.log(currentChat)
   const {user} = useSelector(state=>state.auth);
   const myid = user?._id;
+  const messagesEndRef = useRef(null);
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   const sendmsg = async (e) => {
     e.preventDefault();
     console.log(currentChat)
     try {
       const {data} = await sendmessage(currentChat?._id,{content});
       dispatch(addMessage(data.data))
+      scrollToBottom();
     } catch (error) {
       handleApiError(error);
     }
   }
+  useEffect(()=>{
+    socket.on('message',(data)=>{
+      const {chat} = data;
+      if(currentChat && currentChat?._id === chat){
+        dispatch(addMessage(data))
+        scrollToBottom();
+      }
+      // console.log(data)
+    })
+    return () => {
+      // Clean up socket listeners when the component unmounts
+      socket.off('message');
+    };
+  },[dispatch,currentChat]);
+
+
+  useEffect(()=>{
+    scrollToBottom();
+  },[currentChat?.messages])
   if (!currentChat) {
     return (
       <div className="card message-card">
@@ -45,7 +73,7 @@ const ChatBoxContentField = () => {
           </div>
           <div className="user_info">
             <span>{currentChat?.userName}</span>
-            <p>Active</p>
+            <p>{currentChat?.receiverIsOnline && "Xətdə"}</p>
           </div>
         </div>
 
@@ -70,7 +98,7 @@ const ChatBoxContentField = () => {
               className="rounded-circle user_img_msg"
             />
             <div className="name">
-              {message?.sender === myid ? user?.name :currentChat?.userName} <span className="msg_time">35 mins</span>
+              {message?.sender === myid ? user?.name :currentChat?.userName} <span className="msg_time">{calculateTimeDifference(message?.createdAt)}</span>
             </div>
           </div>
           <div className="msg_cotainer">
@@ -79,6 +107,7 @@ const ChatBoxContentField = () => {
         </div>
         ))
       }
+      <div ref={messagesEndRef} />
       </div>
       {/* End .card-body */}
 

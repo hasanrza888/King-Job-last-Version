@@ -14,9 +14,25 @@ import { handleApiError } from '../utils/apiErrorHandling.js';
 import { getallvacancies,getallapplyers,getapplystatuses,getallfolders } from '../services/api/company_api.js';
 import {toast} from 'react-toastify'
 import { setFolders } from '../features/task/taskSlice.js';
+import socket from '../socket/socketService.js';
+import useLogout from './logoutUser.js';
 const useDataFetching = () => {
+  const lguser = useLogout();
   const dispatch = useDispatch();
   const { isLoggedIn,user } = useSelector(state => state.auth);
+  useEffect(() => {
+    if (isLoggedIn && user && socket) {
+      socket.emit('joinRoom', user._id);
+    }
+  }, [user, isLoggedIn]);
+  useEffect(() => {
+    if (socket && isLoggedIn && user) {
+      socket.on('company-block', (data) => {
+        console.log("socket work",data)
+        // lguser();
+      });
+    }
+  }, [isLoggedIn, user,lguser]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -48,9 +64,10 @@ const useDataFetching = () => {
                 getapplystatuses(),
                 getallfolders(),
             ]);
-            // console.log(applyerResponse.data)
+            const applyersData = applyerResponse.data.data;
+            const sortedApplyers = applyersData.sort((a, b) => b.percentageOfCv - a.percentageOfCv);
             dispatch(setVacancies(vacanciesResponse.data.data));
-            dispatch(setApplyers(applyerResponse.data.data))
+            dispatch(setApplyers(sortedApplyers))
             dispatch(setApplyStatuses(applystatusesResponse.data.data));
             dispatch(setFolders(folderResponse.data.data))
         }

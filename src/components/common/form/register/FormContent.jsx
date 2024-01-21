@@ -1,5 +1,6 @@
 import { useState,useEffect } from "react";
 
+
 const FormContent = ({submitRegister,handleRegister,handleChange,registerdata,showotp, type}) => {
   const [otp, setOtp] = useState("");
   const [mainFunction, setMainFunction] = useState(() => handleRegister);

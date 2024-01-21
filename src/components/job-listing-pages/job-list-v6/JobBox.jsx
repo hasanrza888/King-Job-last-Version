@@ -11,7 +11,8 @@ export default function JobBox({item}) {
     const location  = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {isLoggedIn,savedjobs} = useSelector(state=>state.candidate)
+    const {savedjobs} = useSelector(state=>state.candidate)
+    const {isLoggedIn} = useSelector(state=>state.auth)
     const removeJobFromSaved = async (id) => {
         if(!isLoggedIn){
           toast.info('İşi yadda saxlamaq üçün hesabınıza daxil olun',{

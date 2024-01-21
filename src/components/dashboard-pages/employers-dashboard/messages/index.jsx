@@ -7,7 +7,7 @@ import CopyrightFooter from "../../CopyrightFooter";
 import ChatBox from "./components";
 import MenuToggler from "../../MenuToggler";
 import { useSelector } from "react-redux";
-
+import ChatHamburger from "./components/ChatHamburger";
 const Index = () => {
   const { chatSidebar } = useSelector((state) => state.toggle);
   return (
@@ -35,6 +35,9 @@ const Index = () => {
 
           <MenuToggler />
           {/* Collapsible sidebar button */}
+          <div style={{display:'flex'}} className="btn-box">
+          <ChatHamburger /><span>Kontaktlar</span>
+        </div>
 
           <div className="row">
             <div

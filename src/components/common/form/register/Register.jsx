@@ -119,7 +119,7 @@ const Register = () => {
         {/* End .form-group */}
 
         <TabPanel>
-          <Form submitRegister={submitRegister} showotp={showotp} handleRegister={handleRegister} handleChange = {handleChange} registerdata={registerdata} />
+          <Form submitRegister={submitRegister} showotp={showotp} handleRegister={handleRegister} handleChange = {handleChange} registerdata={registerdata} nm = "Adınızı daxil edin" />
         </TabPanel>
         {/* End cadidates Form */}
 

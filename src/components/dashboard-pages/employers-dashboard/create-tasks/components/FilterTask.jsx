@@ -51,6 +51,7 @@ const FilterTask = () => {
             <tr>
             <td><strong>{folder?.name?.toUpperCase()}</strong></td>
             <td title={folder?.questions.map((q,i)=>i+1+'-'+extractTextFromHTML(q.question)).join('\n')}>{folder?.questions?.length}</td>
+            <td><strong>{folder?.createdAt?.split("T")[0]},{folder?.createdAt?.split("T")[1]?.split(".")[0]}</strong></td>
             {/* <td>
               <div className="option-box">
                 <ul className="option-list">

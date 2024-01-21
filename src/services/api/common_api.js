@@ -10,7 +10,9 @@ export const getCategories = () => {
 export const fetchcompanies = () => {
     return axiosInstance.get('/getcompanyinfos');
 }
-
+export const getcompanydetail = (id) => {
+    return axiosInstance.get('/company/'+id)
+}
 //JOB
 export const getJobWithId = (id,d) => {
     return axiosInstance.get('/getJobWithId/'+id+`?isViewed=${d}`);

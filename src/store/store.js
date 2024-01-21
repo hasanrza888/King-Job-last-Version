@@ -15,6 +15,7 @@ import applyerFilterSlice from "../features/filter/applyerFilterSlice";
 import taskSlice from "../features/task/taskSlice";
 import questionSlice from "../features/question/questionSlice";
 import messageSlice from "../features/message/messageSlice";
+import socketSlice from "../features/socket/socketSlice";
 export const store = configureStore({
     reducer: {
         job: jobSlice,
@@ -32,7 +33,8 @@ export const store = configureStore({
         applyerfilter:applyerFilterSlice,
         task:taskSlice,
         question:questionSlice,
-        message:messageSlice
+        message:messageSlice,
+        socket:socketSlice
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
 });

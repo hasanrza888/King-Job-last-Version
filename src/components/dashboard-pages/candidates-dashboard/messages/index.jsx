@@ -34,7 +34,7 @@ const Index = () => {
           <MenuToggler />
           {/* Collapsible sidebar button */}
 
-          <BreadCrumb title="Messages!" />
+          {/* <BreadCrumb title="Messages!" /> */}
           {/* breadCrumb */}
 
           <div className="row">
@@ -48,7 +48,6 @@ const Index = () => {
                   <ChatBox />
                 </div>
               </div>
-              {/* <!-- Chat Widget --> */}
             </div>
           </div>
           {/* End row */}

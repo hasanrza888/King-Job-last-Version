@@ -19,20 +19,16 @@ const ChatBox = () => {
       >
         <div className="card contacts_card">
           <div className="card-header">
-            {/* Startclose chatbox in mobile menu */}
             <div
               className="fix-icon position-absolute top-0 end-0 show-1023"
               onClick={chatToggle}
             >
               <span className="flaticon-close"></span>
             </div>
-            {/* close chatbox in mobile menu */}
             <div className="search-box-one">
               <SearchBox />
             </div>
           </div>
-          {/* End cart-heaer */}
-
           <div className="card-body contacts_body">
             <ContactList />
           </div>
@@ -41,8 +37,7 @@ const ChatBox = () => {
       {/* End chat_contact */}
 
       <div className=" col-xl-8 col-lg-7 col-md-12 col-sm-12 chat">
-        <h2>Söhbət yoxdur!</h2>
-        {/* <ContentField /> */}
+        <ContentField />
       </div>
       {/* chatbox-field-content */}
     </div>

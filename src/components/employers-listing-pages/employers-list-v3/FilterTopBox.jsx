@@ -106,7 +106,7 @@ const FilterTopBox = () => {
               />
             </span>
             <h4>
-              <Link to={`/companies-list/${company.id}`}>
+              <Link to={`/companies-list/${company?.company?._id}`}>
                 {company?.company?.name}
               </Link>
             </h4>

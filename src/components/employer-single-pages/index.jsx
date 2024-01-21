@@ -9,12 +9,37 @@ import Social from "./social/Social";
 import PrivateMessageBox from "./shared-components/PrivateMessageBox";
 import { useParams } from "react-router";
 import DefaulHeader2 from "../header/DefaulHeader2";
-
+import { useSelector,useDispatch } from "react-redux";
+import { setLoading } from "../../features/loading/loadingSlice";
+import JobBox from "../job-listing-pages/job-list-v6/JobBox";
+import { useState,useEffect } from "react";
+import { handleApiError } from "../../utils/apiErrorHandling";
+import { getcompanydetail } from "../../services/api/common_api";
 const EmployersSingleV1 = () => {
+  const {loading} = useSelector(state=>state.loading);
+  const dispatch = useDispatch();
+  const [employer,setEmloyer] = useState(null)
   const id = useParams().id;
-
-  const employer =
-    employersInfo.find((item) => item.id == id) || employersInfo[0];
+  const {alljobs} = useSelector(state=>state.job)
+  const companyJobs = alljobs?.filter(job=>job?.companyId === id);
+  console.log(alljobs)
+  useEffect(()=>{
+    dispatch(setLoading(true))
+    const gtcmp = async () => {
+      try {
+        const {data} = await getcompanydetail(id);
+        console.log(data)
+        setEmloyer(data.data)
+        dispatch(setLoading(false))
+      } catch (error) {
+        dispatch(setLoading(false))
+        handleApiError(error);
+      }
+    }
+    gtcmp();
+  },[id,dispatch])
+  // const employer =
+  //   employersInfo.find((item) => item.id == id) || employersInfo[0];
 
   return (
     <>
@@ -31,7 +56,10 @@ const EmployersSingleV1 = () => {
       {/* End MobileMenu */}
 
       {/* <!-- Job Detail Section --> */}
-      <section className="job-detail-section">
+      {!loading && !employer && <section className="job-detail-section">
+        Məlumat tapılmadı
+        </section>}
+      {employer &&  <section className="job-detail-section">
         {/* <!-- Upper Box --> */}
         <div className="upper-box">
           <div className="auto-container">
@@ -42,38 +70,38 @@ const EmployersSingleV1 = () => {
                     <img
                       width={100}
                       height={100}
-                      src={employer?.img}
+                      src={employer?.companyInfo?.logo}
                       alt="logo"
                     />
                   </span>
-                  <h4>{employer?.name}</h4>
+                  <h4>{employer?.name || "Qeyd yoxdur"}</h4>
 
                   <ul className="job-info">
                     <li>
                       <span className="icon flaticon-map-locator"></span>
-                      {employer?.location}
+                      {employer?.companyInfo?.city || "Qeyd yoxdur"}
                     </li>
                     {/* compnay info */}
                     <li>
                       <span className="icon flaticon-briefcase"></span>
-                      {employer?.jobType}
+                      {employer?.companyInfo?.categories[0] || "Qeyd yoxdur"}
                     </li>
                     {/* location info */}
                     <li>
                       <span className="icon flaticon-telephone-1"></span>
-                      {employer?.phone}
+                      {employer?.companyInfo?.phone || "Qeyd yoxdur"}
                     </li>
                     {/* time info */}
                     <li>
                       <span className="icon flaticon-mail"></span>
-                      {employer?.email}
+                      {employer?.email || "Qeyd yoxdur"}
                     </li>
                     {/* salary info */}
                   </ul>
                   {/* End .job-info */}
 
                   <ul className="job-other-info">
-                    <li className="time">{employer.jobNumber} Vakansiya</li>
+                    <li className="time">{employer?.companyInfo?.vacancynum} Vakansiya</li>
                   </ul>
                   {/* End .job-other-info */}
                 </div>
@@ -104,7 +132,7 @@ const EmployersSingleV1 = () => {
                     <div className="apply-modal-content modal-content">
                       <div className="text-center">
                         <h3 className="title">
-                          Send message to {employer.name}
+                          Send message to {employer?.name}
                         </h3>
                         <button
                           type="button"
@@ -135,7 +163,7 @@ const EmployersSingleV1 = () => {
             <div className="row">
               <div className="content-column col-lg-8 col-md-12 col-sm-12">
                 {/*  job-detail */}
-                <JobDetailsDescriptions />
+                <JobDetailsDescriptions employer={employer} />
                 {/* End job-detail */}
 
                 {/* <!-- Related Jobs --> */}
@@ -148,7 +176,7 @@ const EmployersSingleV1 = () => {
                   </div>
                   {/* End .title-box */}
 
-                  <RelatedJobs />
+                  <RelatedJobs companyJobs={companyJobs} />
                   {/* End RelatedJobs */}
                 </div>
                 {/* <!-- Related Jobs --> */}
@@ -162,37 +190,37 @@ const EmployersSingleV1 = () => {
                       {/*  compnay-info */}
                       <ul className="company-info mt-0">
                         <li>
-                          Şirkət tipi: <span>Software</span>
+                          Şirkət tipi: <span>{employer?.companyInfo?.categories[0] || "Qeyd yoxdur"}</span>
                         </li>
                         {/* <li>
                           Company size: <span>501-1,000</span>
                         </li> */}
-                        <li>
+                        {/* <li>
                           Yaranma tarixi: <span>2011</span>
+                        </li> */}
+                        <li>
+                          Telefon: <span>{employer?.companyInfo?.phone || "Qeyd yoxdur"}</span>
                         </li>
                         <li>
-                          Telefon: <span>{employer?.phone}</span>
+                          Email: <span>{employer?.email || "Qeyd yoxdur"}</span>
                         </li>
                         <li>
-                          Email: <span>{employer?.email}</span>
+                          Şəhər: <span>{employer?.companyInfo?.city || "Qeyd yoxdur"}</span>
                         </li>
-                        <li>
-                          Şəhər: <span>{employer?.location}</span>
-                        </li>
-                        <li>
+                        {/* <li>
                           Sosial şəbəkələri:
                           <Social />
-                        </li>
+                        </li> */}
                       </ul>
                       {/* End compnay-info */}
 
                       <div className="btn-box">
                         <a
-                          href="#"
+                          href={employer?.companyInfo?.website}
                           className="theme-btn btn-style-three"
                           style={{ textTransform: "lowercase" }}
                         >
-                          www.{employer?.name}.com
+                         {employer?.companyInfo?.website || "Qeyd yoxdur"} 
                         </a>
                       </div>
                       {/* btn-box */}
@@ -218,7 +246,7 @@ const EmployersSingleV1 = () => {
           </div>
         </div>
         {/* <!-- job-detail-outer--> */}
-      </section>
+      </section>}
       {/* <!-- End Job Detail Section --> */}
 
       <FooterDefault footerStyle="alternate5" />

@@ -1,6 +1,7 @@
 import { useState,useEffect } from "react";
 
-const FormContent = ({submitRegister,handleRegister,handleChange,registerdata,showotp,nm}) => {
+
+const FormContent = ({submitRegister,handleRegister,handleChange,registerdata,showotp, type}) => {
   const [otp, setOtp] = useState("");
   const [mainFunction, setMainFunction] = useState(() => handleRegister);
 
@@ -15,8 +16,12 @@ const FormContent = ({submitRegister,handleRegister,handleChange,registerdata,sh
   return (
     <form onSubmit={handleSubmit} method="post">
       <div className="form-group">
-        <label>{nm}</label>
-        <input onChange={handleChange} value={registerdata.name} type="text" name="name" placeholder={nm} required />
+        { type === "cmp" ? 
+          <label>Şirkət adı</label> 
+          :
+          <label>Ad və Soyad</label>
+        }
+        <input onChange={handleChange} value={registerdata.name} type="text" name="name" placeholder={type === "cmp" ? "Şirkət adı" : "Ad və Soyad"} required />
       </div>
       <div className="form-group">
         <label>Email</label>

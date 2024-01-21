@@ -79,31 +79,13 @@ const useDataFetching = () => {
     fetchData();
   }, [dispatch, isLoggedIn,user]);
   useEffect(() => {
-    const logoutUser = async () => {
-      try {
-        const { data } = await logout();
-        dispatch(clearUser());
-        toast.success("Successfully logged out", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      } catch (error) {
-        handleApiError(error)
-      }
-    };
     const checkLoggedIn = async () => {
       try {
         const { data } = await loggedin();
         if (data.user.returnedData.u_t_p === 'c_m_p') {
           if (data.user.info.isBlock) {
             // console.log("okkkokokok")
-            return logoutUser();
+            return lguser();
           }
           else{
             console.log(data?.user?.info)

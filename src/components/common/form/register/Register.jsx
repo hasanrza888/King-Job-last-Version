@@ -124,7 +124,7 @@ const Register = () => {
         {/* End cadidates Form */}
 
         <TabPanel>
-        <Form submitRegister={submitRegisterCompany} showotp={showotp} handleRegister={handleRegister} handleChange = {handleChange} registerdata={registerdata} />
+          <Form submitRegister={submitRegisterCompany} showotp={showotp} handleRegister={handleRegister} handleChange = {handleChange} registerdata={registerdata} type="cmp"/>
         </TabPanel>
         {/* End Employer Form */}
       </Tabs>
@@ -140,10 +140,10 @@ const Register = () => {
             Daxil ol
           </Link>
         </div>
-        <div className="divider">
+        {/* <div className="divider">
           <span>və ya</span>
-        </div>
-        <LoginWithSocial />
+        </div> */}
+        {/* <LoginWithSocial /> */}
       </div>
       {/* End bottom-box LoginWithSocial */}
     </div>

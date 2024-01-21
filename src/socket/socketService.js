@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
-
-const socket = io('https://seal-app-qdwqo.ondigitalocean.app');
+import { localapiUrl,deployedapiUrl } from '../constants/constants';
+const socket = io(deployedapiUrl);
 
 export default socket;

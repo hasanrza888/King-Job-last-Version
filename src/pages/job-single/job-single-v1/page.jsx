@@ -32,7 +32,7 @@ const JobSingleDynamicV1 = () => {
   const {alljobs,viewedJobs} = useSelector(state=>state.job)
   let checker = viewedJobs.includes(id) ? 'second' : 'first';
   const job = alljobs.find((item) => item._id === id);
-
+  console.log(job)
   useEffect(()=>{
     const incrs = async () => {
       try {
@@ -241,7 +241,7 @@ const JobSingleDynamicV1 = () => {
                               />
                             </div>
                             <h5 className="company-name">{job?.companyName}</h5>
-                            <Link to={`/companies-list/${job?.companyName}`} className="profile-link">
+                            <Link to={`/companies-list/${job?.companyId}`} className="profile-link">
                               Şirkətin profilinə bax
                             </Link>
                           </div>

@@ -72,7 +72,7 @@ const JobListingsTable = () => {
                       </div>
                     </td>
                     <td>{item?.createdAt?.split("T")[0]}</td>
-                    <td style={{color:item?.status?.color}} className="status"><span style={{backgroundColor:'#C9F7F8',padding:"8px",borderRadius:'6px'}}>{item?.status?.name}</span></td>
+                    <td style={{color:item?.status[item?.status?.length-1]?.color}} className="status"><span style={{backgroundColor:'#C9F7F8',padding:"8px",borderRadius:'6px'}}>{item?.status[item?.status?.length-1]?.name}</span></td>
                     <td>
                       <div className="option-box">
                         <ul className="option-list">

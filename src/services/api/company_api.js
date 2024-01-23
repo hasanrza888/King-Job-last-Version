@@ -37,6 +37,9 @@ export const getapplywithid = (id) => {
     return axiosInstance.get('/apply/'+id);
 }
 
+export const giveanstatustoapplyer = (applyerId,statusId,data) => {
+    return axiosInstance.post('/companygiveanstatus/'+applyerId+"/"+statusId,data)
+}
 
 //TASKS
 export const getallfolders = () => {

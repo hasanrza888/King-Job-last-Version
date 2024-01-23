@@ -6,6 +6,7 @@ import { giveanstatustoapplyer } from "../../../../../services/api/company_api";
 import { handleApiError } from "../../../../../utils/apiErrorHandling";
 import {toast} from 'react-toastify'
 import ApplicantBox from "./ApplicantBox";
+import { addPerPage } from "../../../../../features/filter/filterSlice";
 
 const WidgetContentBox = () => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const WidgetContentBox = () => {
               <Tab className="tab-btn rejected"> Rejected(s): 4</Tab> */}
             </TabList>
           </div>
-
+              
           <div className="tabs-content">
             <TabPanel>
               <div className="row">
@@ -57,7 +58,18 @@ const WidgetContentBox = () => {
           </div>
         </Tabs>
       </div>
+      {endData.length > 0 &&
+      <div className="col d-flex flex-column justify-content-between flex-sm-row">
+        <button onClick={()=>dispatch(addPerPage({start:0,end:applyerSort?.perPage?.end>20?applyerSort?.perPage?.end-10 : 10}))} className="btn-style-one-bordered mb-sm-0 mb-2">
+          Daha 10 gizlət
+        </button>
+        <button onClick={()=>dispatch(addPerPage({start:0,end:applyerSort?.perPage?.end+10}))} className="btn-style-one-bordered">
+          Daha 10 göstər
+        </button>
+      </div>
+      }
     </div>
+    
   );
 };
 

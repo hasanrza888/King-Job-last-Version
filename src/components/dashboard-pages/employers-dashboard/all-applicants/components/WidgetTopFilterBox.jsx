@@ -45,11 +45,11 @@ const WidgetTopFilterBox = () => {
           ))
         }
       </select>
-      <button style={{border:'1px solid gray'}} onClick={()=>dispatch(addPerPage({start:0,end:applyerSort?.perPage?.end+10}))} className="chosen-single  chosen-container">
-        Daha + 10
-      </button>
       <button style={{border:'1px solid gray'}} onClick={()=>dispatch(addPerPage({start:0,end:applyerSort?.perPage?.end>20?applyerSort?.perPage?.end-10 : 10}))} className="chosen-single  chosen-container">
         Daha - 10
+      </button>
+      <button style={{border:'1px solid gray'}} onClick={()=>dispatch(addPerPage({start:0,end:applyerSort?.perPage?.end+10}))} className="chosen-single  chosen-container">
+        Daha + 10
       </button>
       {/* <!--Tabs Box--> */}
     </div>

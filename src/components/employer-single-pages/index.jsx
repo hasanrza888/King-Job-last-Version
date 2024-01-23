@@ -22,7 +22,7 @@ const EmployersSingleV1 = () => {
   const id = useParams().id;
   const {alljobs} = useSelector(state=>state.job)
   const companyJobs = alljobs?.filter(job=>job?.companyId === id);
-  console.log(alljobs)
+
   useEffect(()=>{
     dispatch(setLoading(true))
     const gtcmp = async () => {
@@ -168,12 +168,11 @@ const EmployersSingleV1 = () => {
 
                 {/* <!-- Related Jobs --> */}
                 <div className="related-jobs mt-5">
+                  {companyJobs.length > 0 &&
                   <div className="title-box">
                     <h3>{employer?.name} Şirkətinin Vakansiyaları</h3>
-                    {/* <div className="text">
-                      2020 jobs live - 293 added today.
-                    </div> */}
                   </div>
+                  }
                   {/* End .title-box */}
 
                   <RelatedJobs companyJobs={companyJobs} />

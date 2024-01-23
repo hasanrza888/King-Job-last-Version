@@ -13,33 +13,104 @@ import { useParams } from "react-router";
 import { getapplywithid } from "../../../services/api/company_api";
 import { useEffect, useState } from "react";
 import { handleApiError } from "../../../utils/apiErrorHandling";
-import defaultProfile  from '../../../img/defaultcompanylogo.jpg'
-import { useSelector } from "react-redux";
+import defaultProfile from "../../../img/defaultcompanylogo.jpg";
+import { useSelector, useDispatch } from "react-redux";
 import DashboardHeader from "../../../components/header/DashboardHeader";
 import { pdfjs } from "react-pdf";
 import PdfComp from "./PdfComp";
-
+import { toast } from "react-toastify";
+import { updateApplyer } from "../../../features/employer/employerSlice";
+import { giveanstatustoapplyer } from "../../../services/api/company_api";
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
   import.meta.url
 ).toString();
 const CandidateSingleDynamicV1 = () => {
+  const dispatch = useDispatch();
   const id = useParams().id;
   const candidate = candidates.find((item) => item.id === id) || candidates[0];
-  const {allapplyers,vacancies,applystatuses} = useSelector(state=>state.employer);
-  const [applyer,setApplyer] = useState(null);
-  useEffect(()=>{
-    const fetchapplyer = async ()=> {
+  const { allapplyers, vacancies, applystatuses } = useSelector(
+    (state) => state.employer
+  );
+  const [applyer, setApplyer] = useState(null);
+  useEffect(() => {
+    const fetchapplyer = async () => {
       try {
-        const {data} = await getapplywithid(id);
+        const { data } = await getapplywithid(id);
         console.log(data);
-        setApplyer(data.data)
+        setApplyer(data.data);
       } catch (error) {
         handleApiError(error);
       }
-    }
+    };
     fetchapplyer();
-  },[id])
+  }, [id]);
+  const sendNewStatus = async (applyerId, statusId, emailsend) => {
+    try {
+      const confirmationMessage =
+        "Bu əməliyyatı etməyə əminsizmi? Təsdiq etdiyiniz anda Müraciətçiyə email bildirişi gedəcək.";
+
+      if (emailsend && window.confirm(confirmationMessage)) {
+        await updateApplyerAndNotify(applyerId, statusId, emailsend);
+      } else {
+        await updateApplyerAndNotify(applyerId, statusId, false);
+      }
+    } catch (error) {
+      handleApiError(error);
+    }
+  };
+
+  const updateApplyerAndNotify = async (applyerId, statusId, emailsend) => {
+    const { data } = await giveanstatustoapplyer(applyerId, statusId, {
+      emailsend,
+    });
+    toast.success(data.message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    dispatch(updateApplyer(data.data));
+    setApplyer({...applyer,status:data?.data?.status});
+  };
+
+  const renderSkillLists = (skills, itemsPerList) => {
+    const skillLists = [];
+    for (let i = 0; i < skills?.length; i += itemsPerList) {
+      const slicedSkills = skills?.slice(i, i + itemsPerList);
+      const listItems = slicedSkills?.map((val, j) => (
+        <li key={i + j}>{val}</li>
+      ));
+      skillLists.push(
+        <ul key={i} className="post-tags">
+          {listItems}
+        </ul>
+      );
+    }
+
+    return skillLists;
+  };
+  const renderStatuses = (statuses) => {
+    const statuslist = [];
+    const listItems = statuses?.map((val, j) => (
+      <>
+        <li style={{color:val?.color,marginTop:'3px'}}>{val?.name}</li>
+        {j < statuses.length - 1 && <span>&rarr;{'\u00A0'}{'\u00A0'}{'\u00A0'}</span>}
+      </>
+    ));
+    
+    statuslist.push(
+      <ul key={"x"} className="post-tags">
+        {listItems}
+      </ul>
+    );
+  
+    return statuslist;
+  };
   return (
     <>
       {/* <!-- Header Span --> */}
@@ -69,10 +140,14 @@ const CandidateSingleDynamicV1 = () => {
                       alt="avatar"
                     />
                   </figure>
-                  <h4 className="name">{applyer?.user?.name || "Qeyd yoxdur"}</h4>
+                  <h4 className="name">
+                    {applyer?.user?.name || "Qeyd yoxdur"}
+                  </h4>
 
                   <ul className="candidate-info">
-                    <li className="designation">{applyer?.user?.jobTitle || "Qeyd yoxdur"}</li>
+                    <li className="designation">
+                      {applyer?.user?.jobTitle || "Qeyd yoxdur"}
+                    </li>
                     <li>
                       <span className="icon flaticon-map-locator"></span>
                       {applyer?.user?.city || "Qeyd yoxdur"}
@@ -86,12 +161,10 @@ const CandidateSingleDynamicV1 = () => {
                       Since,Aug 19, 2020
                     </li> */}
                   </ul>
-
-                  <ul className="post-tags">
-                    {applyer?.user?.skills?.map((val, i) => (
-                      <li key={i}>{val}</li>
-                    ))}
-                  </ul>
+                  {renderSkillLists(applyer?.user?.skills, 5)}
+                  <br />
+                  <br />
+                  <p>Status</p>{renderStatuses(applyer?.status)}
                 </div>
 
                 <div className="btn-box">
@@ -101,18 +174,23 @@ const CandidateSingleDynamicV1 = () => {
                     download
                   >
                     Cv-ni yüklə
-                  </a> */}
-                  {/* <button className="bookmark-btn">
+                  </a>
+                  <button className="bookmark-btn">
                     <i className="flaticon-bookmark"></i>
                   </button> */}
-                  <select className="chosen-single form-select chosen-container">
-        <option value={""}>Status ver</option>
-        {
-          applystatuses?.map((val,ind)=>(
-            <option  style={{color:val?.color}} value={val?.name}>{val?.name}</option>
-          ))
-        }
-      </select>
+                  <select
+                    onChange={(e) =>
+                      sendNewStatus(applyer?._id, e.target.value, true)
+                    }
+                    className="chosen-single form-select chosen-container"
+                  >
+                    <option value={""}>Status ver</option>
+                    {applystatuses?.map((val, ind) => (
+                      <option style={{ color: val?.color }} value={val?._id}>
+                        {val?.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
             </div>
@@ -130,15 +208,9 @@ const CandidateSingleDynamicV1 = () => {
                     <h4>Müraciətçi haqqında</h4>
                     {false && <AboutVideo />}
                     {<PdfComp pdfFile={applyer?.file} />}
-
                   </div>
                   {/* <!-- About Video Box --> */}
-                  <p>
-                   {
-                    applyer?.user?.coverLetter  || "Qeyd yoxdur"
-                   }
-                  </p>
- 
+                  <p>{applyer?.user?.coverLetter || "Qeyd yoxdur"}</p>
 
                   {/* <!-- Portfolio --> */}
                   <div className="portfolio-outer">
@@ -146,83 +218,86 @@ const CandidateSingleDynamicV1 = () => {
                       <GalleryBox />
                     </div> */}
                   </div>
-                  <div
-                      className={`resume-outer theme-blue`}
-                    >
-                      <div className="upper-title">
-                        <h4>Təcrübə</h4>
-                      </div>
-                      {/* <!-- Start Resume BLock --> */}
-                      {applyer?.user?.experiences?.map((item) => (
-                        <div className="resume-block" key={item._id}>
-                          <div className="inner">
-                            <span className="name">{item.companyName?.[0]}</span>
-                            <div className="title-box">
-                              <div className="info-box">
-                                <h3>{item?.position}</h3>
-                                <span>{item?.companyName}</span>
-                              </div>
-                              <div className="edit-box">
-                                <span className="year">{item?.startDate?.split('-')[0]}-{item?.endDate?.split('-')[0]}</span>
-                              </div>
-                            </div>
-                            <div className="text">{item?.description}</div>
-                          </div>
-                        </div>
-                      ))}
+                  <div className={`resume-outer theme-blue`}>
+                    <div className="upper-title">
+                      <h4>Təcrübə</h4>
                     </div>
-                    <div
-                      className={`resume-outer`}
-                    >
-                      <div className="upper-title">
-                        <h4>Təhsil</h4>
-                      </div>
-                      {/* <!-- Start Resume BLock --> */}
-                      {applyer?.user?.educations?.map((item) => (
-                        <div className="resume-block" key={item._id}>
-                          <div className="inner">
-                            <span className="name">{item.school?.[0]}</span>
-                            <div className="title-box">
-                              <div className="info-box">
-                                <h3>{item?.name}</h3>
-                                <span>{item?.school}</span>
-                              </div>
-                              <div className="edit-box">
-                                <span className="year">{item?.startDate?.split('-')[0]}-{item?.endDate?.split('-')[0]}</span>
-                              </div>
+                    {/* <!-- Start Resume BLock --> */}
+                    {applyer?.user?.experiences?.map((item) => (
+                      <div className="resume-block" key={item._id}>
+                        <div className="inner">
+                          <span className="name">{item.companyName?.[0]}</span>
+                          <div className="title-box">
+                            <div className="info-box">
+                              <h3>{item?.position}</h3>
+                              <span>{item?.companyName}</span>
                             </div>
-                            <div className="text">{item?.description}</div>
+                            <div className="edit-box">
+                              <span className="year">
+                                {item?.startDate?.split("-")[0]}-
+                                {item?.endDate?.split("-")[0]}
+                              </span>
+                            </div>
                           </div>
+                          <div className="text">{item?.description}</div>
                         </div>
-                      ))}
+                      </div>
+                    ))}
+                  </div>
+                  <div className={`resume-outer`}>
+                    <div className="upper-title">
+                      <h4>Təhsil</h4>
                     </div>
+                    {/* <!-- Start Resume BLock --> */}
+                    {applyer?.user?.educations?.map((item) => (
+                      <div className="resume-block" key={item._id}>
+                        <div className="inner">
+                          <span className="name">{item.school?.[0]}</span>
+                          <div className="title-box">
+                            <div className="info-box">
+                              <h3>{item?.name}</h3>
+                              <span>{item?.school}</span>
+                            </div>
+                            <div className="edit-box">
+                              <span className="year">
+                                {item?.startDate?.split("-")[0]}-
+                                {item?.endDate?.split("-")[0]}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="text">{item?.description}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
 
-                    <div
-                      className={`resume-outer theme-yellow`}
-                    >
-                      <div className="upper-title">
-                        <h4>Sertifikatlar/Uğurlar</h4>
-                      </div>
-                      {/* <!-- Start Resume BLock --> */}
-                      {applyer?.user?.achievements?.map((item) => (
-                        <div className="resume-block" key={item._id}>
-                          <div className="inner">
-                            <span className="name">{item.name?.[0]}</span>
-                            <div className="title-box">
-                              <div className="info-box">
-                                <h3>{item?.name}</h3>
-                                <a href={item?.certifivateUrl}>Sertifikat</a>
-                              </div>
-                              <div className="edit-box">
-                                <span className="year">{item?.startDate?.split('-')[0]}-{item?.endDate?.split('-')[0]}</span>
-                              </div>
+                  <div className={`resume-outer theme-yellow`}>
+                    <div className="upper-title">
+                      <h4>Sertifikatlar/Uğurlar</h4>
+                    </div>
+                    {/* <!-- Start Resume BLock --> */}
+                    {applyer?.user?.achievements?.map((item) => (
+                      <div className="resume-block" key={item._id}>
+                        <div className="inner">
+                          <span className="name">{item.name?.[0]}</span>
+                          <div className="title-box">
+                            <div className="info-box">
+                              <h3>{item?.name}</h3>
+                              <a href={item?.certifivateUrl}>Sertifikat</a>
+                            </div>
+                            <div className="edit-box">
+                              <span className="year">
+                                {item?.startDate?.split("-")[0]}-
+                                {item?.endDate?.split("-")[0]}
+                              </span>
                             </div>
                           </div>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
+                  </div>
                   {/* <!-- Candidate Resume Start --> */}
-                  
+
                   {/* <!-- Candidate Resume End --> */}
                 </div>
               </div>
@@ -236,7 +311,9 @@ const CandidateSingleDynamicV1 = () => {
                         <li>
                           <i className="icon icon-calendar"></i>
                           <h5>Təcrübə</h5>
-                          <span>{applyer?.user?.experiencesYear || "Qeyd yoxdur"}</span>
+                          <span>
+                            {applyer?.user?.experiencesYear || "Qeyd yoxdur"}
+                          </span>
                         </li>
 
                         <li>
@@ -248,13 +325,17 @@ const CandidateSingleDynamicV1 = () => {
                         <li>
                           <i className="icon icon-rate"></i>
                           <h5>Hazırkı əmək haqqı</h5>
-                          <span>{applyer?.user?.currentSalary || "Qeyd yoxdur"}</span>
+                          <span>
+                            {applyer?.user?.currentSalary || "Qeyd yoxdur"}
+                          </span>
                         </li>
 
                         <li>
                           <i className="icon icon-salary"></i>
                           <h5>Gözlənti əməkhaqqı</h5>
-                          <span>{applyer?.user?.expestedSalary || "Qeyd yoxdur"}</span>
+                          <span>
+                            {applyer?.user?.expestedSalary || "Qeyd yoxdur"}
+                          </span>
                         </li>
 
                         {/* <li>
@@ -266,13 +347,17 @@ const CandidateSingleDynamicV1 = () => {
                         <li>
                           <i className="icon icon-language"></i>
                           <h5>Dil bilikləri</h5>
-                          <span>{applyer?.user?.languages || "Qeyd yoxdur"}</span>
+                          <span>
+                            {applyer?.user?.languages || "Qeyd yoxdur"}
+                          </span>
                         </li>
 
                         <li>
                           <i className="icon icon-degree"></i>
                           <h5>Hazırkı təhsil pilləsi</h5>
-                          <span>{applyer?.user?.educationlevelNow || "Qeyd yoxdur"}</span>
+                          <span>
+                            {applyer?.user?.educationlevelNow || "Qeyd yoxdur"}
+                          </span>
                         </li>
                       </ul>
                     </div>
@@ -293,8 +378,10 @@ const CandidateSingleDynamicV1 = () => {
                     <h4 className="widget-title">Professional bacarıqlar</h4>
                     <div className="widget-content">
                       <ul className="job-skills">
-                        {applyer?.user?.skills?.length ===0 && "Qeyd yoxdur"}
-                        {applyer?.user?.skills?.length>0 && <JobSkills skills={applyer?.user?.skills} />}
+                        {applyer?.user?.skills?.length === 0 && "Qeyd yoxdur"}
+                        {applyer?.user?.skills?.length > 0 && (
+                          <JobSkills skills={applyer?.user?.skills} />
+                        )}
                       </ul>
                     </div>
                   </div>
@@ -326,4 +413,4 @@ const CandidateSingleDynamicV1 = () => {
   );
 };
 
-export default CandidateSingleDynamicV1
+export default CandidateSingleDynamicV1;

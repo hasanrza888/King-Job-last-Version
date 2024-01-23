@@ -29,16 +29,7 @@ const modules = {
     ['clean'] 
   ],
 };
-  const specialisms = [
-    { value: "Banking", label: "Banking" },
-    { value: "Digital & Creative", label: "Digital & Creative" },
-    { value: "Retail", label: "Retail" },
-    { value: "Human Resources", label: "Human Resources" },
-    { value: "Managemnet", label: "Managemnet" },
-    { value: "Accounting & Finance", label: "Accounting & Finance" },
-    { value: "Digital", label: "Digital" },
-    { value: "Creative Art", label: "Creative Art" },
-  ];
+  
   const [formData, setFormData] = useState({
     category: "",
     name: "",
@@ -53,6 +44,7 @@ const modules = {
     agreedSalary: false,
     endTime: "",
   });
+  const specialisms = categories?.find(ctg=>ctg._id === formData.category)?.skills || [];
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prevData) => ({

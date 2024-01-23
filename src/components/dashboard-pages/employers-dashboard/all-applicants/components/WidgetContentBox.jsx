@@ -2,10 +2,18 @@ import candidatesData from "../../../../../data/candidates";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { Link } from "react-router-dom";
 import defaultProfile  from '../../../../../img/defaultcompanylogo.jpg'
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { useState } from "react";
+import { updateApplyer } from "../../../../../features/employer/employerSlice";
+import { giveanstatustoapplyer } from "../../../../../services/api/company_api";
+import { handleApiError } from "../../../../../utils/apiErrorHandling";
+import {toast} from 'react-toastify'
+
 const WidgetContentBox = () => {
+  const dispatch = useDispatch();
   const {applyerlist,applyerSort} = useSelector(state=>state.applyerfilter)
   const {allapplyers,applystatuses} = useSelector(state=>state.employer)
+  const [hoveredStatus, setHoveredStatus] = useState(null);
   console.log(allapplyers)
   const jobNameFilter = (item) =>
     applyerlist.jobName !== ""
@@ -13,7 +21,7 @@ const WidgetContentBox = () => {
       : item;
   const statusFilter = (item) =>
     applyerlist.status !== ""
-      ? item?.status?.name === applyerlist.status
+      ? item?.status?.[item?.status?.length-1]?.name === applyerlist.status
       : item;  
   const percentageFilter = (item) =>
     (applyerlist.percentageOfCv.max !== 0)
@@ -23,6 +31,36 @@ const WidgetContentBox = () => {
   ?.filter(jobNameFilter)
   ?.filter(statusFilter)
   ?.filter(percentageFilter)
+
+  const sendNewStatus = async (applyerId, statusId, emailsend) => {
+    try {
+      const confirmationMessage = "Bu əməliyyatı etməyə əminsizmi? Təsdiq etdiyiniz anda Müraciətçiyə email bildirişi gedəcək.";
+  
+      if (emailsend && window.confirm(confirmationMessage)) {
+        await updateApplyerAndNotify(applyerId, statusId, emailsend);
+      } else {
+        await updateApplyerAndNotify(applyerId, statusId, false);
+      }
+    } catch (error) {
+      handleApiError(error);
+    }
+  };
+  
+  const updateApplyerAndNotify = async (applyerId, statusId, emailsend) => {
+    const { data } = await giveanstatustoapplyer(applyerId, statusId, { emailsend });
+    toast.success(data.message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    dispatch(updateApplyer(data.data));
+  };
+  
   return (
     <div className="widget-content">
       <div className="tabs-box">
@@ -68,11 +106,32 @@ const WidgetContentBox = () => {
                           <li title={candidate?.jobTitle || 'Yoxdur'} className="designation">
                             {candidate?.jobTitle?.slice(0,5) || 'Yoxdur'}
                           </li>
-                          <li>
-                            <span style={{color:candidate?.status?.color}} className={"icon "+candidate?.status?.icon}>
+                          <li className="status_li">
+                            <span style={{color:candidate?.status[candidate?.status.length-1]?.color}} className={"icon "+candidate?.status[candidate?.status.length-1]?.icon}>
                               
                             </span>
-                            <span style={{color:candidate?.status?.color,backgroundColor:'#C9F7F8',padding:"8px",borderRadius:'6px'}}> {candidate?.status?.name}</span>
+                            <span style={{color:candidate?.status[candidate?.status.length-1]?.color,backgroundColor:'#C9F7F8',padding:"8px",borderRadius:'6px'}} onMouseEnter={() =>
+                                  setHoveredStatus(candidate)
+                                }
+                                onMouseLeave={() => setHoveredStatus(null)}> {candidate?.status[candidate?.status.length-1]?.name}</span>
+                            {hoveredStatus && hoveredStatus?._id === candidate?._id && (
+                                <div className="status-roadmap-tooltip">
+                                  {hoveredStatus?.status?.map((status, index) => (
+                                    <div key={index}>
+                                      <span
+                                        style={{
+                                          color: status.color,
+                                        }}
+                                      >
+                                        {status.name}
+                                      </span>
+                                      {index < hoveredStatus?.status?.length - 1 && (
+                                        <span> → </span>
+                                      )}
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
                            
                           </li>
                           <li>
@@ -83,7 +142,7 @@ const WidgetContentBox = () => {
                         {/* End candidate-info */}
 
                         <ul className="post-tags">
-                          {candidate?.skills?.map((val, i) => (
+                          {candidate?.skills?.slice(0,2)?.map((val, i) => (
                             <li key={i}>
                               <a href="#">{val}</a>
                             </li>
@@ -100,12 +159,12 @@ const WidgetContentBox = () => {
                             </button>
                           </li>
                           <li>
-                            <button data-text="Birbaşa qəbul et">
+                            <button onClick={()=>sendNewStatus(candidate?._id,'65a6ec29788f1a9ccd9f0e49',true)} data-text="Birbaşa qəbul et">
                               <span className="la la-check"></span>
                             </button>
                           </li>
                           <li>
-                            <button data-text="Birbaşa ləğv et">
+                            <button onClick={()=>sendNewStatus(candidate?._id,'65a6ea2a788f1a9ccd9f0e26',true)} data-text="Birbaşa ləğv et">
                               <span className="la la-times-circle"></span>
                             </button>
                           </li>

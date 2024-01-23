@@ -4,10 +4,9 @@ import { giveanstatustoapplyer } from "../../../../../services/api/company_api";
 import { updateApplyer } from "../../../../../features/employer/employerSlice";
 import { useSelector,useDispatch } from "react-redux";
 import {toast}  from "react-toastify"
-import defaultProfile  from '../../../../../img/defApplicant5.png';
+import defaultProfile  from '../../../../../img/defaultcompanylogo.jpg'
 import { Link } from "react-router-dom";
 import { useState } from "react";
-
 export default function ApplicantBox({candidate}) {
     const dispatch = useDispatch();
     const [hoveredStatus, setHoveredStatus] = useState(null);

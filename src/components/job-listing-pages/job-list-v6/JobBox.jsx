@@ -12,7 +12,7 @@ export default function JobBox({item}) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {savedjobs} = useSelector(state=>state.candidate)
-    const {isLoggedIn} = useSelector(state=>state.auth)
+    const {isLoggedIn,user} = useSelector(state=>state.auth)
     const removeJobFromSaved = async (id) => {
         if(!isLoggedIn){
           toast.info('İşi yadda saxlamaq üçün hesabınıza daxil olun',{
@@ -106,9 +106,9 @@ export default function JobBox({item}) {
             </ul>
             {/* End .job-other-info */}
 
-            <button onClick={()=>removeJobFromSaved(item?._id)}  className="bookmark-btn">
+            {user?.u_t_p === 'u_s_r' && (<button onClick={()=>removeJobFromSaved(item?._id)}  className="bookmark-btn">
               <span style={{color:check(item?._id) ? 'blue':''}} className="flaticon-bookmark"></span>
-            </button>
+            </button>)}
           </div>
         </div>
       </div>

@@ -10,18 +10,18 @@ const JobCategorie1 = () => {
 };
   return (
     <>
-      {categories.map((item) => (
+      {categories?.filter(v=>v.numofactivevacancywithiscategory!==0)?.map((item) => (
         <div
           className="category-block col-lg-4 col-md-6 col-sm-12"
-          key={item._id}
+          key={item?._id}
         >
           <div className="inner-box">
             <div className="content">
               <span className={`icon ${item.icon}`}></span>
               <h4>
-                <Link onClick={()=>categoryHandler(item.name)} to="/vacancies-list">{item.name}</Link>
+                <Link onClick={()=>categoryHandler(item?.name)} to="/vacancies-list">{item?.name}</Link>
               </h4>
-              <p>({2} Aktiv Vakansiya)</p>
+              <p>({item?.numofactivevacancywithiscategory} Aktiv Vakansiya)</p>
             </div>
           </div>
         </div>

@@ -1,4 +1,6 @@
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { Link } from "react-router-dom";
+
 import { useSelector,useDispatch } from "react-redux";
 import { useState } from "react";
 import { updateApplyer } from "../../../../../features/employer/employerSlice";
@@ -6,7 +8,6 @@ import { giveanstatustoapplyer } from "../../../../../services/api/company_api";
 import { handleApiError } from "../../../../../utils/apiErrorHandling";
 import {toast} from 'react-toastify'
 import ApplicantBox from "./ApplicantBox";
-
 const WidgetContentBox = () => {
   const dispatch = useDispatch();
   const {applyerlist,applyerSort} = useSelector(state=>state.applyerfilter)
@@ -28,7 +29,6 @@ const WidgetContentBox = () => {
   ?.filter(jobNameFilter)
   ?.filter(statusFilter)
   ?.filter(percentageFilter)
-
   return (
     <div className="widget-content">
       <div className="tabs-box">
@@ -50,7 +50,7 @@ const WidgetContentBox = () => {
                 ?.slice(applyerSort?.perPage?.start,applyerSort?.perPage?.end)
                 ?.sort((a,b)=>b?.percentageOfCv-a?.percentageOfCv)
                 ?.map((candidate) => (
-                  <ApplicantBox candidate={candidate} />
+                  (<ApplicantBox candidate={candidate} />)
                 ))}
               </div>
             </TabPanel>

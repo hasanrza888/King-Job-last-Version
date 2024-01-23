@@ -33,7 +33,7 @@ const index = ({numjob}) => {
       <section className="job-categories ui-job-categories">
         <div className="auto-container">
           <div className="sec-title text-center">
-            <h2>Kateqoriyalar</h2>
+            <h2>Aktiv kateqoriyalar</h2>
             <div className="text">{numjob} Aktiv Vakansiya</div>
           </div>
 
@@ -44,8 +44,12 @@ const index = ({numjob}) => {
           >
             {/* <!-- Category Block --> */}
             <JobCategorie1 />
+            
           </div>
+          
         </div>
+        
+
       </section>
       {/* End Job Categorie Section */}
 

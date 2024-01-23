@@ -9,7 +9,7 @@ import Notification from "./components/Notification";
 import Applicants from "./components/Applicants";
 import CopyrightFooter from "../../CopyrightFooter";
 import MenuToggler from "../../MenuToggler";
-
+import ApplyingLevelCart from "./components/ApplyingLevelInterval";
 const Index = () => {
   return (
     <div className="page-wrapper dashboard">
@@ -47,6 +47,9 @@ const Index = () => {
               {/* <!-- Graph widget --> */}
               <div className="graph-widget ls-widget">
                 <ProfileChart />
+              </div>
+              <div className="graph-widget ls-widget">
+                <ApplyingLevelCart />
               </div>
               {/* End profile chart */}
             </div>

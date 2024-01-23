@@ -21,7 +21,7 @@ import { handleApiError } from "../../../utils/apiErrorHandling";
 import { useEffect } from "react";
 import DefaulHeader2 from "../../../components/header/DefaulHeader2";
 import { Link } from "react-router-dom";
-
+import defcompanylogo from "../../../img/defaultcompanylogo.jpg"
 const JobSingleDynamicV1 = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -236,7 +236,7 @@ const JobSingleDynamicV1 = () => {
                               <img
                                 width={54}
                                 height={53}
-                                src={job?.logo}
+                                src={job?.logo || defcompanylogo}
                                 alt="resource"
                               />
                             </div>

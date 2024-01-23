@@ -15,6 +15,7 @@ import JobBox from "../job-listing-pages/job-list-v6/JobBox";
 import { useState,useEffect } from "react";
 import { handleApiError } from "../../utils/apiErrorHandling";
 import { getcompanydetail } from "../../services/api/common_api";
+import defcompanylogo from "../../img/defaultcompanylogo.jpg"
 const EmployersSingleV1 = () => {
   const {loading} = useSelector(state=>state.loading);
   const dispatch = useDispatch();
@@ -70,7 +71,7 @@ const EmployersSingleV1 = () => {
                     <img
                       width={100}
                       height={100}
-                      src={employer?.companyInfo?.logo}
+                      src={employer?.companyInfo?.logo || defcompanylogo}
                       alt="logo"
                     />
                   </span>

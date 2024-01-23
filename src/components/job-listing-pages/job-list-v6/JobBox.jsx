@@ -7,6 +7,7 @@ import { addjobtosaved } from '../../../services/api/candidate_api';
 import { addJobToSaved } from '../../../features/candidate/candidateSlice';
 import { deleteJobFromSaved } from '../../../features/candidate/candidateSlice';
 import { handleApiError } from '../../../utils/apiErrorHandling';
+import defcompanylogo from '../../../img/defaultcompanylogo.jpg'
 export default function JobBox({item}) {
     const location  = useLocation();
     const navigate = useNavigate();
@@ -66,7 +67,7 @@ export default function JobBox({item}) {
         <div className="inner-box">
           <div className="content">
             <span className="company-logo">
-              <img width={50} height={49} src={item?.logo} alt="item brand" />
+              <img width={50} height={49} src={item?.logo || defcompanylogo} alt="item brand" />
             </span>
             <h4>
               <Link to={`/vacancies-list/${item?._id}`}>{item?.name}</Link>

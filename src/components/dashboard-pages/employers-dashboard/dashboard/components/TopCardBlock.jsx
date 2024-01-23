@@ -1,24 +1,27 @@
+import { useSelector } from "react-redux";
 const TopCardBlock = () => {
+  const {allapplyers,vacancies} = useSelector(state=>state.employer)
+  const {folders} = useSelector(state=>state.task)
   const cardContent = [
     {
       id: 1,
       icon: "flaticon-briefcase",
-      countNumber: "22",
+      countNumber: vacancies?.length,
       metaName: "Vakansiyalar",
       uiClass: "ui-blue",
     },
     {
       id: 2,
       icon: "la-file-invoice",
-      countNumber: "9382",
+      countNumber: allapplyers?.length,
       metaName: "Müraciətlər",
       uiClass: "ui-red",
     },
     {
       id: 3,
       icon: "la-comment-o",
-      countNumber: "74",
-      metaName: "Məktublar",
+      countNumber: folders?.length,
+      metaName: "Tapşırıqlar",
       uiClass: "ui-yellow",
     },
     {

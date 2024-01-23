@@ -65,3 +65,12 @@ export const getcurrentchat = (id) => {
 export const sendmessage = (id,data) => {
     return axiosInstance.post('/usersendmessage/'+id,data)
 }
+
+//CHARTS
+export const getmonthlyvacancydata = () => {
+    return axiosInstance.get('/getMontlhyVakansyData');
+}
+
+export const getapplyerlevelinterval = () => {
+    return axiosInstance.get('/applysintervalnums')
+}

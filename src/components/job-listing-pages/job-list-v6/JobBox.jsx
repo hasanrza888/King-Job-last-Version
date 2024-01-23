@@ -7,12 +7,13 @@ import { addjobtosaved } from '../../../services/api/candidate_api';
 import { addJobToSaved } from '../../../features/candidate/candidateSlice';
 import { deleteJobFromSaved } from '../../../features/candidate/candidateSlice';
 import { handleApiError } from '../../../utils/apiErrorHandling';
+import defcompanylogo from '../../../img/defaultcompanylogo.jpg'
 export default function JobBox({item}) {
     const location  = useLocation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {savedjobs} = useSelector(state=>state.candidate)
-    const {isLoggedIn} = useSelector(state=>state.auth)
+    const {isLoggedIn,user} = useSelector(state=>state.auth)
     const removeJobFromSaved = async (id) => {
         if(!isLoggedIn){
           toast.info('İşi yadda saxlamaq üçün hesabınıza daxil olun',{
@@ -66,7 +67,7 @@ export default function JobBox({item}) {
         <div className="inner-box">
           <div className="content">
             <span className="company-logo">
-              <img width={50} height={49} src={item?.logo} alt="item brand" />
+              <img width={50} height={49} src={item?.logo || defcompanylogo} alt="item brand" />
             </span>
             <h4>
               <Link to={`/vacancies-list/${item?._id}`}>{item?.name}</Link>
@@ -106,9 +107,9 @@ export default function JobBox({item}) {
             </ul>
             {/* End .job-other-info */}
 
-            <button onClick={()=>removeJobFromSaved(item?._id)}  className="bookmark-btn">
+            {user?.u_t_p === 'u_s_r' && (<button onClick={()=>removeJobFromSaved(item?._id)}  className="bookmark-btn">
               <span style={{color:check(item?._id) ? 'blue':''}} className="flaticon-bookmark"></span>
-            </button>
+            </button>)}
           </div>
         </div>
       </div>

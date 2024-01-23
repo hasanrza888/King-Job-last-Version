@@ -1,4 +1,3 @@
-import candidatesData from "../../../../../data/candidates";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { Link } from "react-router-dom";
 
@@ -13,8 +12,7 @@ const WidgetContentBox = () => {
   const dispatch = useDispatch();
   const {applyerlist,applyerSort} = useSelector(state=>state.applyerfilter)
   const {allapplyers,applystatuses} = useSelector(state=>state.employer)
-  
-  console.log(allapplyers)
+  const [hoveredStatus, setHoveredStatus] = useState(null);
   const jobNameFilter = (item) =>
     applyerlist.jobName !== ""
       ? item?.jobName?.toLocaleLowerCase() === applyerlist.jobName?.toLocaleLowerCase()
@@ -31,9 +29,6 @@ const WidgetContentBox = () => {
   ?.filter(jobNameFilter)
   ?.filter(statusFilter)
   ?.filter(percentageFilter)
-
- 
-  
   return (
     <div className="widget-content">
       <div className="tabs-box">

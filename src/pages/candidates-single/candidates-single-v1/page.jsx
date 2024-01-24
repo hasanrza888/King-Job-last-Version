@@ -21,10 +21,13 @@ import PdfComp from "./PdfComp";
 import { toast } from "react-toastify";
 import { updateApplyer } from "../../../features/employer/employerSlice";
 import { giveanstatustoapplyer } from "../../../services/api/company_api";
+import PdfViewer from "./PdfViewer";
+import sm from './sm.pdf'
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
   import.meta.url
 ).toString();
+
 const CandidateSingleDynamicV1 = () => {
   const dispatch = useDispatch();
   const id = useParams().id;
@@ -207,7 +210,7 @@ const CandidateSingleDynamicV1 = () => {
                   <div className="video-outer">
                     <h4>Müraciətçi haqqında</h4>
                     {false && <AboutVideo />}
-                    {<PdfComp pdfFile={applyer?.file} />}
+                    {<PdfViewer pdfFile={sm} />}
                   </div>
                   {/* <!-- About Video Box --> */}
                   <p>{applyer?.user?.coverLetter || "Qeyd yoxdur"}</p>

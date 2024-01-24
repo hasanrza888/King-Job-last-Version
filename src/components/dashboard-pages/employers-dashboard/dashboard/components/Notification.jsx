@@ -1,48 +1,55 @@
+import { Link } from "react-router-dom";
+import { setNotificationsForCompany,addNotificationForCompany } from "../../../../../features/employer/employerSlice";
+import { useSelector,useDispatch } from "react-redux";
+import { getcompanynotifications } from "../../../../../services/api/company_api";
+import { useEffect } from "react";
+import { handleApiError } from "../../../../../utils/apiErrorHandling";
 const Notification = () => {
+  const dispatch = useDispatch();
+  const {notifications} = useSelector(state=>state.employer)
+  useEffect(()=>{
+    const fetchnotifications = async () => {
+      try {
+        const {data} = await getcompanynotifications();
+        dispatch(setNotificationsForCompany(data.data))
+      } catch (error) {
+        handleApiError(error)
+      }
+    }
+    fetchnotifications();
+  },[dispatch])
+  const stringfortype = {
+    exam:(
+      <span>
+        göndərdiyiniz <Link to="/company-dashboard/exams">{"imtahanı"}</Link> bitirdi.
+      </span>
+    ),
+    meeting:(
+      <span>
+        sizin təyin etdiyiniz <Link to="/company-dashboard/meeting">{"görüşü"}</Link> qəbul etdi
+      </span>
+    ),
+    message:(
+      <span>
+        sizə <Link to="/company-dashboard/messages">{"mesaj"}</Link> göndərdi
+      </span>
+    ),
+    apply:(
+      <span>
+        iş üçün <Link to="/company-dashboard/all-applicants">{"müraciət"}</Link> göndərdi
+      </span>
+    )
+  }
   return (
-    <ul className="notification-list">
-      <li>
-        {/* <span className="icon flaticon-briefcase"></span>
-        <strong>Henry Wilson</strong> applied for a job */}
-        <span className="colored">Mövcud bildiriş yoxdur</span>
-      </li>
-      {/* End li */}
-
-      {/* <li className="success">
-        <span className="icon flaticon-briefcase"></span>
-        <strong>Raul Costa</strong> applied for a job
-        <span className="colored"> Product Manager, Risk</span>
-      </li> */}
-      {/* End li */}
-
-      {/* <li>
-        <span className="icon flaticon-briefcase"></span>
-        <strong>Jack Milk</strong> applied for a job
-        <span className="colored"> Technical Architect</span>
-      </li> */}
-      {/* End li */}
-
-      {/* <li className="success">
-        <span className="icon flaticon-briefcase"></span>
-        <strong>Michel Arian</strong>
-        applied for a job
-        <span className="colored"> Software Engineer</span>
-      </li> */}
-      {/* End li */}
-
-      {/* <li>
-        <span className="icon flaticon-briefcase"></span>
-        <strong>Wade Warren</strong> applied for a job
-        <span className="colored"> Web Developer</span>
-      </li> */}
-      {/* End li */}
-
-      {/* <li className="success">
-        <span className="icon flaticon-briefcase"></span>
-        <strong>Michel Arian</strong>
-        applied for a job
-        <span className="colored"> Software Engineer</span>
-      </li> */}
+    <ul style={{maxHeight:"270px",overflowY:'scroll'}} className="notification-list">
+      {
+        notifications?.map((val,index)=>(
+          <li key={index}>
+          <span className="icon flaticon-briefcase"></span>
+          <strong>{val?.userName}</strong> {stringfortype[val?.type]}
+        </li>
+        ))
+      }
       {/* End li */}
     </ul>
   );

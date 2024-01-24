@@ -63,7 +63,7 @@ const JobFavouriteTable = () => {
   return (
     <div className="tabs-box">
       <div className="widget-title">
-        <h4>My Favorite Jobs</h4>
+        <h4>Mənim sevimli işlərim</h4>
 
         <div className="chosen-outer">
           {/* <!--Tabs Box--> */}

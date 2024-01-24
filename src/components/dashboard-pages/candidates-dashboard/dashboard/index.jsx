@@ -9,8 +9,9 @@ import CopyrightFooter from "../../CopyrightFooter";
 import JobApplied from "./components/JobApplied";
 import DashboardCandidatesHeader from "../../../header/DashboardCandidatesHeader";
 import MenuToggler from "../../MenuToggler";
-
+import { useSelector } from "react-redux";
 const Index = () => {
+  const {user} = useSelector(state=>state.auth)
   return (
     <div className="page-wrapper dashboard">
       <span className="header-span"></span>
@@ -34,7 +35,7 @@ const Index = () => {
           <MenuToggler />
           {/* Collapsible sidebar button */}
 
-          <BreadCrumb title="Salam, Şıxkərim!" />
+          <BreadCrumb title={"Salam,"+user?.name+"!"} />
           {/* breadCrumb */}
 
           <div className="row">
@@ -56,7 +57,7 @@ const Index = () => {
               {/* <!-- Notification Widget --> */}
               <div className="notification-widget ls-widget">
                 <div className="widget-title">
-                  <h4>Notifications</h4>
+                  <h4>Bildirişlər</h4>
                 </div>
                 <div className="widget-content">
                   <Notification />
@@ -69,7 +70,7 @@ const Index = () => {
               {/* <!-- applicants Widget --> */}
               <div className="applicants-widget ls-widget">
                 <div className="widget-title">
-                  <h4>Jobs Applied Recently</h4>
+                  <h4>Ən son müraciətlər</h4>
                 </div>
                 <div className="widget-content">
                   <div className="row">

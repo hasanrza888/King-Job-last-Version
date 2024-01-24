@@ -74,3 +74,13 @@ export const getmonthlyvacancydata = () => {
 export const getapplyerlevelinterval = () => {
     return axiosInstance.get('/applysintervalnums')
 }
+
+//notifications
+export const getcompanynotifications = () => {
+    return axiosInstance.get('/companynotifications')
+}
+
+//Account settings
+export const changecompanyaccountpassword = (data) => {
+    return axiosInstance.post('/changeCompanyAccountPassword',data)
+}

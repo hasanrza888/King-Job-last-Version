@@ -6,7 +6,10 @@ import { sendmessage } from "../../../../../services/api/company_api";
 import { useEffect, useState,useRef } from "react";
 import socket from "../../../../../socket/socketService";
 import { calculateTimeDifference } from "../../../../../utils/calculateTimeDifference";
+import { increaseNumOfCompanyUnreadMessages } from "../../../../../features/employer/employerSlice";
+import messagecomenotificationsound from "../../../../../sounds/messagecomenotification.mp3"
 const ChatBoxContentField = () => {
+  const notificationAudioRef = useRef(null);
   const dispatch = useDispatch();
   const [content,setContent] = useState("")
   const {currentChat} = useSelector(state=>state.message);
@@ -31,11 +34,25 @@ const ChatBoxContentField = () => {
     }
   }
   useEffect(()=>{
+    const notificationAudio = notificationAudioRef.current;
     socket.on('message',(data)=>{
       const {chat} = data;
+      if(!currentChat){
+        dispatch(increaseNumOfCompanyUnreadMessages(chat));
+      }
+      if(currentChat && currentChat?._id !==chat){
+      dispatch(increaseNumOfCompanyUnreadMessages(chat));
+      }
       if(currentChat && currentChat?._id === chat){
-        dispatch(addMessage(data))
+        dispatch(addMessage(data));
+        
         scrollToBottom();
+      }
+      else{
+        notificationAudio?.play().catch((error) => {
+          // Handle autoplay error, if any
+          console.error('Autoplay failed:', error);
+        });
       }
       // console.log(data)
     })

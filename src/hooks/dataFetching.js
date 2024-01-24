@@ -8,8 +8,8 @@ import { loggedin,logout } from '../services/api/auth_api.js';
 import { setJobs } from '../features/job/jobSlice.js';
 import { setCategories } from '../features/category/categorySlice.js';
 import { setJobtypes } from '../features/jobtypes/jobtypeSlice.js';
-import { setApplieds, setSavedJobs, setContacts,setInfo } from '../features/candidate/candidateSlice.js';
-import { setCompanyInfo,setVacancies,setApplyers,setApplyStatuses } from '../features/employer/employerSlice.js';
+import { setApplieds, setSavedJobs, setContacts,setInfo,addNotification } from '../features/candidate/candidateSlice.js';
+import { setCompanyInfo,setVacancies,setApplyers,setApplyStatuses,addNotificationForCompany,updateCompanyContacts } from '../features/employer/employerSlice.js';
 import { handleApiError } from '../utils/apiErrorHandling.js';
 import { getallvacancies,getallapplyers,getapplystatuses,getallfolders } from '../services/api/company_api.js';
 import {toast} from 'react-toastify'
@@ -33,6 +33,23 @@ const useDataFetching = () => {
       });
     }
   }, [isLoggedIn, user,lguser]);
+  useEffect(()=>{
+    if (socket && isLoggedIn && user) {
+      socket.on('notification', (data) => {
+        console.log("socket work from notification",data)
+        if(user?.u_t_p === 'u_s_r'){
+        dispatch(addNotification(data))
+        // lguser();
+        }
+        if(user?.u_t_p === 'c_m_p'){
+          dispatch(addNotificationForCompany(data))
+        }
+      });
+    } 
+    return () => {
+      socket.off('notification');
+    };
+  },[isLoggedIn,user])
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,14 +64,12 @@ const useDataFetching = () => {
         dispatch(setJobtypes(jobTypesResponse.data.data));
 
         if (isLoggedIn && user?.u_t_p === 'u_s_r') {
-          const [appliedsResponse, savedJobsResponse, contactsResponse] = await Promise.all([
+          const [appliedsResponse, savedJobsResponse] = await Promise.all([
             getuserapplys(),
             getsavedjobs(),
-            getallcontacts()
           ]);
           dispatch(setApplieds(appliedsResponse.data.data));
           dispatch(setSavedJobs(savedJobsResponse.data.data));
-          dispatch(setContacts(contactsResponse.data.data));
           return
         }
         if(isLoggedIn && user?.u_t_p === 'c_m_p'){
@@ -82,17 +97,19 @@ const useDataFetching = () => {
     const checkLoggedIn = async () => {
       try {
         const { data } = await loggedin();
+        // console.log(data)
         if (data.user.returnedData.u_t_p === 'c_m_p') {
           if (data.user.info.isBlock) {
             // console.log("okkkokokok")
             return lguser();
           }
           else{
-            console.log(data?.user?.info)
+            // console.log(data?.user?.info)
             dispatch(setCompanyInfo(data?.user?.info))
           }
         }
         else{
+          // console.log(data?.user?.info)
           dispatch(setInfo(data?.user?.info));
         }
         dispatch(setUser(data?.user?.returnedData));

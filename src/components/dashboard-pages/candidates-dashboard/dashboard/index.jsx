@@ -34,8 +34,8 @@ const Index = () => {
         <div className="dashboard-outer">
           <MenuToggler />
           {/* Collapsible sidebar button */}
-
           <BreadCrumb title={"Salam,"+user?.name+"!"} />
+
           {/* breadCrumb */}
 
           <div className="row">

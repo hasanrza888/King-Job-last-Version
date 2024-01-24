@@ -81,7 +81,7 @@ const FormInfoBox = () => {
         <div className="form-group col-lg-6 col-md-12">
           <label>Vəzifə</label>
           <input type="text" name="jobTitle" placeholder="UI Designer" value={formData.jobTitle}
-        onChange={handleChange}  />
+          onChange={handleChange}  />
         </div>
 
         {/* <!-- Input --> */}
@@ -90,9 +90,9 @@ const FormInfoBox = () => {
           <input
             type="text"
             name="phone"
-            placeholder="0 123 456 7890"
+            placeholder="+994 12 456 78 90"
             value={formData.phone}
-        onChange={handleChange}
+            onChange={handleChange}
             
           />
         </div>
@@ -121,47 +121,47 @@ const FormInfoBox = () => {
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-3 col-md-12">
-          <label>Hazırki əməkhaqqınız($/AZN)</label>
+          <label>Hazırki əməkhaqqınız (AZN)</label>
           <input
             type="text"
             name="currentSalary"
             placeholder="1000-2000"
             value={formData.currentSalary}
-        onChange={handleChange}
+            onChange={handleChange}
           />
         </div>
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-3 col-md-12">
-          <label>Gözlənti əmək haqqı($/AZN)</label>
+          <label>Gözlənti əmək haqqı (AZN)</label>
           <input
             type="text"
             name="expestedSalary"
             placeholder="2000-3000"
             value={formData.expestedSalary}
-        onChange={handleChange}
+            onChange={handleChange}
           />
         </div>
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
           <label>Təcrübə</label>
-          <input type="text" name="experiencesYear" placeholder="5-10 Years" value={formData.experiencesYear}
-        onChange={handleChange}  />
+          <input type="text" name="experiencesYear" placeholder="5-10" value={formData.experiencesYear}
+          onChange={handleChange}  />
         </div>
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
           <label>Yaş</label>
-          <input type="text" name="age" placeholder="22 years" value={formData.age}
-        onChange={handleChange}  />
+          <input type="text" name="age" placeholder="22" value={formData.age}
+          onChange={handleChange}  />
         </div>
 
         {/* <!-- Input --> */}
         <div className="form-group col-lg-6 col-md-12">
           <label>Hazırki təhsil pilləsi</label>
-          <input type="text" name="educationlevelNow" placeholder="Master" value={formData.educationlevelNow}
-        onChange={handleChange} />
+          <input type="text" name="educationlevelNow" placeholder="Magistr" value={formData.educationlevelNow}
+          onChange={handleChange} />
         </div>
 
         {/* <!-- Input --> */}
@@ -172,7 +172,7 @@ const FormInfoBox = () => {
             name="languages"
             placeholder="English, Turkish"
             value={formData.languages}
-        onChange={handleChange}
+            onChange={handleChange}
             
           />
         </div>
@@ -207,7 +207,7 @@ const FormInfoBox = () => {
         </div> */}
 
         {/* <!-- Input --> */}
-        <div className="form-group col-lg-6 col-md-12">
+        <div className="form-group col-lg-12 col-md-12">
           <button type="submit" className="theme-btn btn-style-one">
             Yadda saxla
           </button>

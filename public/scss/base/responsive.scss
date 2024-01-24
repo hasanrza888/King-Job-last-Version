@@ -131,6 +131,9 @@
 		padding-left: 300px;
 	}
 
+	.page-wrapper.task-solve-p {
+		padding-left: 0px;
+	}
 	.dashboard {
 		.dashboard-outer {
 			padding: 40px 30px 0;
@@ -1265,6 +1268,8 @@
 
 	.chat-widget .contacts_column .card-header {
 		padding: 30px 20px 0;
+		margin: 10px 10px 0px 0px;
+		position: relative;
 	}
 
 	.contacts li a {

@@ -10,7 +10,7 @@ export default function ChatHamburger() {
   return (
     <>
       <button onClick={chatToggle} className="toggle-contact">
-        <span className="fa fa-bars"></span>
+        <i class="icon las la-address-card"></i>
       </button>
     </>
   );

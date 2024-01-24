@@ -33,6 +33,14 @@ module.exports = [
   },
   {
     id: 5,
+    name: "Tapşırıqlarım",
+    icon: "las la-book",
+    routePath: "/applicants-dashboard/my-tasks",
+    active: "",
+    onCLick:""
+  },
+  {
+    id: 6,
     name: "Geri Dönüşlər",
     icon: "la la-bell",
     routePath: "/applicants-dashboard/feedbacks",
@@ -40,29 +48,15 @@ module.exports = [
     onCLick:""
   },
   {
-    id: 6,
+    id: 7,
     name: "Yadda saxlanmışlar",
     icon: "la-bookmark-o",
     routePath: "/applicants-dashboard/saved-vacancies",
     active: "",
     onCLick:""
   },
-  // {
-  //   id: 7,
-  //   name: "CV manager",
-  //   icon: "la la-file-invoice",
-  //   routePath: "/applicants-dashboard/cv-manager",
-  //   active: "",
-  // },
-  // {
-  //   id: 8,
-  //   name: "Packages",
-  //   icon: "la-box",
-  //   routePath: "/applicants-dashboard/packages",
-  //   active: "",
-  // },
   {
-    id: 9,
+    id: 8,
     name: "Mesajlar",
     icon: "la-comment-o",
     routePath: "/applicants-dashboard/messages",
@@ -70,7 +64,7 @@ module.exports = [
     onCLick:""
   },
   {
-    id: 10,
+    id: 9,
     name: "Şifrəni Dəyiş",
     icon: "la-lock",
     routePath: "/applicants-dashboard/change-password",
@@ -78,18 +72,11 @@ module.exports = [
     onCLick:""
   },
   {
-    id: 11,
+    id: 10,
     name: "Çıxış",
     icon: "la-sign-out",
     routePath: "/login",
     active: "",
     onCLick:"ok"
   },
-  // {
-  //   id: 12,
-  //   name: "Delete Profile",
-  //   icon: "la-trash",
-  //   routePath: "/",
-  //   active: "",
-  // },
 ];

@@ -21,15 +21,15 @@ const WidgetToFilterBox = () => {
       {/* End searchBox one */}
 
       {/* <!--Tabs Box--> */}
-      <select className="chosen-single form-select chosen-container">
+      {/* <select className="chosen-single form-select chosen-container">
         <option>Hamısı</option>
         <option>IT</option>
         <option>Bank</option>
         <option>Maliyyə</option>
         <option>Memar</option>
         <option>Dizayn</option>
-      </select>
-      <button onClick={()=>setShowModal(true)} className="chosen-single chosen-container">
+      </select> */}
+      <button onClick={()=>setShowModal(true)} className="chosen-container theme-btn btn-style-one">
         Yeni tapşırıq +
       </button>
 

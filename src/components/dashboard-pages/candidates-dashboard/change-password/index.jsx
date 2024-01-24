@@ -38,7 +38,7 @@ const index = () => {
 
           <div className="ls-widget">
             <div className="widget-title">
-              <h4>Change Password</h4>
+              <h4>Şifrəni dəyiş</h4>
             </div>
 
             <div className="widget-content">

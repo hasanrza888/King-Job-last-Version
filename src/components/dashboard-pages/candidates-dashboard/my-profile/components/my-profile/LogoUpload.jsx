@@ -63,13 +63,12 @@ const logoImgHandler = async (e) => {
             className="uploadButton-button ripple-effect"
             htmlFor="upload"
           >
-            {logoImg ? logoImg.name : "Browse Logo"}
+            {logoImg ? logoImg.name : "Profil Şəkli yüklə"}
           </label>
           <span className="uploadButton-file-name"></span>
         </div>
         <div className="text">
-          Max file size is 1MB, Minimum dimension: 330x300 And Suitable files
-          are .jpg & .png
+          Maksimum fayl ölçüsü 1MB, minimum ölçüsü 300x300 və .jpg & .png formatında olmalıdır
         </div>
         {/* <img style={{width:150}} src={info?.profilepic} alt="ll" /> */}
       </div>

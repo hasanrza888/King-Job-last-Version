@@ -63,14 +63,14 @@ module.exports = [
     active: "",
     onClick:""
   },
-  {
-    id: 9,
-    name: "Abunəliklər",
-    icon: "la-box",
-    routePath: "/company-dashboard/subscriptions",
-    active: "",
-    onClick:""
-  },
+  // {
+  //   id: 9,
+  //   name: "Abunəliklər",
+  //   icon: "la-box",
+  //   routePath: "/company-dashboard/subscriptions",
+  //   active: "",
+  //   onClick:""
+  // },
   {
     id: 10,
     name: "Mesajlar",

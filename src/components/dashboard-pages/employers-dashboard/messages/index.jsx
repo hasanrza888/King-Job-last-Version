@@ -30,14 +30,15 @@ const Index = () => {
       {/* <!-- Dashboard --> */}
       <section className="user-dashboard">
         <div className="dashboard-outer">
-          <BreadCrumb title="Mesajlar" />
-          {/* breadCrumb */}
-
+          
           <MenuToggler />
+          <BreadCrumb title="Mesajlar" />
+          <p>Yalnız müraciət edən namizədlərə mesaj göndərə bilərsiniz !</p>
+          
           {/* Collapsible sidebar button */}
-          <div style={{display:'flex'}} className="btn-box">
-          <ChatHamburger /><span>Kontaktlar</span>
-        </div>
+          <div className="d-flex flex-row-reverse btn-box mb-5" title="Kontaktlarım">
+            <ChatHamburger />
+          </div>
 
           <div className="row">
             <div

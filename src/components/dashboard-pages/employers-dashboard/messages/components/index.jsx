@@ -13,7 +13,7 @@ const ChatBox = () => {
   return (
     <div className="row">
       <div
-        className="contacts_column col-xl-4 col-lg-5 col-md-12 col-sm-12 chat"
+        className="contacts_column col-xxl-4 col-lg-6 col-md-12 col-sm-12 chat"
         id="chat_contacts"
       >
         <div className="card contacts_card">
@@ -26,7 +26,7 @@ const ChatBox = () => {
               <span className="flaticon-close"></span>
             </div>
             {/* close chatbox in mobile menu */}
-            <div className="search-box-one">
+            <div className="search-box-one mt-3">
               <SearchBox />
             </div>
           </div>
@@ -39,7 +39,7 @@ const ChatBox = () => {
       </div>
       {/* End chat_contact */}
 
-      <div className=" col-xl-8 col-lg-7 col-md-12 col-sm-12 chat">
+      <div className=" col-xxl-8 col-lg-6 col-md-12 col-sm-12 chat">
         <ContentField />
       </div>
       {/* chatbox-field-content */}

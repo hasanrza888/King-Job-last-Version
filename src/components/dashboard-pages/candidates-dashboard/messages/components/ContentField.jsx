@@ -54,89 +54,91 @@ const ChatBoxContentField = () => {
   useEffect(() => {
     scrollToBottom(); // Scroll to the bottom after sending a message
   }, [currentChat?.messages]);
-  if (!currentChat) {
+  // if (!currentChat) {
+  //   return (
+  //     <div className="card message-card">
+  //       <div className="card-header msg_head">
+  //         <p>No Conversation</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+  if(currentChat){
     return (
       <div className="card message-card">
         <div className="card-header msg_head">
-          <p>No Conversation</p>
+        <div className="d-flex bd-highlight">
+            <div className="img_cont">
+              <img
+                width={48}
+                height={48}
+                src={currentChat?.userprofilelogo || "/images/resource/candidate-8.png"}
+                alt="candidates"
+                className="rounded-circle user_img"
+              />
+            </div>
+            <div className="user_info">
+              <span>{currentChat?.userName}</span>
+              <p>{currentChat?.receiverIsOnline && "Xətdə"}</p>
+            </div>
+          </div>
+
+          <div className="btn-box">
+            <button className="dlt-chat">Mesajları sil</button>
+            <ChatHamburger />
+          </div>
         </div>
+        {/* End .cart-header */}
+
+        <div className="card-body msg_card_body">
+        {
+          currentChat?.messages?.map((message,index)=>(
+            
+            <div className={message?.sender === myid ?"d-flex justify-content-end mb-2 reply" :"d-flex justify-content-start mb-2"}>
+            <div className="img_cont_msg">
+              <img
+                width={48}
+                height={48}
+                src={message?.sender === myid ? currentChat?.myprofilelogo || "/images/resource/candidate-3.png" : currentChat?.userprofilelogo || "/images/resource/candidate-3.png"}
+                alt="candidates"
+                className="rounded-circle user_img_msg"
+              />
+              <div className="name">
+                {message?.sender === myid ? user?.name?.slice(0,6)+"..." :currentChat?.userName?.slice(0,6)+"..."} <span className="msg_time">{calculateTimeDifference(message?.createdAt)}</span>
+              </div>
+            </div>
+            <div className="msg_cotainer">
+              {message?.text}
+            </div>
+          </div>
+          ))
+        }
+        <div ref={messagesEndRef} />
+        </div>
+        {/* End .card-body */}
+
+        <div className="card-footer">
+          <div className="form-group mb-0">
+            <form onSubmit={sendmsg}>
+              <textarea
+                className="form-control type_msg"
+                placeholder="Mesaj yaz..."
+                required
+                onChange={(e)=>{setContent(e.target.value)}}
+              ></textarea>
+              <button
+                type="submit"
+                className="theme-btn btn-style-one submit-btn"
+              >
+                Göndər
+              </button>
+            </form>
+          </div>
+        </div>
+        {/* End .card-footer */}
       </div>
     );
   }
-  return (
-    <div className="card message-card">
-      <div className="card-header msg_head">
-      <div className="d-flex bd-highlight">
-          <div className="img_cont">
-            <img
-              width={48}
-              height={48}
-              src={currentChat?.userprofilelogo || "/images/resource/candidate-8.png"}
-              alt="candidates"
-              className="rounded-circle user_img"
-            />
-          </div>
-          <div className="user_info">
-            <span>{currentChat?.userName}</span>
-            <p>{currentChat?.receiverIsOnline && "Xətdə"}</p>
-          </div>
-        </div>
-
-        <div className="btn-box">
-          <button className="dlt-chat">Delete Conversation</button>
-          <ChatHamburger />
-        </div>
-      </div>
-      {/* End .cart-header */}
-
-      <div className="card-body msg_card_body">
-      {
-        currentChat?.messages?.map((message,index)=>(
-          
-          <div className={message?.sender === myid ?"d-flex justify-content-end mb-2 reply" :"d-flex justify-content-start mb-2"}>
-          <div className="img_cont_msg">
-            <img
-              width={48}
-              height={48}
-              src={message?.sender === myid ? currentChat?.myprofilelogo || "/images/resource/candidate-3.png" : currentChat?.userprofilelogo || "/images/resource/candidate-3.png"}
-              alt="candidates"
-              className="rounded-circle user_img_msg"
-            />
-            <div className="name">
-              {message?.sender === myid ? user?.name?.slice(0,6)+"..." :currentChat?.userName?.slice(0,6)+"..."} <span className="msg_time">{calculateTimeDifference(message?.createdAt)}</span>
-            </div>
-          </div>
-          <div className="msg_cotainer">
-            {message?.text}
-          </div>
-        </div>
-        ))
-      }
-      <div ref={messagesEndRef} />
-      </div>
-      {/* End .card-body */}
-
-      <div className="card-footer">
-        <div className="form-group mb-0">
-          <form onSubmit={sendmsg}>
-            <textarea
-              className="form-control type_msg"
-              placeholder="Type a message..."
-              required
-              onChange={(e)=>{setContent(e.target.value)}}
-            ></textarea>
-            <button
-              type="submit"
-              className="theme-btn btn-style-one submit-btn"
-            >
-              Send Message
-            </button>
-          </form>
-        </div>
-      </div>
-      {/* End .card-footer */}
-    </div>
-  );
 };
 
 export default ChatBoxContentField;

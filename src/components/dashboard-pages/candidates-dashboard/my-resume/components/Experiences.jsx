@@ -136,22 +136,27 @@ const Experiences = () => {
               <Form.Label>Vəzifə</Form.Label>
               <Form.Control onChange={handleChange} value={edu.position} name="position" type="text" placeholder="məs-Front end developer" />
             </Form.Group>
+            <br />
             <Form.Group controlId="formName">
               <Form.Label>Müəssisə</Form.Label>
               <Form.Control onChange={handleChange} value={edu.companyName} name="companyName" type="text" placeholder="məs-Paşa Bank" />
             </Form.Group>
+            <br />
             <Form.Group controlId="formStartDate">
               <Form.Label>Başlama müddəti</Form.Label>
               <Form.Control onChange={handleChange} value={edu.startDate} name="startDate" type="text" placeholder="məs-2012-09-08" />
             </Form.Group>
+            <br />
             <Form.Group controlId="formEndDate">
               <Form.Label>Bitmə müddəti</Form.Label>
               <Form.Control onChange={handleChange} value={edu.endDate} name="endDate" type="text" placeholder="məs-2012-09-08" />
             </Form.Group>
+            <br />
             <Form.Group controlId="formDescription">
               <Form.Label>Qeyd</Form.Label>
               <Form.Control onChange={handleChange} value={edu.description} name="description" as="textarea" rows={3} placeholder="Qeyd" />
             </Form.Group>
+            <br />
             <Button onClick={submitExperience} variant="primary" type="submit">
               Əlavə et
             </Button>

@@ -31,7 +31,7 @@ const index = () => {
           <MenuToggler />
           {/* Collapsible sidebar button */}
 
-          <BreadCrumb title="Job Alerts!" />
+          <BreadCrumb title="Geri dönüşlər" />
           {/* breadCrumb */}
 
           <div className="row">

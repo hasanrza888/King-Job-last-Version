@@ -5,6 +5,8 @@ import HeaderNavContent from "./HeaderNavContent";
 import { isActiveLink } from "../../utils/linkActiveChecker";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import DefCandidateP from '../../img/defApplicant5.png';
+
 const DashboardCandidatesHeader = () => {
     const {user,info} = useSelector(state=>state.candidate)
     console.log(user)
@@ -78,7 +80,7 @@ const DashboardCandidatesHeader = () => {
                                 <img
                                     alt="avatar"
                                     className="thumb"
-                                    src={info?.profilepic}
+                                    src={info?.profilepic || DefCandidateP}
                                     width={50}
                                     height={50}
                                 />

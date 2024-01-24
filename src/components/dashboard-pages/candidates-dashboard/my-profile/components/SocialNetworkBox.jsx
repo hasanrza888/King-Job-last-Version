@@ -74,12 +74,12 @@ const SocialNetworkBox = () => {
           </div>
         ))}
         <div className="form-group col-lg-6 col-md-12">
-          <button type="button" onClick={addNewLink} className="theme-btn btn-style-one">
+          <button type="button" onClick={addNewLink} className="theme-btn small btn-style-one-bordered mt-5" title="Əlavə et">
             +
           </button>
         </div>
-        <div className="form-group col-lg-6 col-md-12">
-          <button type="submit" className="theme-btn btn-style-one">
+        <div className="form-group col-lg-12 col-md-12">
+          <button type="submit" className="theme-btn btn-style-one" >
             Yadda saxla
           </button>
         </div>

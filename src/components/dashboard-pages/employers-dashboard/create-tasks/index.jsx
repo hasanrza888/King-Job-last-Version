@@ -8,6 +8,7 @@ import AboutTask from "./components/AboutTask";
 import CreateQuestion from "./components/CreateQuestion";
 import MenuToggler from "../../MenuToggler";
 import FilterTask from "./components/FilterTask";
+import SelectedQuestions from "./components/selectedQuestions";
 
 const index = () => {
   return (
@@ -30,10 +31,12 @@ const index = () => {
       {/* <!-- Dashboard --> */}
       <section className="user-dashboard">
         <div className="dashboard-outer">
+          <MenuToggler />
+
           <BreadCrumb title="Tapşırıq yarat" />
           {/* breadCrumb */}
 
-          <MenuToggler />
+          
           {/* Collapsible sidebar button */}
 
           <div className="row">
@@ -47,6 +50,16 @@ const index = () => {
                 </div>
               </div>
               
+              {
+                
+                <div className="ls-widget">
+                  <div className="tabs-box">
+                    <div className="">
+                      <SelectedQuestions />
+                    </div>
+                  </div>
+                </div>
+              }
               {/* <!-- Ls widget --> */}
               {/* <div className="ls-widget">
                 <div className="tabs-box">

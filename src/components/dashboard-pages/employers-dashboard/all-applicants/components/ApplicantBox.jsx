@@ -119,6 +119,11 @@ export default function ApplicantBox({candidate}) {
                               <span className="la la-trash"></span>
                             </button>
                           </li>
+                          <li>
+                            <button data-text="Tapşırıq göndər">
+                              <i class="las la-book"></i>
+                            </button>
+                          </li>
                         </ul>
                       </div>
                       {/* End admin options box */}

@@ -9,7 +9,7 @@ const MenuToggler = () => {
   };
 
   return (
-    <div className="mb-4 ms-0 show-1023">
+    <div className="mb-4 ms-0 show-1266">
       <button
         onClick={menuToggleHandler}
         type="button"

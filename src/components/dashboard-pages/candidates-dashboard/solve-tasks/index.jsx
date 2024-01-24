@@ -4,13 +4,13 @@ import ConfirmModal from "./components/ConfirmModal";
 import QuestionBox from "./components/QuestionBox";
 
 const index = () => {
-  const [openTask, setOpenTask] = useState(true);
-  const handleClose = () => setOpenTask(false);
-  const handleShow = () => setOpenTask(true);
-  if(openTask){
-      return(
-          <ConfirmModal openTask={openTask} handleClose={handleClose} handleShow={handleShow}/>
-      )
+  // const [openTask, setOpenTask] = useState(true);
+  // const handleClose = () => setOpenTask(false);
+  // const handleShow = () => setOpenTask(true);
+  if("9"){
+      // return(
+      //     <ConfirmModal openTask={openTask} handleClose={handleClose} handleShow={handleShow}/>
+      // )
   }else{
   return (
     <div className="page-wrapper dashboard task-solve-p">

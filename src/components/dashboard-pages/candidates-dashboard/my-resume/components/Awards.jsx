@@ -124,7 +124,7 @@ const Awards = () => {
       {/* <!-- Resume BLock --> */}
       <Modal show={showModal} onHide={closeModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Sertificat əlavə et</Modal.Title>
+          <Modal.Title>Sertifikat əlavə et</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {/* Your education form goes here */}
@@ -134,18 +134,22 @@ const Awards = () => {
               <Form.Label>Ad</Form.Label>
               <Form.Control onChange={handleChange} value={edu.name} name="name" type="text" placeholder="məs-Bronze medal of Respublician olympiad" />
             </Form.Group>
+            <br />
             <Form.Group controlId="formName">
               <Form.Label>Sertifikat linki</Form.Label>
               <Form.Control onChange={handleChange} value={edu.certificateUrl} name="certificateUrl" type="text" placeholder="https://www.google.drive/myserfikat" />
             </Form.Group>
+            <br />
             <Form.Group controlId="formStartDate">
               <Form.Label>Başlama müddəti</Form.Label>
               <Form.Control onChange={handleChange} value={edu.startDate} name="startDate" type="text" placeholder="məs-2012-09-08" />
             </Form.Group>
+            <br />
             <Form.Group controlId="formEndDate">
               <Form.Label>Bitmə müddəti</Form.Label>
               <Form.Control onChange={handleChange} value={edu.endDate} name="endDate" type="text" placeholder="məs-2012-09-08" />
             </Form.Group>
+            <br />
             <Button onClick={submitAchievement} variant="primary" type="submit">
               Əlavə et
             </Button>

@@ -27,62 +27,40 @@ const FilterTask = () => {
   return (
     <div className="chosen-outer">
         <select onChange={(e)=>dispatch(setFolder(e.target.value))} value={formData.folder} className="chosen-single form-select chosen-container">
-        <option value="">Tapşırıq seç</option>
-        {
-            folders?.map((folder,index)=>(
-                <option value={folder?._id}>{folder?.name}</option>
-            ))
-        }
-      </select>
-      {/* <!--search box--> */}
-      <div className="search-box-one">
-      {selectedfolders && <table className="default-table manage-job-table">
-      <thead>
-        <tr>
-          <th>Ad</th>
-          <th>Sual sayı</th>
-          <th>Yaranma tarixi</th>
-        </tr>
-      </thead>
-      {/* End thead */}
-      <tbody>
-        {
-          [selectedfolders]?.map((folder,index)=>(
-            <tr>
-            <td><strong>{folder?.name?.toUpperCase()}</strong></td>
-            <td title={folder?.questions.map((q,i)=>i+1+'-'+extractTextFromHTML(q.question)).join('\n')}>{folder?.questions?.length}</td>
-            <td><strong>{folder?.createdAt?.split("T")[0]},{folder?.createdAt?.split("T")[1]?.split(".")[0]}</strong></td>
-            {/* <td>
-              <div className="option-box">
-                <ul className="option-list">
-                  <li>
-                    <button data-text="Tapşırığa bax">
-                      <span className="la la-eye"></span>
-                    </button>
-                  </li>
-                  <li>
-                    <button data-text="Tapşırığı redaktə et">
-                      <span className="la la-pencil"></span>
-                    </button>
-                  </li>
-                  <li>
-                    <button data-text="Tapşırığı sil">
-                      <span className="la la-trash"></span>
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </td> */}
-          </tr>
-          ))
-        }
-      </tbody>
-    </table>}
-      </div>
+          <option value="">Tapşırıq seç</option>
+          {
+              folders?.map((folder,index)=>(
+                  <option value={folder?._id}>{folder?.name}</option>
+              ))
+          }
+        </select>
+        {/* <!--search box--> */}
+        {/* <div className="search-box-one">
+          {selectedfolders && 
+            <table className="default-table manage-job-table">
+              <thead>
+                <tr>
+                  <th>Ad</th>
+                  <th>Sual sayı</th>
+                  <th>Yaranma tarixi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  [selectedfolders]?.map((folder,index)=>(
+                    <tr>
+                      <td><strong>{folder?.name?.toUpperCase()}</strong></td>
+                      <td title={folder?.questions.map((q,i)=>i+1+'-'+extractTextFromHTML(q.question)).join('\n')}>{folder?.questions?.length}</td>
+                      <td><strong>{folder?.createdAt?.split("T")[0]},{folder?.createdAt?.split("T")[1]?.split(".")[0]}</strong></td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          }
+        </div> */}
       {/* End searchBox one */}
-
       {/* <!--Tabs Box--> */}
-      
     </div>
   );
 };

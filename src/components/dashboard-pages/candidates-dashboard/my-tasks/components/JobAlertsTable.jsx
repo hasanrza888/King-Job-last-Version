@@ -1,14 +1,20 @@
 import { Link } from "react-router-dom";
 import jobs from "../../../../../data/job-featured.js";
+import { useState } from "react";
+import ViewTask from "./ViewTask.jsx";
 
 const JobAlertsTable = () => {
+  const [openTask, setOpenTask] = useState(false);
+  const handleClose = () => setOpenTask(false);
+  const handleShow = () => setOpenTask(true);
+
   return (
     <div className="tabs-box">
       <div className="widget-title">
-        <h4>Müraciətlərdən geri dönüş</h4>
-
-        <div className="chosen-outer">
-          {/* <!--Tabs Box--> */}
+        <h4>Müraciətlərim üçün gələn tapşırıqlar</h4>
+        
+        {/* <!--Tabs Box--> */}
+        {/* <div className="chosen-outer">
           <select className="chosen-single form-select">
             <option>Last 6 Months</option>
             <option>Last 12 Months</option>
@@ -16,7 +22,7 @@ const JobAlertsTable = () => {
             <option>Last 24 Months</option>
             <option>Last 5 year</option>
           </select>
-        </div>
+        </div> */}
       </div>
       {/* End filter top bar */}
 
@@ -27,10 +33,10 @@ const JobAlertsTable = () => {
             <table className="default-table manage-job-table">
               <thead>
                 <tr>
-                  <th>Vakansiya</th>
-                  <th>Criteria</th>
-                  <th>Created</th>
-                  <th>Action</th>
+                  <th>Tapşırıq</th>
+                  <th>Göndərilmə tarixi</th>
+                  <th>Bitmə tarixi</th>
+                  <th>İdarə Etmə</th>
                 </tr>
               </thead>
 
@@ -58,11 +64,11 @@ const JobAlertsTable = () => {
                             <ul className="job-info">
                               <li>
                                 <span className="icon flaticon-briefcase"></span>
-                                Segment
+                                Şirkət adı
                               </li>
                               <li>
                                 <span className="icon flaticon-map-locator"></span>
-                                London, UK
+                                Vakansiya
                               </li>
                             </ul>
                           </div>
@@ -75,13 +81,13 @@ const JobAlertsTable = () => {
                       <div className="option-box">
                         <ul className="option-list">
                           <li>
-                            <button data-text="View Aplication">
-                              <span className="la la-eye"></span>
+                            <button data-text="Həll etməyə başla !" onClick={()=> setOpenTask(true)}>
+                              <i class="las la-play"></i>
                             </button>
                           </li>
                           <li>
-                            <button data-text="Delete Aplication">
-                              <span className="la la-trash"></span>
+                            <button data-text="Tapşırıqdan İmtina Et">
+                              <i class="las la-ban"></i>
                             </button>
                           </li>
                         </ul>
@@ -95,6 +101,9 @@ const JobAlertsTable = () => {
         </div>
       </div>
       {/* End table widget content */}
+
+      {/* task open modal */}
+      <ViewTask handleClose={handleClose} handleShow={handleShow} openTask={openTask} task={"task item"}/>
     </div>
   );
 };

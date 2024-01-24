@@ -31,7 +31,7 @@ const index = () => {
           <MenuToggler />
           {/* Collapsible sidebar button */}
 
-          <BreadCrumb title="Applied jobs!" />
+          <BreadCrumb title="Müraciət olunmuşlar" />
           {/* breadCrumb */}
 
           

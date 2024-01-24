@@ -58,3 +58,9 @@ export const getsavedjobs = () => {
 export const getallcontacts = () => {
     return axiosInstance.get('/usermessagers')
 }
+
+
+//Notifications
+export const getusernotification = () => {
+    return axiosInstance.get('/getusernotifications')
+}

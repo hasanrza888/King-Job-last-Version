@@ -23,3 +23,9 @@ export const getjobTypes = () => {
 export const increaseViews = (id,checker) => {
     return axiosInstance.put('/increaseNumberOfViews/'+id+"/"+checker)
 }
+
+
+//emailsending like otp
+export const verifyemailandsendotp = (data) => {
+    return axiosInstance.post('/verifyEmailAndSendOtp',data);
+}

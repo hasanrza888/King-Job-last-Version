@@ -24,7 +24,9 @@ const initialState = {
         age:"",
         educationlevelNow:"",
         languages:"",
+        
     },
+    notifications:[],
     myapplieds:[],
     savedjobs:[],
     numofactivesavedjobs:0,
@@ -178,6 +180,44 @@ export const candidateSlice = createSlice({
         setContacts:(state,{payload}) => {
             state.contacts = payload;
         },
+        updateCandidateContacts:(state,{payload}) => {
+            const index = state.contacts.findIndex(
+              (contact) => contact._id.toString() === payload._id.toString()
+            );
+            if (index !== -1) {
+              state.contacts = state.contacts.map((contact, i) =>
+                i === index ? { ...contact, ...payload } : contact
+              );
+            }
+          },
+          increaseNumOfCandidateUnreadMessages: (state, { payload }) => {
+            console.log("payload from increasing",payload)
+            const index = state.contacts.findIndex(
+              (contact) => contact._id.toString() === payload.toString()
+            );
+          
+            if (index !== -1) {
+              state.contacts = state.contacts.map((contact, i) =>
+                i === index
+                  ? {
+                      ...contact,
+                      unreadMessages: {
+                        ...contact.unreadMessages,
+                        user: (contact.unreadMessages?.user || 0) + 1,
+                        company: 0, // Assuming you want to reset user unread messages to 0
+                      },
+                    }
+                  : contact
+              );
+            }
+            console.log(state.companycontacts)
+          },
+        setNotifications:(state,{payload})=>{
+            state.notifications = payload
+        },
+        addNotification:(state,{payload}) => {
+            state.notifications = [payload,...state.notifications]
+        },
         addDatePostCheck: (state, { payload }) => {
             state?.datePost?.map((item) => {
                 item.isChecked = false;
@@ -266,6 +306,10 @@ export const {
     addJobToSaved,
     deleteJobFromSaved,
     setContacts,
-    setNumOfActiveSavedJobs
+    setNumOfActiveSavedJobs,
+    addNotification,
+    setNotifications,
+    updateCandidateContacts,
+    increaseNumOfCandidateUnreadMessages
 } = candidateSlice.actions;
 export default candidateSlice.reducer;

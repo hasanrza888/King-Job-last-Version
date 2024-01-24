@@ -10,7 +10,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
-
+import './blur.css'
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -65,24 +65,35 @@ export const data = {
 };
 
 const ProfileChart = () => {
+  const overlayStyles = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: "rgba(255, 255, 200, 0.8)",
+    backdropFilter: "blur(10px)", // Adjust the blur radius as needed
+    pointerEvents: "none", // Allow interaction with elements behind the overlay
+  };
   return (
     <div className="tabs-box">
       <div className="widget-title">
-        <h4>Your Profile Views</h4>
+        <h4>Profilə baxış</h4>
         <div className="chosen-outer">
           {/* <!--Tabs Box--> */}
           <select className="chosen-single form-select">
-            <option>Last 6 Months</option>
-            <option>Last 12 Months</option>
-            <option>Last 16 Months</option>
-            <option>Last 24 Months</option>
-            <option>Last 5 year</option>
+            <option>Son 1 ay</option>
+            <option>Son 3 ay</option>
+            <option>Son 5 ay</option>
+            <option>Son 7 ay</option>
+            <option>Son 9 ay</option>
           </select>
         </div>
       </div>
       {/* End widget top bar */}
 
-      <div className="widget-content">
+      <div className="widget-content chart-container" >
+      <button title="Profil analizi üçün premium hesab almalısız" className="premium-button">Abunə ol</button>
         <Line options={options} data={data} />
       </div>
       {/* End  profile chart */}

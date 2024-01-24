@@ -40,6 +40,7 @@ const initialState = {
       value: "apartments",
     },
   ],
+  notifications:[],
   companySize: [],
   allCompanies: [],
   allapplyers:[],
@@ -90,10 +91,48 @@ export const employerSlice = createSlice({
     },
     setCompanyContacts:(state,{payload}) => {
       state.companycontacts = payload;
+    },
+    updateCompanyContacts:(state,{payload}) => {
+      const index = state.companycontacts.findIndex(
+        (contact) => contact._id.toString() === payload._id.toString()
+      );
+      if (index !== -1) {
+        state.companycontacts = state.companycontacts.map((contact, i) =>
+          i === index ? { ...contact, ...payload } : contact
+        );
+      }
+    },
+    increaseNumOfCompanyUnreadMessages: (state, { payload }) => {
+      console.log("payload from increasing",payload)
+      const index = state.companycontacts.findIndex(
+        (contact) => contact._id.toString() === payload.toString()
+      );
+    
+      if (index !== -1) {
+        state.companycontacts = state.companycontacts.map((contact, i) =>
+          i === index
+            ? {
+                ...contact,
+                unreadMessages: {
+                  ...contact.unreadMessages,
+                  company: (contact.unreadMessages?.company || 0) + 1,
+                  user: 0, // Assuming you want to reset user unread messages to 0
+                },
+              }
+            : contact
+        );
+      }
+      console.log(state.companycontacts)
+    },
+    setNotificationsForCompany:(state,{payload}) => {
+      state.notifications = payload;
+    },
+    addNotificationForCompany:(state,{payload}) => {
+      state.notifications = [payload,...state.notifications]
     }
   },
 });
 
-export const { setCompanies, setCompanyInfo, setVacancies, addVacancy,updateVacancy,setApplyers,updateApplyer,setApplyStatuses,setCompanyContacts } =
+export const { setCompanies, setCompanyInfo, setVacancies, addVacancy,updateVacancy,setApplyers,updateApplyer,setApplyStatuses,setCompanyContacts,updateCompanyContacts,increaseNumOfCompanyUnreadMessages,setNotificationsForCompany,addNotificationForCompany } =
   employerSlice.actions;
 export default employerSlice.reducer;

@@ -6,6 +6,7 @@ import { handleApiError } from "../../../../../utils/apiErrorHandling";
 import { useState,useEffect,useRef } from "react";
 import socket from "../../../../../socket/socketService";
 import { calculateTimeDifference } from "../../../../../utils/calculateTimeDifference";
+import { increaseNumOfCandidateUnreadMessages } from "../../../../../features/candidate/candidateSlice";
 const ChatBoxContentField = () => {
   const dispatch = useDispatch();
   const [content,setContent] = useState("");
@@ -33,6 +34,12 @@ const ChatBoxContentField = () => {
     socket.on('message',(data)=>{
       console.log(data)
       const {chat} = data;
+      if(!currentChat){
+        dispatch(increaseNumOfCandidateUnreadMessages(chat));
+      }
+      if(currentChat && currentChat?._id !==chat){
+        dispatch(increaseNumOfCandidateUnreadMessages(chat));
+        }
       if(currentChat && currentChat?._id === chat){
         dispatch(addMessage(data));
         scrollToBottom();

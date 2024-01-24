@@ -9,8 +9,8 @@ import { setLoading } from "../../../../../../features/loading/loadingSlice";
 const FormInfoBox = () => {
     const dispatch = useDispatch();
   const {companyInfo} = useSelector(state=>state.employer);
-
-  console.log(companyInfo)
+  const {categories} = useSelector(state=>state.category)
+  console.log(categories)
   const [formData, setFormData] = useState({
     info: companyInfo?.info || "",
     phone: companyInfo?.phone || "",
@@ -74,16 +74,7 @@ const FormInfoBox = () => {
     }
 
   }
-    const catOptions = [
-        { value: "Banking", label: "Banking" },
-        { value: "Digital & Creative", label: "Digital & Creative" },
-        { value: "Retail", label: "Retail" },
-        { value: "Human Resources", label: "Human Resources" },
-        { value: "Managemnet", label: "Managemnet" },
-        { value: "Accounting & Finance", label: "Accounting & Finance" },
-        { value: "Digital", label: "Digital" },
-        { value: "Creative Art", label: "Creative Art" },
-    ];
+    const catOptions = categories?.map(val=>({value:val.name,label:val.name}));
 
     return (
         <form onSubmit={updateSubmit} className="default-form">

@@ -7,7 +7,7 @@ const SocialNetworkBox = () => {
     <div className="ls-widget">
       <div className="tabs-box">
         <div className="widget-title">
-          <h4>Sual ?</h4>
+          <h4>Front-End development ne demekdir?</h4>
         </div>
         {/* End widget-title */}
         <div className="widget-content">
@@ -21,7 +21,7 @@ const SocialNetworkBox = () => {
               <input 
               type="text"
               name='ans'
-              placeholder="Variant content" disabled/>
+              placeholder="Web seyfelerin arxa terefi" disabled/>
             </div>
             {/* question variants */}
             <div className="form-group col-lg-6 col-md-12 quiz-var">
@@ -30,7 +30,7 @@ const SocialNetworkBox = () => {
               <input 
               type="text"
               name='ans'
-              placeholder="Variant content" disabled/>
+              placeholder="Web seyfelrerin buttonlari" disabled/>
             </div>
             {/* question variants */}
             <div className="form-group col-lg-6 col-md-12 quiz-var">
@@ -39,7 +39,7 @@ const SocialNetworkBox = () => {
               <input 
               type="text"
               name='ans'
-              placeholder="Variant content" disabled/>
+              placeholder="Web seyfelerin on uzu" disabled/>
             </div>
             {/* question variants */}
             <div className="form-group col-lg-6 col-md-12 quiz-var">
@@ -48,7 +48,7 @@ const SocialNetworkBox = () => {
               <input 
               type="text"
               name='ans'
-              placeholder="Variant content" disabled/>
+              placeholder="Web seyfelerin arcadan qabaqi" disabled/>
             </div>
           </div>
         </form>

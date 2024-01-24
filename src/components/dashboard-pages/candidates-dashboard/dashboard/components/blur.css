@@ -1,0 +1,28 @@
+.chart-container {
+    position: relative;
+    text-align: center;
+  }
+  
+  .chart-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(180, 177, 177, 0.176);
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+  }
+  
+  .premium-button {
+    position: absolute;
+    top: 50%; /* Center the button vertically */
+    transform: translateY(-50%);
+    padding: 10px 20px;
+    background-color: #ffcc00; /* Your desired button color */
+    color: #000; /* Your desired text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }

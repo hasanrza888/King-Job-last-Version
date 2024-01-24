@@ -6,7 +6,7 @@ const SearchBox = () => {
         <input
           type="search"
           name="search-field"
-          placeholder="Search"
+          placeholder="Axtar"
           required=""
         />
       </div>

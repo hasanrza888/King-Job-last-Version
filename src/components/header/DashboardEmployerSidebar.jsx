@@ -23,7 +23,7 @@ const DashboardEmployerSidebar = () => {
     return (
         <div className={`user-sidebar ${menu ? "sidebar_open" : ""}`}>
             {/* Start sidebar close icon */}
-            <div className="pro-header text-end pb-0 mb-0 show-1023">
+            <div className="pro-header text-end pb-0 mb-0 show-1266">
                 <div className="fix-icon" onClick={menuToggleHandler}>
                     <span className="flaticon-close"></span>
                 </div>

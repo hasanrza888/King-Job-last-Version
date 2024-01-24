@@ -140,28 +140,34 @@ const Education = () => {
           <Form >
             {/* Form fields */}
             <Form.Group controlId="formName">
-              <Form.Label>Pillə</Form.Label>
-              <Form.Control onChange={handleChange} value={edu.name} name="name" type="text" placeholder="pillə" />
+              <Form.Label>Təhsil pilləsi</Form.Label>
+              <Form.Control onChange={handleChange} value={edu.name} name="name" type="text" placeholder="Təhsil pilləsi" />
             </Form.Group>
+            <br />
             <Form.Group controlId="formName">
               <Form.Label>Müəssisə</Form.Label>
               <Form.Control onChange={handleChange} value={edu.school} name="school" type="text" placeholder="müəssisə" />
             </Form.Group>
+            <br />
             <Form.Group controlId="formStartDate">
               <Form.Label>Başlama müddəti</Form.Label>
               <Form.Control onChange={handleChange} value={edu.startDate} name="startDate" type="text" placeholder="Başlama müddəti" />
             </Form.Group>
+            <br />
             <Form.Group controlId="formEndDate">
               <Form.Label>Bitmə müddəti</Form.Label>
               <Form.Control onChange={handleChange} value={edu.endDate} name="endDate" type="text" placeholder="Bitmə müddəti" />
             </Form.Group>
+            <br />
             <Form.Group controlId="formDescription">
               <Form.Label>Qeyd</Form.Label>
               <Form.Control onChange={handleChange} value={edu.description} name="description" as="textarea" rows={3} placeholder="Qeyd" />
             </Form.Group>
+            <br />
             <Form.Group controlId="formContinue">
               <Form.Check onChange={handleChange} value={edu.continue} name="continue" type="checkbox" label="hələ davam edir" />
             </Form.Group>
+            <br />
             <Button onClick={submitEducation} variant="primary" type="submit">
               Əlavə et
             </Button>

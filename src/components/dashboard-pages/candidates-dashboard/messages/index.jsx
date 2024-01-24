@@ -7,6 +7,7 @@ import ChatBox from "./components";
 import DashboardCandidatesHeader from "../../../header/DashboardCandidatesHeader";
 import MenuToggler from "../../MenuToggler";
 import { useSelector } from "react-redux";
+import ChatHamburger from "../../employers-dashboard/messages/components/ChatHamburger";
 
 const Index = () => {
   const { chatSidebar } = useSelector((state) => state.toggle);
@@ -36,6 +37,13 @@ const Index = () => {
 
           {/* <BreadCrumb title="Messages!" /> */}
           {/* breadCrumb */}
+          <BreadCrumb title="Mesajlar" />
+          <p>Yalnız müraciət etdiyiniz şirkətlərə mesaj göndərə bilərsiniz !</p>
+          
+          {/* Collapsible sidebar button */}
+          <div className="d-flex flex-row-reverse btn-box mb-5" title="Kontaktlarım">
+            <ChatHamburger />
+          </div>
 
           <div className="row">
             <div

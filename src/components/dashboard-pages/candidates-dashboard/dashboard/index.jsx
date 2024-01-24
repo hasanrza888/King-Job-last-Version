@@ -34,7 +34,7 @@ const Index = () => {
           <MenuToggler />
           {/* Collapsible sidebar button */}
 
-          <BreadCrumb title="Salam, Şıxkərim!" />
+          <BreadCrumb title={`Salam, `} />
           {/* breadCrumb */}
 
           <div className="row">

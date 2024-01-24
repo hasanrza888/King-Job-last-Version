@@ -49,15 +49,16 @@ const ChatBoxContentField = () => {
   useEffect(()=>{
     scrollToBottom();
   },[currentChat?.messages])
-  if (!currentChat) {
-    return (
-      <div className="card message-card">
-        <div className="card-header msg_head">
-          <p>No Conversation</p>
-        </div>
-      </div>
-    );
-  }
+  // if (!currentChat) {
+  //   return (
+  //     <div className="card message-card">
+  //       <div className="card-header msg_head">
+  //         <p>No Conversation</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+  if(currentChat){
   return (
     <div className="card message-card">
       <div className="card-header msg_head">
@@ -78,7 +79,7 @@ const ChatBoxContentField = () => {
         </div>
 
         <div className="btn-box">
-          <button className="dlt-chat">Delete Conversation</button>
+          <button className="dlt-chat">Mesajları sil</button>
           <ChatHamburger />
         </div>
       </div>
@@ -89,22 +90,22 @@ const ChatBoxContentField = () => {
         currentChat?.messages?.map((message,index)=>(
           
           <div className={message?.sender === myid ?"d-flex justify-content-end mb-2 reply" :"d-flex justify-content-start mb-2"}>
-          <div className="img_cont_msg">
-            <img
-              width={48}
-              height={48}
-              src={message?.sender === myid ? currentChat?.myprofilelogo || "/images/resource/candidate-3.png" : currentChat?.userprofilelogo || "/images/resource/candidate-3.png"}
-              alt="candidates"
-              className="rounded-circle user_img_msg"
-            />
-            <div className="name">
-              {message?.sender === myid ? user?.name :currentChat?.userName} <span className="msg_time">{calculateTimeDifference(message?.createdAt)}</span>
+            <div className="img_cont_msg">
+              <img
+                width={48}
+                height={48}
+                src={message?.sender === myid ? currentChat?.myprofilelogo || "/images/resource/candidate-3.png" : currentChat?.userprofilelogo || "/images/resource/candidate-3.png"}
+                alt="candidates"
+                className="rounded-circle user_img_msg"
+              />
+              <div className="name">
+                {message?.sender === myid ? user?.name :currentChat?.userName} <span className="msg_time">{calculateTimeDifference(message?.createdAt)}</span>
+              </div>
+            </div>
+            <div className="msg_cotainer">
+              {message?.text}
             </div>
           </div>
-          <div className="msg_cotainer">
-            {message?.text}
-          </div>
-        </div>
         ))
       }
       <div ref={messagesEndRef} />
@@ -116,7 +117,7 @@ const ChatBoxContentField = () => {
           <form onSubmit={sendmsg}>
             <textarea
               className="form-control type_msg"
-              placeholder="Type a message..."
+              placeholder="Mesaj yaz..."
               required
               onChange={(e)=>{setContent(e.target.value)}}
             ></textarea>
@@ -124,14 +125,14 @@ const ChatBoxContentField = () => {
               type="submit"
               className="theme-btn btn-style-one submit-btn"
             >
-              Send Message
+              Göndər
             </button>
           </form>
         </div>
       </div>
       {/* End .card-footer */}
     </div>
-  );
+  )};
 };
 
 export default ChatBoxContentField;

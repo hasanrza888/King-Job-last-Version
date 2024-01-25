@@ -120,6 +120,7 @@ const initialState = {
             value: "doctorate-degree",
         },
     ],
+    usertasks:[],
 };
 
 export const candidateSlice = createSlice({
@@ -281,6 +282,9 @@ export const candidateSlice = createSlice({
                 };
             });
         },
+        setUserTasks:(state,{payload}) => {
+            state.usertasks = payload;
+        }
     },
 });
 
@@ -310,6 +314,7 @@ export const {
     addNotification,
     setNotifications,
     updateCandidateContacts,
-    increaseNumOfCandidateUnreadMessages
+    increaseNumOfCandidateUnreadMessages,
+    setUserTasks
 } = candidateSlice.actions;
 export default candidateSlice.reducer;

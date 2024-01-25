@@ -11,7 +11,8 @@ const questionSlice = createSlice({
       formData1:{
         name: '',
         descriptionOfTask: '',
-      }
+      },
+      examvariantdata:{}
     },
     reducers: {
       setName:(state,{payload})=>{
@@ -64,7 +65,11 @@ const questionSlice = createSlice({
         }));
         state.formData.options = newOptions;
       },
+      setExamVariantData:(state,{payload}) => {
+        const {questionId,answerId} = payload;
+        state.examvariantdata[questionId] = answerId;
+      }
     },
   });
-  export const { setQuestionData, addOption, updateOption,handleCorrectOptionChange,setName,setDescriptionOfTask,setFolder } = questionSlice.actions;
+  export const { setQuestionData, addOption, updateOption,handleCorrectOptionChange,setName,setDescriptionOfTask,setFolder,setExamVariantData } = questionSlice.actions;
 export default questionSlice.reducer;

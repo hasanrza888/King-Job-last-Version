@@ -1,55 +1,38 @@
-import React from 'react'
-
-const SocialNetworkBox = () => {
-  
+import React,{useEffect} from 'react'
+import { setExamVariantData } from '../../../../../features/question/questionSlice';
+import { useSelector,useDispatch } from 'react-redux';
+const SocialNetworkBox = ({question,no}) => {
+  const dispatch  = useDispatch();
+  const {examvariantdata} = useSelector(state=>state.question);
+  useEffect(()=>{
+    dispatch(setExamVariantData({ questionId:question?._id, answerId:null }));
+  },[dispatch,question])
+  const handleAnswerSelection = (questionId, answerId) => {
+    dispatch(setExamVariantData({ questionId, answerId }));
+  };
   return (
 
     <div className="ls-widget ">
       <div className="tabs-box">
         <div className="widget-title">
-          <h4>Front-End development ne demekdir?</h4>
+          <div dangerouslySetInnerHTML={{ __html: no+"."+question?.question}} />
         </div>
         {/* End widget-title */}
         <div className="widget-content">
         <form  className="default-form">
           <div className="row">
-            
-            {/* question variants */}
-            <div className="form-group col-lg-6 col-md-12 quiz-var">
-              <input type="radio" name='isCorrect' id="q1" />
+            {
+              question?.options?.map((val,ind)=>(
+                <div key={val?._id} className="form-group col-lg-6 col-md-12 quiz-var">
+              <input type="radio" name={`question_${question?._id}`} id={`q_${question?._id}_a_${val?._id}`} onChange={() => handleAnswerSelection(question?._id, val?._id)}  />
 
               <input 
               type="text"
               name='ans'
-              placeholder="Web seyfelerin arxa terefi" disabled/>
+              placeholder={val?.ans} disabled/>
             </div>
-            {/* question variants */}
-            <div className="form-group col-lg-6 col-md-12 quiz-var">
-              <input type="radio" name='isCorrect' id="q1" />
-
-              <input 
-              type="text"
-              name='ans'
-              placeholder="Web seyfelrerin buttonlari" disabled/>
-            </div>
-            {/* question variants */}
-            <div className="form-group col-lg-6 col-md-12 quiz-var">
-              <input type="radio" name='isCorrect' id="q1" />
-
-              <input 
-              type="text"
-              name='ans'
-              placeholder="Web seyfelerin on uzu" disabled/>
-            </div>
-            {/* question variants */}
-            <div className="form-group col-lg-6 col-md-12 quiz-var">
-              <input type="radio" name='isCorrect' id="q1" />
-
-              <input 
-              type="text"
-              name='ans'
-              placeholder="Web seyfelerin arcadan qabaqi" disabled/>
-            </div>
+              ))
+            }
           </div>
         </form>
         </div>

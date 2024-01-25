@@ -64,3 +64,16 @@ export const getallcontacts = () => {
 export const getusernotification = () => {
     return axiosInstance.get('/getusernotifications')
 }
+
+//Tasks
+export const fetchusertasks = () => {
+    return axiosInstance.get('/usertasks')
+}
+
+export const fetchtaskquestions = (applyId,folderId) => {
+    return axiosInstance.get('/getfolderquestionforapplicant/'+applyId+"/"+folderId);
+}
+
+export const checktaskresult = (applyId,folderId,data) => {
+    return axiosInstance.post('/checkapplicanttask/'+applyId+"/"+folderId,data);
+}

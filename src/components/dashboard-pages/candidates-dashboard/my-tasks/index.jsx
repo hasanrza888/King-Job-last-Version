@@ -6,7 +6,6 @@ import CopyrightFooter from "../../CopyrightFooter";
 import JobAlertsTable from "./components/JobAlertsTable";
 import DashboardCandidatesHeader from "../../../header/DashboardCandidatesHeader";
 import MenuToggler from "../../MenuToggler";
-
 const index = () => {
   return (
     <div className="page-wrapper dashboard">

@@ -1,13 +1,35 @@
 import { Link } from "react-router-dom";
 import jobs from "../../../../../data/job-featured.js";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import ViewTask from "./ViewTask.jsx";
-
+import { fetchusertasks } from "../../../../../services/api/candidate_api.js";
+import { setUserTasks } from "../../../../../features/candidate/candidateSlice.js";
+import { useSelector,useDispatch } from "react-redux";
+import {handleApiError} from "../../../../../utils/apiErrorHandling.js"
 const JobAlertsTable = () => {
+  const dispatch = useDispatch();
+  const {usertasks} = useSelector(state=>state.candidate);
+  const [selectedTask,setSelectedTask] = useState(null);
+  
+  useEffect(()=>{
+    const fetchtasks = async () => {
+      try {
+        const {data} = await fetchusertasks();
+        dispatch(setUserTasks(data.data))
+      } catch (error) {
+        handleApiError(error);
+      }
+    }
+    fetchtasks();
+
+  },[dispatch])
   const [openTask, setOpenTask] = useState(false);
   const handleClose = () => setOpenTask(false);
   const handleShow = () => setOpenTask(true);
-
+  const slc = (t) => {
+    setSelectedTask(t);
+    handleShow();
+  }
   return (
     <div className="tabs-box">
       <div className="widget-title">
@@ -33,16 +55,18 @@ const JobAlertsTable = () => {
             <table className="default-table manage-job-table">
               <thead>
                 <tr>
-                  <th>Tapşırıq</th>
-                  <th>Göndərilmə tarixi</th>
+                  <th>Müraciət</th>
+                  <th>Tapşırıq adı</th>
+                  <th>Sual sayı</th>
                   <th>Bitmə tarixi</th>
+                  <th>Cəhd sayı</th>
                   <th>İdarə Etmə</th>
                 </tr>
               </thead>
 
               <tbody>
-                {jobs.slice(4, 8).map((item) => (
-                  <tr key={item.id}>
+                {usertasks?.map((item) => (
+                  <tr key={item?._id}>
                     <td>
                       {/* <!-- Job Block --> */}
                       <div className="job-block">
@@ -52,36 +76,34 @@ const JobAlertsTable = () => {
                               <img
                                 width={50}
                                 height={49}
-                                src={item.logo}
+                                src={item?.companyLogo}
                                 alt="logo"
                               />
                             </span>
                             <h4>
                               <Link to={`/vacancies-list/${item.id}`}>
-                                {item.jobTitle}
+                                {item?.jobName}
                               </Link>
                             </h4>
                             <ul className="job-info">
                               <li>
                                 <span className="icon flaticon-briefcase"></span>
-                                Şirkət adı
-                              </li>
-                              <li>
-                                <span className="icon flaticon-map-locator"></span>
-                                Vakansiya
+                                {item?.companyName}
                               </li>
                             </ul>
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td>Human Resources, Junior</td>
-                    <td>Nov 12, 2021 </td>
+                    <td>{item?.taskInfoInfo?.name}</td>
+                    <td>{item?.taskInfoInfo?.numOfQuestion}</td>
+                    <td>{item?.taskInfo?.endTime}</td>
+                    <td>{item?.taskInfo?.numberOfTry}</td>
                     <td>
                       <div className="option-box">
                         <ul className="option-list">
                           <li>
-                            <button data-text="Həll etməyə başla !" onClick={()=> setOpenTask(true)}>
+                            <button data-text="Həll etməyə başla !" onClick={()=>{slc(item)}}>
                               <i className="las la-play"></i>
                             </button>
                           </li>
@@ -103,7 +125,7 @@ const JobAlertsTable = () => {
       {/* End table widget content */}
 
       {/* task open modal */}
-      <ViewTask handleClose={handleClose} handleShow={handleShow} openTask={openTask} task={"task item"}/>
+      <ViewTask handleClose={handleClose} handleShow={handleShow} openTask={openTask} task={selectedTask}/>
     </div>
   );
 };

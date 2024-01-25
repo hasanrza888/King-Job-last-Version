@@ -35,6 +35,5 @@ export const store = configureStore({
         question:questionSlice,
         message:messageSlice,
         socket:socketSlice
-    },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(),
+    }
 });

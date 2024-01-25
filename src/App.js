@@ -106,7 +106,7 @@ function App() {
                 <Route path='/applicants-dashboard/my-resume' element={<MyResume />} />
                 <Route path='/applicants-dashboard/applies' element={<AppliedJobs />} />
                 <Route path='/applicants-dashboard/my-tasks' element={<MyTasksCandidate />} />
-                <Route path='/applicants-dashboard/solve-tasks/:id' element={<SolveTasks />} />
+                <Route path='/applicants-dashboard/solve-tasks/:applyId/:taskId' element={<SolveTasks />} />
                 <Route path='/applicants-dashboard/feedbacks' element={<JobAlerts />} />
                 <Route path='/applicants-dashboard/saved-vacancies' element={<ShortListedJobs />} />
                 <Route path='/applicants-dashboard/messages' element={<MessagesCandidates />} />

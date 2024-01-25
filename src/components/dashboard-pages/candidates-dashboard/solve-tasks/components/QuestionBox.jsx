@@ -4,7 +4,7 @@ const SocialNetworkBox = () => {
   
   return (
 
-    <div className="ls-widget">
+    <div className="ls-widget ">
       <div className="tabs-box">
         <div className="widget-title">
           <h4>Front-End development ne demekdir?</h4>

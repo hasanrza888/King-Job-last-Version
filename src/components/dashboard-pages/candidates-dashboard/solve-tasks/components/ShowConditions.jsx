@@ -1,11 +1,11 @@
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router";
 
-function ConfirmModal({handleClose, openTask}) {
+function ShowConditions({handleClose, showCond}) {
     const navigate = useNavigate();
     return ( 
         <div className="view-task">
-            <Modal show={openTask}>
+            <Modal show={showCond} onHide={handleClose}>
                 <Modal.Header closeButton>
                 <Modal.Title>Tapşırıq adı</Modal.Title>
                 </Modal.Header>
@@ -15,11 +15,8 @@ function ConfirmModal({handleClose, openTask}) {
                     Amet iure quo vitae mollitia labore animi itaque, veritatis accusamus. Hic ad ab alias eligendi reprehenderit eius cum deleniti! Beatae harum id hic pariatur iusto deserunt quibusdam culpa voluptate reiciendis!
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="secondary" onClick={()=> navigate(-1)}>
+                <Button variant="secondary" onClick={handleClose}>
                     Bağla
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Razıyam
                 </Button>
                 </Modal.Footer>
             </Modal>
@@ -27,4 +24,4 @@ function ConfirmModal({handleClose, openTask}) {
      );
 }
 
-export default ConfirmModal;
+export default ShowConditions;

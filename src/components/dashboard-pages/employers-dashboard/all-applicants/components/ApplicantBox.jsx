@@ -13,11 +13,12 @@ export default function ApplicantBox({candidate}) {
     const sendNewStatus = async (applyerId, statusId, emailsend) => {
         try {
           const confirmationMessage = "Bu əməliyyatı etməyə əminsizmi? Təsdiq etdiyiniz anda Müraciətçiyə email bildirişi gedəcək.";
-      
-          if (emailsend && window.confirm(confirmationMessage)) {
-            await updateApplyerAndNotify(applyerId, statusId, emailsend);
-          } else {
-            await updateApplyerAndNotify(applyerId, statusId, false);
+          if(window.confirm(confirmationMessage)){
+            if (emailsend) {
+              await updateApplyerAndNotify(applyerId, statusId, emailsend);
+            } else {
+              await updateApplyerAndNotify(applyerId, statusId, false);
+            }
           }
         } catch (error) {
           handleApiError(error);

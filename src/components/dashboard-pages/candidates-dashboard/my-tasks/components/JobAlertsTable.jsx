@@ -82,12 +82,12 @@ const JobAlertsTable = () => {
                         <ul className="option-list">
                           <li>
                             <button data-text="Həll etməyə başla !" onClick={()=> setOpenTask(true)}>
-                              <i class="las la-play"></i>
+                              <i className="las la-play"></i>
                             </button>
                           </li>
                           <li>
                             <button data-text="Tapşırıqdan İmtina Et">
-                              <i class="las la-ban"></i>
+                              <i className="las la-ban"></i>
                             </button>
                           </li>
                         </ul>

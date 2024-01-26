@@ -210,7 +210,7 @@ const CandidateSingleDynamicV1 = () => {
                   <div className="video-outer">
                     <h4>Müraciətçi haqqında</h4>
                     {false && <AboutVideo />}
-                    {<PdfViewer pdfFile={applyer?.file} />}
+                    {applyer && (<PdfViewer pdfFile={applyer?.file} />)}
                   </div>
                   {/* <!-- About Video Box --> */}
                   <p>{applyer?.user?.coverLetter || "Qeyd yoxdur"}</p>

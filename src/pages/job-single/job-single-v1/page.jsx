@@ -93,7 +93,7 @@ const JobSingleDynamicV1 = () => {
                         <img
                           width={100}
                           height={98}
-                          src={job?.logo}
+                          src={job?.logo || defcompanylogo}
                           alt="logo"
                         />
                       </span>

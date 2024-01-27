@@ -92,6 +92,7 @@ export const filterSlice = createSlice({
             state.jobList.tag = payload;
         },
         addPerPage: (state, { payload }) => {
+        console.log(payload)
             state.jobSort.perPage.start = payload.start;
             state.jobSort.perPage.end = payload.end;
         },

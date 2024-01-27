@@ -4,6 +4,7 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import packageJson from '../../../../package.json';
 function PdfViewer({pdfFile}) {
+    console.log(pdfFile)
     const pdfjsVersion = packageJson.dependencies['pdfjs-dist'];
     const newPlugin = defaultLayoutPlugin()
 

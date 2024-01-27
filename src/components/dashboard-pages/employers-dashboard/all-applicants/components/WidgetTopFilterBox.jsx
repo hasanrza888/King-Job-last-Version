@@ -41,7 +41,7 @@ const WidgetTopFilterBox = () => {
         <option value={""}>Status/hamısı</option>
         {
           applystatuses?.map((val,ind)=>(
-            <option  style={{color:val?.color}} value={val?.name}>{val?.name}</option>
+            <option key={ind} style={{color:val?.color}} value={val?.name}>{val?.name}</option>
           ))
         }
       </select>

@@ -7,9 +7,13 @@ import {toast}  from "react-toastify"
 import defaultProfile  from '../../../../../img/defaultcompanylogo.jpg'
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { companysendtasktouser } from "../../../../../services/api/company_api";
+import TaskModal from "./TaskModal";
+import { addNewApplyer } from "../../../../../features/task/taskSlice";
 export default function ApplicantBox({candidate}) {
     const dispatch = useDispatch();
     const [hoveredStatus, setHoveredStatus] = useState(null);
+    const [showModal,setShowModal]  = useState(false)
     const sendNewStatus = async (applyerId, statusId, emailsend) => {
         try {
           const confirmationMessage = "Bu əməliyyatı etməyə əminsizmi? Təsdiq etdiyiniz anda Müraciətçiyə email bildirişi gedəcək.";
@@ -39,6 +43,11 @@ export default function ApplicantBox({candidate}) {
         });
         dispatch(updateApplyer(data.data));
       };
+
+      const openTaskModal = (applyerId) => {
+        dispatch(addNewApplyer(applyerId))
+        setShowModal(true)
+      }
   return (
                 <div className="candidate-block-three col-lg-6 col-md-12 col-sm-12" key={candidate?._id} >
                     <div className="inner-box">
@@ -121,7 +130,7 @@ export default function ApplicantBox({candidate}) {
                             </button>
                           </li>
                           <li>
-                            <button data-text="Tapşırıq göndər">
+                            <button onClick={()=>openTaskModal(candidate?._id)} data-text="Tapşırıq göndər">
                               <i class="las la-book"></i>
                             </button>
                           </li>
@@ -135,6 +144,7 @@ export default function ApplicantBox({candidate}) {
                         </p>
                       </span>
                     </div>
+                    <TaskModal showModal={showModal} setShowModal={setShowModal} />
                 </div>
   );
 }

@@ -6,13 +6,14 @@ import { useState } from "react";
 import { updateApplyer } from "../../../../../features/employer/employerSlice";
 import { giveanstatustoapplyer } from "../../../../../services/api/company_api";
 import { handleApiError } from "../../../../../utils/apiErrorHandling";
-import {toast} from 'react-toastify'
+import {toast} from 'react-toastify';
 import ApplicantBox from "./ApplicantBox";
 import { addPerPage } from "../../../../../features/filter/filterSlice";
 
 const WidgetContentBox = () => {
   const dispatch = useDispatch();
   const {applyerlist,applyerSort} = useSelector(state=>state.applyerfilter)
+  console.log(applyerSort)
   const {allapplyers,applystatuses} = useSelector(state=>state.employer)
   const [hoveredStatus, setHoveredStatus] = useState(null);
   const jobNameFilter = (item) =>
@@ -51,24 +52,24 @@ const WidgetContentBox = () => {
                 {endData
                 ?.slice(applyerSort?.perPage?.start,applyerSort?.perPage?.end)
                 ?.sort((a,b)=>b?.percentageOfCv-a?.percentageOfCv)
-                ?.map((candidate) => (
-                  (<ApplicantBox candidate={candidate} />)
+                ?.map((candidate,index) => (
+                  (<ApplicantBox key={index} candidate={candidate} />)
                 ))}
               </div>
             </TabPanel>
           </div>
         </Tabs>
       </div>
-      {endData.length > 0 &&
+      {/* {endData.length > 0 &&
       <div className="col d-flex flex-column justify-content-between flex-sm-row">
-        <button onClick={()=>dispatch(addPerPage({start:0,end:applyerSort?.perPage?.end>20?applyerSort?.perPage?.end-10 : 10}))} className="btn-style-one-bordered mb-sm-0 mb-2">
+        <button onClick={add10} className="btn-style-one-bordered mb-sm-0 mb-2">
           Daha 10 gizlət
         </button>
         <button onClick={()=>dispatch(addPerPage({start:0,end:applyerSort?.perPage?.end+10}))} className="btn-style-one-bordered">
           Daha 10 göstər
         </button>
       </div>
-      }
+    } */}
     </div>
     
   );

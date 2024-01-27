@@ -10,20 +10,25 @@ import { handleApiError } from "../../../../../utils/apiErrorHandling";
 import { useSelector,useDispatch } from "react-redux";
 import { setLoading } from "../../../../../features/loading/loadingSlice";
 import { checktaskresult } from "../../../../../services/api/candidate_api";
+import CountdownTimer from "./CountdownTimer";
 function QuestionsWindow() {
     const dispatch = useDispatch();
     const params = useParams();
     // console.log(params)
     const {applyId,taskId} = params;
     const [currentTask,setCurrentTask] = useState(null);
+    const [aditionalinfo,setaddinfo] = useState(null);
     const {examvariantdata} = useSelector(state=>state.question);
+    const [stopTimerCondition,setstopTimerCondition] = useState(false)
     useEffect(()=>{
         const fetchQuestions = async () => {
             try {
                 dispatch(setLoading(true))
                 const {data} = await fetchtaskquestions(applyId,taskId);
+                console.log(data)
                 // console.log(data)
                 setCurrentTask(data.data)
+                setaddinfo(data.additionalInfo)
                 dispatch(setLoading(false))
             } catch (error) {
                 dispatch(setLoading(false))
@@ -44,7 +49,8 @@ function QuestionsWindow() {
             // console.log(data)
             setRes(data)
             dispatch(setLoading(false))
-            setShowConditionBox(true)
+            setShowConditionBox(true);
+            setstopTimerCondition(true)
         } catch (error) {
             dispatch(setLoading(false))
             handleApiError(error)
@@ -52,7 +58,9 @@ function QuestionsWindow() {
 
     }
         return ( 
+            
             <div className="page-wrapper dashboard task-solve-p">
+                {currentTask?.questions?.length >0 && (
                 <section className="user-dashboard pb-5">
                     <div className="dashboard-outer">
                         
@@ -75,7 +83,7 @@ function QuestionsWindow() {
                                                 </button>
                                             </div>
 
-                                            <h4>00:00:50</h4>
+                                            <CountdownTimer durationInMinutes={aditionalinfo?.examdurationTime} stopTimerCondition={stopTimerCondition} />
                                         </div>    
                                     </div>
                                 </div>
@@ -89,7 +97,7 @@ function QuestionsWindow() {
                             </div>
                         </div>
                         
-                        {currentTask?.questions?.length >0 && (<div className="row d-flex flex-column align-items-center">
+                        <div className="row d-flex flex-column align-items-center">
                             <div className="col-lg-12 col-xl-8 col-md-10">
                                 {
                                     currentTask?.questions?.map((val,ind)=>(
@@ -109,18 +117,27 @@ function QuestionsWindow() {
                                 </div>
                                 </div>
                             </div>
-                        </div>)}
+                        </div>
                     {/* End .row */}
                     </div>
                     {/* End dashboard-outer */}
                 </section>
+                )}
                 {/* <!-- End Dashboard --> */}
                 {
-                    showConditionBox && <ShowConditions  handleClose={conditionClose} handleShow={conditionShow} showCond={showConditionBox} res={res}/>
+                    showConditionBox && <ShowConditions  handleClose={conditionClose} handleShow={conditionShow} showCond={showConditionBox} res={res || currentTask?.description}/>
                 }
             </div>
+            
         );
+        
     }
-
+    
+    function formatTime(seconds) {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+        return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    }
 
 export default QuestionsWindow;

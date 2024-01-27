@@ -52,7 +52,9 @@ export const addquestion = (data) => {
     return axiosInstance.post('/creattask',data)
 }
 
-
+export const companysendtasktouser = (data) => {
+    return axiosInstance.put('/companysendtasksfoldertoapplicant',data)
+}
 
 //MESSAGING
 export const getallcompanycontact = () => {

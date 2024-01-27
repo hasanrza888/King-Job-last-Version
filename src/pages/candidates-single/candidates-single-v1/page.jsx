@@ -16,18 +16,10 @@ import { handleApiError } from "../../../utils/apiErrorHandling";
 import defaultProfile from "../../../img/defaultcompanylogo.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import DashboardHeader from "../../../components/header/DashboardHeader";
-import { pdfjs } from "react-pdf";
-import PdfComp from "./PdfComp";
 import { toast } from "react-toastify";
 import { updateApplyer } from "../../../features/employer/employerSlice";
 import { giveanstatustoapplyer } from "../../../services/api/company_api";
 import PdfViewer from "./PdfViewer";
-import sm from './sm.pdf'
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.js",
-  import.meta.url
-).toString();
-
 const CandidateSingleDynamicV1 = () => {
   const dispatch = useDispatch();
   const id = useParams().id;
@@ -42,6 +34,7 @@ const CandidateSingleDynamicV1 = () => {
         const { data } = await getapplywithid(id);
         console.log(data);
         setApplyer(data.data);
+        console.log(data.data)
       } catch (error) {
         handleApiError(error);
       }
@@ -210,7 +203,7 @@ const CandidateSingleDynamicV1 = () => {
                   <div className="video-outer">
                     <h4>Müraciətçi haqqında</h4>
                     {false && <AboutVideo />}
-                    {<PdfViewer pdfFile={applyer?.file} />}
+                    {applyer && (<PdfViewer pdfFile={applyer?.file} />)}
                   </div>
                   {/* <!-- About Video Box --> */}
                   <p>{applyer?.user?.coverLetter || "Qeyd yoxdur"}</p>

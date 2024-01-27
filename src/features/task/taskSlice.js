@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   folders: [],
+  selectedapplyerIds:[],
 };
 
 export const taskSlice = createSlice({
@@ -24,9 +25,15 @@ export const taskSlice = createSlice({
         );
       }
     },
+    addNewApplyer : (state,{payload}) => {
+      state.selectedapplyerIds = [...state.selectedapplyerIds,payload]
+    },
+    clearApplyer : (state,{payload}) => {
+      state.selectedapplyerIds = [];
+    }
   },
 });
 
-export const { setFolders, addFolder, updateFolder } =
+export const { setFolders, addFolder, updateFolder, addNewApplyer, clearApplyer } =
   taskSlice.actions;
 export default taskSlice.reducer;

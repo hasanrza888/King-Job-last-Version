@@ -56,6 +56,13 @@ export const companysendtasktouser = (data) => {
     return axiosInstance.put('/companysendtasksfoldertoapplicant',data)
 }
 
+export const detectillegalactiononexam = (data) => {
+    return axiosInstance.post('/examillegalactiondetector',data);
+}
+
+export const uploadexamscreenrocerder = (data) => {
+    return axiosInstance.post('/uploadexamscreenrocerder',data)
+}
 //MESSAGING
 export const getallcompanycontact = () => {
     return axiosInstance.get('/companymessagers')

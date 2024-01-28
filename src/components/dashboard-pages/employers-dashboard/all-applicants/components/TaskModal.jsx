@@ -19,6 +19,7 @@ const TaskModal = ({ showModal, setShowModal }) => {
   const [formData1, setFomrData1] = useState({
     folderId: "",
     endTime: "",
+    startDate:"",
     numberOfTry: "",
     examdurationTime: "",
   });
@@ -84,7 +85,17 @@ const TaskModal = ({ showModal, setShowModal }) => {
               ))}
             </select>
             <div className="form-group col-lg-6 col-md-12">
-              <label>Son tarix</label>
+              <label>Başlanma tarixi</label><br />
+              <input
+                required
+                onChange={handleChange}
+                type="datetime-local"
+                value={formData1.startDate}
+                name="startDate"
+              />
+            </div>
+            <div className="form-group col-lg-6 col-md-12">
+              <label>Son tarix</label><br />
               <input
                 required
                 onChange={handleChange}

@@ -3,12 +3,14 @@ import Select from "react-select";
 import { useSelector,useDispatch } from "react-redux";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { addjob } from "../../../../../services/api/company_api";
 import { handleApiError } from "../../../../../utils/apiErrorHandling";
 import {toast} from 'react-toastify';
 import { setLoading } from "../../../../../features/loading/loadingSlice";
 import { addVacancy } from "../../../../../features/employer/employerSlice";
+import { detectillegalactiononexam } from "../../../../../services/api/company_api";
+import socket from "../../../../../socket/socketService";
 const PostBoxForm = () => {
   const dispatch = useDispatch();
   const {categories} = useSelector(state=>state.category);
@@ -101,6 +103,17 @@ const modules = {
       handleApiError(error);
     }
   }
+
+  
+  // useEffect(() => {
+  //   const data = {name:"Karim"}
+  //   socket.emit('joinExam', data);
+
+  //   // Cleanup function
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
   return (
     <form onSubmit={handleSubmit} className="default-form">
       <div className="row">
@@ -141,7 +154,7 @@ const modules = {
         <div className="form-group col-lg-6 col-md-12">
           <label>Təcrübə</label>
           <select onChange={handleChange} name='experience' className="chosen-single form-select">
-          <option value={""}>İş qrafiki</option>
+          <option value={""}>Təcrübə</option>
             {experienceLavel?.map((val)=>(
              <option key={val?.id} value={val?.value}>{val?.name}</option>
             ))}
@@ -154,7 +167,7 @@ const modules = {
         <div className="form-group col-lg-6 col-md-12">
           <label>Təhsil səviyyəsi</label>
           <select onChange={handleChange} name='education' className="chosen-single form-select">
-          <option value={""}>İş qrafiki</option>
+          <option value={""}>Təhsil səviyyəsi</option>
             {['Təhsilsiz','Orta','Ali']?.map((val)=>(
              <option key={val} value={val}>{val}</option>
             ))}

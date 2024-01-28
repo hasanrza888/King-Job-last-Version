@@ -11,6 +11,8 @@ import { useSelector,useDispatch } from "react-redux";
 import { setLoading } from "../../../../../features/loading/loadingSlice";
 import { checktaskresult } from "../../../../../services/api/candidate_api";
 import CountdownTimer from "./CountdownTimer";
+import { detectillegalactiononexam,uploadexamscreenrocerder } from "../../../../../services/api/company_api";
+import RecordRTC from 'recordrtc';
 function QuestionsWindow() {
     const dispatch = useDispatch();
     const params = useParams();
@@ -20,6 +22,7 @@ function QuestionsWindow() {
     const [aditionalinfo,setaddinfo] = useState(null);
     const {examvariantdata} = useSelector(state=>state.question);
     const [stopTimerCondition,setstopTimerCondition] = useState(false)
+    const [recorder, setRecorder] = useState(null);
     useEffect(()=>{
         const fetchQuestions = async () => {
             try {
@@ -42,7 +45,71 @@ function QuestionsWindow() {
     const conditionShow = () => setShowConditionBox(true);
     const [res,setRes] = useState(null)
     const navigate = useNavigate();
-    const finishExam = async () => {
+    
+    const sendIllegalActionToDb = async (data) => {
+        try {
+          const response = await detectillegalactiononexam(data)
+        } catch (error) {
+          handleApiError(error)
+        }
+      }
+      useEffect(() => {
+        const handleVisibilityChange = async () => {
+          if (document.visibilityState === 'hidden') {
+            // Page is hidden, user switched tabs or left the page
+            await sendIllegalActionToDb({applyerId:applyId,leftTime:new Date()});
+          } else {
+            await sendIllegalActionToDb({applyerId:applyId,joinTime:new Date()});
+            // Page is visible again
+            // You can add additional logic if needed
+          }
+        };
+    
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+    
+        return () => {
+          // Cleanup function
+          document.removeEventListener("visibilitychange", handleVisibilityChange);
+        };
+      }, []);
+
+    //   const startRecording = () => {
+    //     navigator.mediaDevices
+    //       .getDisplayMedia({ video: true })
+    //       .then((stream) => {
+    //         const recorder = RecordRTC(stream, { type: 'video' });
+    //         setRecorder(recorder);
+    //         recorder.startRecording();
+    //       })
+    //       .catch((error) => {
+    //         console.error('Error accessing screen:', error);
+    //       });
+    //   };
+    //   useEffect(()=>{
+    //     startRecording();
+    //   },[])
+    //   const stopRecordingAndUpload = async () => {
+    //     if (recorder) {
+    //       recorder.stopRecording(() => {
+    //         const blob = recorder.getBlob();
+    //         uploadVideo(blob);
+    //       });
+    //     }
+    //   };
+    //   const uploadVideo = async (videoBlob) => {
+    //     try {
+    //       const formData = new FormData();
+    //       formData.append('file', videoBlob, 'exam_video.webm');
+    //       const response = await uploadexamscreenrocerder(formData, {
+    //         headers: {
+    //           'Content-Type': 'multipart/form-data',
+    //         },
+    //       });
+    //     } catch (error) {
+    //       console.error('Error uploading video:', error);
+    //     }
+    //   };
+      const finishExam = async () => {
         try {
             dispatch(setLoading(true))
             const {data} = await checktaskresult(applyId,taskId,{crtans:examvariantdata})
@@ -51,6 +118,7 @@ function QuestionsWindow() {
             dispatch(setLoading(false))
             setShowConditionBox(true);
             setstopTimerCondition(true)
+            // await stopRecordingAndUpload()
         } catch (error) {
             dispatch(setLoading(false))
             handleApiError(error)

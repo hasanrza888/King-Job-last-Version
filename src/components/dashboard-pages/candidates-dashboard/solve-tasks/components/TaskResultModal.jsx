@@ -1,16 +1,19 @@
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router";
 
-function ShowConditions({handleClose, showCond,res}) {
+function TaskResult({handleClose, showCond,res}) {
     const navigate = useNavigate();
     return ( 
         <div className="view-task">
             <Modal show={showCond} onHide={handleClose} backdrop="static">
                 <Modal.Header closeButton>
-                <Modal.Title>Tapşırıq haqqında</Modal.Title>
+                <Modal.Title>İmtahan nəticəniz</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p dangerouslySetInnerHTML={{__html:res}} />
+                <p>Ümumi bal: {res?.result}</p>
+                <p>Ümumi doğru sayı: {res?.d?.correct}</p>
+                <p>Ümumi yalnış sayı: {res?.d?.wrong}</p>
+                <p>Boş bıraxılan say: {res?.d?.empty}</p>
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
@@ -22,4 +25,4 @@ function ShowConditions({handleClose, showCond,res}) {
      );
 }
 
-export default ShowConditions;
+export default TaskResult;

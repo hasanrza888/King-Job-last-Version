@@ -12,6 +12,7 @@ import { setLoading } from "../../../../../features/loading/loadingSlice";
 import { checktaskresult } from "../../../../../services/api/candidate_api";
 import CountdownTimer from "./CountdownTimer";
 import { detectillegalactiononexam,uploadexamscreenrocerder } from "../../../../../services/api/company_api";
+import TaskResult from "./TaskResultModal";
 import RecordRTC from 'recordrtc';
 function QuestionsWindow() {
     const dispatch = useDispatch();
@@ -41,10 +42,17 @@ function QuestionsWindow() {
         fetchQuestions();
     },[applyId,taskId,dispatch])
     const [showConditionBox, setShowConditionBox] = useState(false);
+    const [showResultBox, setShowResultBox] = useState(false);
     const conditionClose = () => setShowConditionBox(false);
     const conditionShow = () => setShowConditionBox(true);
+    const resultBoxClose = () => {
+        setShowResultBox(false);
+        navigate('/applicants-dashboard/my-tasks')
+
+    };
+    const resultBoxShow = () => setShowResultBox(true);
     const [res,setRes] = useState(null)
-    const navigate = useNavigate();
+    var navigate = useNavigate();
     
     const sendIllegalActionToDb = async (data) => {
         try {
@@ -116,7 +124,7 @@ function QuestionsWindow() {
             // console.log(data)
             setRes(data)
             dispatch(setLoading(false))
-            setShowConditionBox(true);
+            setShowResultBox(true);
             setstopTimerCondition(true)
             // await stopRecordingAndUpload()
         } catch (error) {
@@ -193,7 +201,10 @@ function QuestionsWindow() {
                 )}
                 {/* <!-- End Dashboard --> */}
                 {
-                    showConditionBox && <ShowConditions  handleClose={conditionClose} handleShow={conditionShow} showCond={showConditionBox} res={res || currentTask?.description}/>
+                    showConditionBox && <ShowConditions  handleClose={conditionClose} handleShow={conditionShow} showCond={showConditionBox} res={currentTask?.description}/>
+                }
+                {
+                    showResultBox && <TaskResult  handleClose={resultBoxClose} handleShow={resultBoxShow} showCond={showResultBox} res={res}/>
                 }
             </div>
             

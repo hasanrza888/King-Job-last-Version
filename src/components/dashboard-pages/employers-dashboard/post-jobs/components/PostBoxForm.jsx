@@ -11,9 +11,11 @@ import { setLoading } from "../../../../../features/loading/loadingSlice";
 import { addVacancy } from "../../../../../features/employer/employerSlice";
 import { detectillegalactiononexam } from "../../../../../services/api/company_api";
 import socket from "../../../../../socket/socketService";
+import { useLocation } from "react-router-dom";
 const PostBoxForm = () => {
   const dispatch = useDispatch();
-  const {categories} = useSelector(state=>state.category);
+  const {alljobs} = useSelector(state=>state.job);
+  const {categories,raions} = useSelector(state=>state.category);
   const {jobtypes}= useSelector(state=>state.jobtype);
   const { jobTypeList, datePost, experienceLavel } = useSelector(
     (state) => state.job
@@ -31,7 +33,23 @@ const modules = {
     ['clean'] 
   ],
 };
-  
+// const location = useLocation();
+// const isEdit = new URLSearchParams(location.search).get("edit");
+
+// const [editableJob, setEditableJob] = useState(null);
+
+// useEffect(() => {
+//   const fetchDataForEdit = () => {
+//     // Find the editable job details from the existing data
+//     const foundEditableJob = alljobs?.find(job => job._id === isEdit);
+//     setEditableJob(foundEditableJob);
+//   };
+
+//   if (isEdit) {
+//     fetchDataForEdit();
+//   }
+// },[isEdit])
+  // console.log(alljobs,isEdit,editableJob)
   const [formData, setFormData] = useState({
     category: "",
     name: "",
@@ -46,6 +64,26 @@ const modules = {
     agreedSalary: false,
     endTime: "",
   });
+  // useEffect(() => {
+  //   // Set the form data to editable job details if available
+  //   if (editableJob) {
+  //     setFormData({
+  //       // Map the editable job details to form fields
+  //       category: editableJob?.category,
+  //       name: editableJob?.name,
+  //       city: editableJob?.city,
+  //       type: editableJob?.type,
+  //       experience: editableJob?.experience,
+  //       education: editableJob?.education,
+  //       age: editableJob?.age,
+  //       skills: editableJob?.skills,
+  //       descriptionOfVacancy: editableJob?.descriptionOfVacancy,
+  //       salary: editableJob?.salary,
+  //       agreedSalary: editableJob?.agreedSalary,
+  //       endTime: editableJob?.endTime,
+  //     });
+  //   }
+  // }, [editableJob]);
   const specialisms = categories?.find(ctg=>ctg._id === formData.category)?.skills || [];
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -137,7 +175,7 @@ const modules = {
           <label>Şəhər</label>
           <select onChange={handleChange} name='city' className="chosen-single form-select">
           <option value={""} >Şəhər</option>
-            {['Bakı']?.map((val)=>(
+            {raions?.map((val)=>(
              <option key={val} value={val}>{val}</option>
             ))}
           </select>

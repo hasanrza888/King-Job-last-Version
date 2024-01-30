@@ -57,7 +57,7 @@ module.exports = [
   },
   {
     id: 8,
-    name: "Tapşırıq yarat",
+    name: "Sual əlavə et",
     icon: "la-pen",
     routePath: "/company-dashboard/create-task",
     active: "",

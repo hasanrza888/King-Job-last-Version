@@ -114,9 +114,9 @@ const JobListingsTable = () => {
                           </button>
                         </li>
                         <li>
-                          <button data-text="Reject Aplication">
+                        <Link to={`/company-dashboard/post-vacancy?edit=${item._id}`} data-text="Edit Job">
                             <span className="la la-pencil"></span>
-                          </button>
+                        </Link>
                         </li>
                         <li>
                           <button data-text="Delete Aplication">

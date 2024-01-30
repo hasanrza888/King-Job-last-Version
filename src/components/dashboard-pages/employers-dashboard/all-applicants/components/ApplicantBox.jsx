@@ -9,9 +9,10 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { companysendtasktouser } from "../../../../../services/api/company_api";
 import TaskModal from "./TaskModal";
-import { addNewApplyer } from "../../../../../features/task/taskSlice";
+import { addNewApplyer,clearApplyer } from "../../../../../features/task/taskSlice";
 export default function ApplicantBox({candidate}) {
     const dispatch = useDispatch();
+    const { selectedapplyerIds } = useSelector((state) => state.task);
     const [hoveredStatus, setHoveredStatus] = useState(null);
     const [showModal,setShowModal]  = useState(false)
     const sendNewStatus = async (applyerId, statusId, emailsend) => {
@@ -45,9 +46,17 @@ export default function ApplicantBox({candidate}) {
       };
 
       const openTaskModal = (applyerId) => {
+        if(selectedapplyerIds.length === 0){
         dispatch(addNewApplyer(applyerId))
+        }
+        else{
+          dispatch(clearApplyer());
+          dispatch(addNewApplyer(applyerId))
+        }
+        
         setShowModal(true)
       }
+      // console.log(selectedapplyerIds)
   return (
                 <div className="candidate-block-three col-lg-6 col-md-12 col-sm-12" key={candidate?._id} >
                     <div className="inner-box">

@@ -57,20 +57,20 @@ module.exports = [
   },
   {
     id: 8,
+    name: "Tapşırıqların nəticəsi",
+    icon: "las la-check-circle",
+    routePath: "/company-dashboard/task-results",
+    active: "",
+    onClick:""
+  },
+  {
+    id: 9,
     name: "Sual əlavə et",
     icon: "la-pen",
     routePath: "/company-dashboard/create-task",
     active: "",
     onClick:""
   },
-  // {
-  //   id: 9,
-  //   name: "Abunəliklər",
-  //   icon: "la-box",
-  //   routePath: "/company-dashboard/subscriptions",
-  //   active: "",
-  //   onClick:""
-  // },
   {
     id: 10,
     name: "Mesajlar",

@@ -15,21 +15,21 @@ const Pricing = () => {
     {
       id: 2,
       packageType: "Dinamik Aylıq",
-      price: "50",
+      price: "40",
       tag: "",
       features: [
         "Minimum 2 vakansiya",
-        "1 Vakansiya 25 AZN"
+        "1 Vakansiya 20 AZN"
       ],
     },
     {
       id: 3,
       packageType: "Dinamik İllik",
-      price: "100",
+      price: "75",
       tag: "Tagged",
       features: [
         "Minimum 5 vakansiya",
-        "1 Vakansiya 20 AZN"
+        "1 Vakansiya 15 AZN"
       ],
     },
   ];

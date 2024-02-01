@@ -1,3 +1,4 @@
+import AppSection from "../../app-section/AppSection";
 import LoginPopup from "../../common/form/login/LoginPopup";
 import FooterDefault from "../../footer/common-footer";
 import DefaulHeader2 from "../../header/DefaulHeader2";
@@ -48,6 +49,12 @@ const index = () => {
         </div>
       </section>
       {/* <!-- Contact Section --> */}
+
+      <section className="app-section">
+        <div className="auto-container">
+          <AppSection />
+        </div>
+      </section>
 
       <FooterDefault footerStyle="alternate5" />
       {/* <!-- End Main Footer --> */}

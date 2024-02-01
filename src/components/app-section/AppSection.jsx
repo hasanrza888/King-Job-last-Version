@@ -6,9 +6,9 @@ const AppSection = () => {
         <div className="bg-shape"></div>
         <figure className="image" data-aos="fade-right">
           <img
-            width={477}
-            height={556}
-            src="/images/resource/mobile-app.png"
+            width={380}
+            // height={556}
+            src="/images/resource/tg-channel.png"
             alt="mobile app"
           />
         </figure>
@@ -18,33 +18,38 @@ const AppSection = () => {
       <div className="content-column col-lg-6 col-md-12 col-sm-12">
         <div className="inner-column" data-aos="fade-left">
           <div className="sec-title">
-            <span className="sub-title">DOWNLOAD & ENJOY</span>
             <h2>
-              Get the Superio Job
-              <br /> Search App
+              Vakansiyaları Axtarma !
             </h2>
-            <div className="text">
-              Search through millions of jobs and find the right fit. Simply
-              <br /> swipe right to apply.
+            <span className="sub-title mt-3" style={{fontSize: 40}}>Vakansiyalar</span>
+            <h2>
+              Sənə gəlsin
+            </h2>
+            <div className="text mt-4" style={{fontSize: 18}}>
+              King Job Telegram kanalımıza abunə olaraq yeni vakansiyalardan 
+              <span className="sub-title">
+              Anında Xəbərdar OL 
+              </span>
             </div>
           </div>
-          <div className="download-btn">
-            <a href="#">
-              <img
-                width={210}
-                height={60}
-                src="/images/icons/apple.png"
-                alt="icon"
-              />
-            </a>
-            <a href="#">
+          <div className="download-btn mt-5">
+              <a href="https://t.me/the_kingjob" style={{fontSize:20}} target="_blank">
+                <img
+                  width={50}
+                  src="/images/icons/telegram-logo.png"
+                  alt="icon"
+                  style={{marginRight:10}}
+                />
+                King Job Kanalımıza keçid
+              </a>
+            {/* <a href="#">
               <img
                 width={210}
                 height={60}
                 src="/images/icons/google.png"
                 alt="icon"
               />
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

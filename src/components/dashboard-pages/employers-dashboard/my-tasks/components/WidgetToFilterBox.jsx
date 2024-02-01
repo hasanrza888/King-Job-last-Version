@@ -6,7 +6,7 @@ const WidgetToFilterBox = () => {
     <div className="chosen-outer">
       {/* <!--search box--> */}
       <div className="search-box-one">
-        <form method="post" action="blog.html">
+        <form>
           <div className="form-group">
             <span className="icon flaticon-search-1"></span>
             <input

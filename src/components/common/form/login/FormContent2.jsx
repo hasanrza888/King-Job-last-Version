@@ -117,11 +117,11 @@ const FormContent2 = () => {
           Hesabın yoxdur? <Link to="/register">Qeydiyyatdan keç</Link>
         </div>
 
-        <div className="divider">
+        {/* <div className="divider">
           <span>Və ya</span>
         </div>
 
-        <LoginWithSocial />
+        <LoginWithSocial /> */}
       </div>
       {/* End bottom-box LoginWithSocial */}
     </div>

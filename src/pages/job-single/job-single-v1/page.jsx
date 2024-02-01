@@ -280,7 +280,7 @@ const JobSingleDynamicV1 = () => {
             {/* <!-- job-detail-outer--> */}
           </section>
           :
-          (<h1 style={{height:'100vh'}}>Uyğun iş tapılmadı</h1>)
+          (<h1 style={{height:'100vh', display:"flex", justifyContent:"center", alignItems:"center"}}>Uyğun iş tapılmadı</h1>)
       }
       
       {/* <!-- End Job Detail Section --> */}

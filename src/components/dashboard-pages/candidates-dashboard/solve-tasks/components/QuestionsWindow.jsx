@@ -118,9 +118,10 @@ function QuestionsWindow() {
     //     }
     //   };
       const finishExam = async () => {
+        const sendedTime = new Date().toISOString();
         try {
             dispatch(setLoading(true))
-            const {data} = await checktaskresult(applyId,taskId,{crtans:examvariantdata})
+            const {data} = await checktaskresult(applyId,taskId,sendedTime,{crtans:examvariantdata})
             // console.log(data)
             setRes(data)
             dispatch(setLoading(false))

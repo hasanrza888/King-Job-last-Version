@@ -13,8 +13,9 @@ import { addPerPage } from "../../../../../features/filter/filterSlice";
 const WidgetContentBox = () => {
   const dispatch = useDispatch();
   const {applyerlist,applyerSort} = useSelector(state=>state.applyerfilter)
-  console.log(applyerSort)
+  // console.log(applyerSort)
   const {allapplyers,applystatuses} = useSelector(state=>state.employer)
+  console.log(allapplyers)
   const [hoveredStatus, setHoveredStatus] = useState(null);
   const jobNameFilter = (item) =>
     applyerlist.jobName !== ""

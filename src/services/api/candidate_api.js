@@ -74,6 +74,6 @@ export const fetchtaskquestions = (applyId,folderId) => {
     return axiosInstance.get('/getfolderquestionforapplicant/'+applyId+"/"+folderId);
 }
 
-export const checktaskresult = (applyId,folderId,data) => {
-    return axiosInstance.post('/checkapplicanttask/'+applyId+"/"+folderId,data);
+export const checktaskresult = (applyId,folderId,sendedTime,data) => {
+    return axiosInstance.post('/checkapplicanttask/'+applyId+"/"+folderId+"/"+sendedTime,data);
 }

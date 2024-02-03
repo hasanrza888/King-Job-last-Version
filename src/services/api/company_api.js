@@ -63,6 +63,10 @@ export const detectillegalactiononexam = (data) => {
 export const uploadexamscreenrocerder = (data) => {
     return axiosInstance.post('/uploadexamscreenrocerder',data)
 }
+
+export const fetchwaitingtasks = () => {
+    return axiosInstance.get('/getwaitingtask');
+}
 //MESSAGING
 export const getallcompanycontact = () => {
     return axiosInstance.get('/companymessagers')

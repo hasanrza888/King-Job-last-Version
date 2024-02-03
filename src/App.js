@@ -49,6 +49,7 @@ import PublicRoutes from './routes/PublicRoutes.js';
 //HOOKS
 import useDataFetching from './hooks/dataFetching.js';
 function App() {
+  console.log(new Date())
   const dispatch = useDispatch();
   const { info } = useSelector(state => state.candidate);
   const { user, isLoggedIn } = useSelector(state => state.auth);

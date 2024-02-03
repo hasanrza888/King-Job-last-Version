@@ -29,7 +29,7 @@ const useDataFetching = () => {
     if (socket && isLoggedIn && user) {
       socket.on('company-block', (data) => {
         console.log("socket work",data)
-        // lguser();
+        lguser();
       });
     }
   }, [isLoggedIn, user,lguser]);

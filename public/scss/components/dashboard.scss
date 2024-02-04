@@ -26,6 +26,23 @@
   padding: 30px 30px 17px;
 }
 
+.dashboard-option .dash-h-drop-menu {
+  -webkit-transform: none !important;
+  -ms-transform: none !important;
+  transform: none !important;
+  top: 100% !important;
+  left: auto !important;
+  right: 0 !important;
+  min-width: 320px;
+  margin-top: 0px;
+  background: #ffffff;
+  border: 1px solid #ecedf2;
+  -webkit-box-shadow: 0px 6px 15px rgba(64, 79, 104, 0.05);
+  box-shadow: 0px 6px 15px rgba(64, 79, 104, 0.05);
+  border-radius: 8px;
+  padding: 30px 30px 17px;
+}
+
 .dashboard-option .dropdown-menu:before {
   position: absolute;
   right: 30px;
@@ -1743,4 +1760,15 @@ Chat Widget
 
 .notification-list li.success .colored {
   color: rgba(52, 168, 83, 1);
+}
+
+.dash-h-drop-menu-cont{
+  display: none;
+  margin-top: 0px;
+}
+.dash-h-drop:hover .dash-h-drop-menu-cont{
+  display: block;
+}
+.dash-h-drop:hover .dash-h-drop-menu{
+  display: block;
 }

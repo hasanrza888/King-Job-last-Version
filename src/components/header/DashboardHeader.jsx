@@ -5,7 +5,11 @@ import HeaderNavContent from "./HeaderNavContent";
 import { isActiveLink } from "../../utils/linkActiveChecker";
 import { useLocation } from 'react-router-dom';
 import defaultProfile  from '../../img/defaultcompanylogo.jpg'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Dropdown from 'react-bootstrap/Dropdown';
+import useLogout from "../../hooks/logoutUser";
+import { menuToggle } from "../../features/toggle/toggleSlice";
+
 const DashboardHeader = () => {
     const {user,info} = useSelector(state=>state.auth);
     const {companyInfo} = useSelector(state=>state.employer)
@@ -14,11 +18,11 @@ const DashboardHeader = () => {
         'u_s_r':info?.profilepic,
         'c_m_p':info?.logo
     }
-    console.log(ppphoto[u_t_p])
+    // console.log(ppphoto[u_t_p])
     const [navbar, setNavbar] = useState(false);
     const location = useLocation();
-
-
+    const logoutUser = useLogout();
+    const dispatch = useDispatch();
 
     const changeBackground = () => {
         if (window.scrollY >= 0) {
@@ -32,6 +36,10 @@ const DashboardHeader = () => {
         window.addEventListener("scroll", changeBackground);
     }, []);
 
+    // menu togggle handler
+    const menuToggleHandler = () => {
+        dispatch(menuToggle());
+    };
     return (
         // <!-- Main Header-->
         <header
@@ -76,13 +84,9 @@ const DashboardHeader = () => {
                         </button>
                         {/* End notification-icon */}
 
-                        {/* <!-- Dashboard Option --> */}
-                        <div className="dropdown dashboard-option">
+                        <div className="dropdown dashboard-option dash-h-drop">
                             <a
-                                className="dropdown-toggle"
-                                role="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
+                                className="dropdown-toggle dash-h-drop-toggle"
                             >
                                 <img
                                     alt="avatar"
@@ -94,28 +98,32 @@ const DashboardHeader = () => {
                                 <span className="name">{user?.name}</span>
                             </a>
 
-                            <ul className="dropdown-menu">
-                                {employerMenuData.map((item) => (
-                                    <li
-                                        className={`${
-                                            isActiveLink(
-                                                item.routePath,
-                                                location.pathname
-                                            )
-                                                ? "active"
-                                                : ""
-                                        } mb-1`}
-                                        key={item.id}
-                                    >
-                                        <Link to={item.routePath}>
-                                            <i
-                                                className={`la ${item.icon}`}
-                                            ></i>{" "}
-                                            {item.name}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
+                            <div className="dash-h-drop-menu-cont">
+                               <ul className="dropdown-menu dash-h-drop-menu">
+                                    {employerMenuData.map((item) => (
+                                        <li
+                                            className={`${
+                                                isActiveLink(
+                                                    item.routePath,
+                                                    location.pathname
+                                                )
+                                                    ? "active"
+                                                    : ""
+                                            } mb-1`}
+                                            key={item.id}
+                                            onClick={item.onClick==='ok' ? logoutUser : menuToggleHandler}
+                                        >
+                                            <Link to={item.routePath}>
+                                                <i
+                                                    className={`la ${item.icon}`}
+                                                ></i>{" "}
+                                                {item.name}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul> 
+                            </div>
+                            
                         </div>
                         {/* End dropdown */}
                     </div>

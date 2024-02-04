@@ -4,15 +4,19 @@ import candidatesMenuData from "../../data/candidatesMenuData";
 import HeaderNavContent from "./HeaderNavContent";
 import { isActiveLink } from "../../utils/linkActiveChecker";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DefCandidateP from '../../img/defApplicant5.png';
+import useLogout from "../../hooks/logoutUser";
+import { menuToggle } from "../../features/toggle/toggleSlice";
 
 const DashboardCandidatesHeader = () => {
     const {user,info} = useSelector(state=>state.candidate)
     console.log(user)
     const [navbar, setNavbar] = useState(false);
     const location = useLocation();
+    const dispatch = useDispatch();
 
+    const logoutUser = useLogout();
     const changeBackground = () => {
         if (window.scrollY >= 0) {
             setNavbar(true);
@@ -24,6 +28,10 @@ const DashboardCandidatesHeader = () => {
     useEffect(() => {
         window.addEventListener("scroll", changeBackground);
     }, []);
+    // menu togggle handler
+    const menuToggleHandler = () => {
+        dispatch(menuToggle());
+    };
 
     return (
         // <!-- Main Header-->
@@ -70,12 +78,9 @@ const DashboardCandidatesHeader = () => {
                         {/* End notification-icon */}
 
                         {/* <!-- Dashboard Option --> */}
-                        <div className="dropdown dashboard-option">
+                        <div className="dropdown dashboard-option dash-h-drop">
                             <a
-                                className="dropdown-toggle"
-                                role="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
+                                className="dropdown-toggle dash-h-drop-toggle"
                             >
                                 <img
                                     alt="avatar"
@@ -87,28 +92,32 @@ const DashboardCandidatesHeader = () => {
                                 <span className="name">{user?.name}</span>
                             </a>
 
-                            <ul className="dropdown-menu">
-                                {candidatesMenuData.map((item) => (
-                                    <li
-                                        className={`${
-                                            isActiveLink(
-                                                item.routePath,
-                                                location.pathname
-                                            )
-                                                ? "active"
-                                                : ""
-                                        } mb-1`}
-                                        key={item.id}
-                                    >
-                                        <Link to={item.routePath}>
-                                            <i
-                                                className={`la ${item.icon}`}
-                                            ></i>{" "}
-                                            {item.name}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
+                            <div className="dash-h-drop-menu-cont">
+                                <ul className="dropdown-menu dash-h-drop-menu">
+                                    {candidatesMenuData.map((item) => (
+                                        <li
+                                            className={`${
+                                                isActiveLink(
+                                                    item.routePath,
+                                                    location.pathname
+                                                )
+                                                    ? "active"
+                                                    : ""
+                                            } mb-1`}
+                                            key={item.id}
+                                            onClick={item.onCLick ==='ok' ? logoutUser : menuToggleHandler}
+                                        >
+                                            <Link to={item.routePath}>
+                                                <i
+                                                    className={`la ${item.icon}`}
+                                                ></i>{" "}
+                                                {item.name}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            
                         </div>
                         {/* End dropdown */}
                     </div>

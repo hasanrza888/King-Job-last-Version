@@ -84,7 +84,7 @@ const FormContent2 = () => {
         </div>
         {/* password */}
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <div className="field-outer">
             <div className="input-group checkboxes square">
               <input type="checkbox" name="remember-me" id="remember" />
@@ -96,10 +96,10 @@ const FormContent2 = () => {
               Şifrəmi unutdum
             </Link>
           </div>
-        </div>
+        </div> */}
         {/* forgot password */}
 
-        <div className="form-group">
+        <div className="form-group mt-5">
           <button
             className="theme-btn btn-style-one"
             type="submit"

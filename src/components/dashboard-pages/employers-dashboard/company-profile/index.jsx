@@ -64,7 +64,7 @@ const index = () => {
                             <div className="ls-widget">
                                 <div className="tabs-box">
                                     <div className="widget-title">
-                                        <h4>Contact Information</h4>
+                                        <h4>Məkan</h4>
                                     </div>
                                     {/* End .widget-title */}
 

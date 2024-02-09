@@ -1,4 +1,5 @@
 import AppSection from "../../app-section/AppSection";
+import Breadcrumb from "../../common/Breadcrumb";
 import LoginPopup from "../../common/form/login/LoginPopup";
 import FooterDefault from "../../footer/common-footer";
 import DefaulHeader2 from "../../header/DefaulHeader2";
@@ -21,17 +22,18 @@ const index = () => {
 
       <MobileMenu />
       {/* End MobileMenu */}
-
-      <section className="map-section">
+      <Breadcrumb title = "Bizimlə Əlaqə" meta = "Bizimlə Əlaqə" />
+      {/* <section className="map-section">
         <div className="map-outer">
           <MapBox />
         </div>
-      </section>
+      </section> */}
       {/* <!-- End Map Section --> */}
 
       <section className="contact-section">
         <div className="auto-container">
           <div className="upper-box">
+            
             <div className="row">
               <Address />
             </div>

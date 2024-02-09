@@ -48,6 +48,7 @@ import PrivateRoutes from './routes/PrivateRoutes.js';
 import PublicRoutes from './routes/PublicRoutes.js';
 //HOOKS
 import useDataFetching from './hooks/dataFetching.js';
+
 function App() {
   console.log(new Date())
   const dispatch = useDispatch();
@@ -67,6 +68,7 @@ function App() {
   return (
     <div className="page-wrapper">
       <Loading show={loading} />
+
       {/* _____________________ Routers _______________________ */}
       <Routes>
         <Route path='/' element={<Home numjob={alljobs?.length} />}/>

@@ -14,7 +14,7 @@ const Address = () => {
     {
       id: 2,
       iconName: "smartphone",
-      title: "Bizimlə əlaqə",
+      title: "Əlaqə nömrəsi",
       text: (
         <>
           <a href="tel:+9940775773133" className="phone">
@@ -26,7 +26,7 @@ const Address = () => {
     {
       id: 3,
       iconName: "letter",
-      title: "Email",
+      title: "E-mail",
       text: (
         <>
           {" "}

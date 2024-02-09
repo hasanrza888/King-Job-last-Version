@@ -5,7 +5,7 @@ const JobDetailsDescriptions = ({job}) => {
       <p
       dangerouslySetInnerHTML={{ __html: job?.['descriptionOfVacancy'] }}
        />
-      <h4 className="mt-5">Xüsusi Tələblər</h4>
+      {job?.specialRequirements && <h4 className="mt-5">Xüsusi Tələblər</h4>}
       <ul className="list-style-three">
         {
           job?.specialRequirements?.map((req)=>{

@@ -1430,6 +1430,18 @@ Banner Section
   color: var(--primary-color);
 }
 
+.banner-section .content-column h1 {
+  font-size: 50px;
+  line-height: 60px;
+  color: #202124;
+  font-weight: 500;
+  margin-bottom: 25px;
+}
+
+.banner-section .content-column h1 .colored {
+  color: var(--primary-color);
+}
+
 .banner-section .content-column .text {
   font-size: 15px;
   color: #696969;

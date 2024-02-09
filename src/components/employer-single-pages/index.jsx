@@ -217,7 +217,7 @@ const EmployersSingleV1 = () => {
 
                       <div className="btn-box">
                         <Link
-                          to={employer?.companyInfo?.website?.includes('https://www.')? employer.companyInfo.website : `https://${employer.companyInfo.website}`}
+                          to={employer?.companyInfo?.website?.includes('https://')? employer.companyInfo.website : `https://${employer.companyInfo.website}`}
                           className="theme-btn btn-style-three"
                           style={{ textTransform: "lowercase" }}
                           target="_blank"

@@ -26,6 +26,7 @@ const ChatBoxContentField = () => {
       const {data} = await sendmessage(currentChat?._id,{content});
       dispatch(addMessage(data.data));
       scrollToBottom();
+      // setContent('');
     } catch (error) {
       handleApiError(error);
     }
@@ -124,6 +125,7 @@ const ChatBoxContentField = () => {
                 className="form-control type_msg"
                 placeholder="Mesaj yaz..."
                 required
+                value={content}
                 onChange={(e)=>{setContent(e.target.value)}}
               ></textarea>
               <button

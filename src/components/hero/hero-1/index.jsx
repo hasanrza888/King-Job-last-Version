@@ -14,10 +14,10 @@ const index = () => {
               data-aos-delay="500"
             >
               <div className="title-box">
-                <h3>
+                <h1>
                   Bütün <span className="colored">iş axtarış</span> prosesi
                   <br /> 1 Platformada
-                </h3>
+                </h1>
                 <div className="text">
                   Vakansiya axtar və bircə toxunuşla müraciət et
                 </div>

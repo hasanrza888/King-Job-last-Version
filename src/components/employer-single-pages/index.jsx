@@ -16,6 +16,7 @@ import { useState,useEffect } from "react";
 import { handleApiError } from "../../utils/apiErrorHandling";
 import { getcompanydetail } from "../../services/api/common_api";
 import defcompanylogo from "../../img/defaultcompanylogo.jpg"
+import { Link } from "react-router-dom";
 const EmployersSingleV1 = () => {
   const {loading} = useSelector(state=>state.loading);
   const dispatch = useDispatch();
@@ -215,13 +216,14 @@ const EmployersSingleV1 = () => {
                       {/* End compnay-info */}
 
                       <div className="btn-box">
-                        <a
-                          href={employer?.companyInfo?.website}
+                        <Link
+                          to={employer?.companyInfo?.website?.includes('https://www.')? employer.companyInfo.website : `https://${employer.companyInfo.website}`}
                           className="theme-btn btn-style-three"
                           style={{ textTransform: "lowercase" }}
+                          target="_blank"
                         >
                          {employer?.companyInfo?.website || "Qeyd yoxdur"} 
-                        </a>
+                        </Link>
                       </div>
                       {/* btn-box */}
                     </div>

@@ -19,7 +19,7 @@ const JobCategorie1 = () => {
             <div className="content">
               <span className={`icon ${item.icon}`}></span>
               <h4>
-                <Link onClick={()=>categoryHandler(item?.name)} to="/vacancies-list">{item?.name}</Link>
+                <Link onClick={()=>categoryHandler(item?.name)} to="/vacancies-list" style={{textTransform: "capitalize"}}>{item?.name}</Link>
               </h4>
               <p>({item?.numofactivevacancywithiscategory} Aktiv Vakansiya)</p>
             </div>

@@ -11,7 +11,7 @@ const index = ({numjob}) => {
         name = "King Job" 
         ogType = "article"
         twType = "summary_large_image" 
-        image = "images/social_media/new_vacancy.png" 
+        image = "/images/social_media/new_vacancy.png" 
         // imageWidth = "" 
       />
       <Home numjob={numjob}  />

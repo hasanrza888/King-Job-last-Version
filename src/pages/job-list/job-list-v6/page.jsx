@@ -7,7 +7,7 @@ const index = () => {
     <>
       <SEO
         title = "kingjob.pro | Vakansiyalar | İş Elanları" 
-        description = "KING JOB, Azərbaycanın ən mükəmməl vakansiya saytı, Bütün iş axtarış prosesi 1 Platformada, Vakansiya axtar və bircə toxunuşla müraciət et"
+        description = "Azərbaycanda arzuladığın işə uyğun vakansiya axtar və bircə kliklə müraciət et. Şirkətlərdən geri dönüşləri hesabında izlə !"
         name = "King Job" 
         ogType = "article"
         twType = "summary_large_image" 

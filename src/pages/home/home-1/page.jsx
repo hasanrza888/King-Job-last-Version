@@ -8,7 +8,7 @@ const index = ({numjob}) => {
     <>
       <SEO 
         title = "KING JOB, Azərbaycanın ən mükəmməl vakansiya saytı" 
-        description = "Bütün iş axtarış prosesi 1 Platformada, Vakansiya axtar və bircə toxunuşla müraciət et"
+        description = "Bütün iş axtarış prosesi 1 platformada, Vakansiya axtar və bircə toxunuşla müraciət et !"
         name = "King Job" 
         ogType = "article"
         twType = "summary_large_image" 

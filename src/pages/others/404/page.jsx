@@ -1,8 +1,19 @@
 import { Link } from "react-router-dom";
+import pImage from "../../../img/social_media/new_vacancy.png";
+import SEO from "../../../utils/seo";
 
 const index = () => {
   return (
     <>
+      <SEO
+        title = "Səhifə tapılmadı - KING JOB" 
+        description = "Axtardığınız səhifə tapılmadı, bir daha cəhd edin !"
+        name = "King Job" 
+        ogType = "article"
+        twType = "summary_large_image" 
+        image = {pImage}
+        // imageWidth = "" 
+      />
       <div
         className="error-page-wrapper "
         style={{

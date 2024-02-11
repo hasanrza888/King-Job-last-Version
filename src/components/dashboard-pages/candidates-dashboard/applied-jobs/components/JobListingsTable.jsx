@@ -7,7 +7,7 @@ const JobListingsTable = () => {
   return (
     <div className="tabs-box">
       <div className="widget-title">
-        <h4>Müraciət etdiyim işlər</h4>
+        <h4>Müraciət etdiyim vakansiyalar</h4>
 
         <div className="chosen-outer">
           {/* <!--Tabs Box--> */}

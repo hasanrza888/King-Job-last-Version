@@ -6,9 +6,24 @@ import CopyrightFooter from "../../CopyrightFooter";
 import JobAlertsTable from "./components/JobAlertsTable";
 import DashboardCandidatesHeader from "../../../header/DashboardCandidatesHeader";
 import MenuToggler from "../../MenuToggler";
-const index = () => {
+import SEO from "../../../../utils/seo";
+import pImage from "../../../../img/social_media/new_vacancy.png";
+import { useSelector } from "react-redux";
+
+const Index = () => {
+  const {user,info} = useSelector(state=>state.auth);
+
   return (
     <div className="page-wrapper dashboard">
+      <SEO
+        title = {`${user?.name} - Tapşırıqlarım | KING JOB`}
+        description = "Hesabınızdakı tapşırıqlarım səhifəsində müraciət etdiyiniz vakansiyalardan gələn tapşırıqlara baxa və həll edə bilərsiniz !"
+        name = "King Job" 
+        ogType = "article"
+        twType = "summary_large_image" 
+        image = {pImage}
+        // imageWidth = "" 
+      />
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
 
@@ -54,4 +69,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

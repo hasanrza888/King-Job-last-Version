@@ -17,6 +17,9 @@ import { handleApiError } from "../../utils/apiErrorHandling";
 import { getcompanydetail } from "../../services/api/common_api";
 import defcompanylogo from "../../img/defaultcompanylogo.jpg"
 import { Link } from "react-router-dom";
+import SEO from "../../utils/seo";
+import pImage from "../../img/social_media/new_vacancy.png";
+
 const EmployersSingleV1 = () => {
   const {loading} = useSelector(state=>state.loading);
   const dispatch = useDispatch();
@@ -45,6 +48,18 @@ const EmployersSingleV1 = () => {
 
   return (
     <>
+      {
+        employer &&
+        <SEO
+          title = {`${employer?.name} şirkəti | King Job`}
+          description = {`${employer?.name} şirkətində arzuladığın işə uyğun vakansiya axtar və bircə kliklə müraciət et. ${employer?.name} şirkətindən geri dönüşləri hesabında izlə !`}
+          name = "King Job" 
+          ogType = "article"
+          twType = "summary_large_image" 
+          image = {pImage}
+          // imageWidth = "" 
+        />
+      }
       {/* <!-- Header Span --> */}
       <span className="header-span"></span>
 
@@ -91,12 +106,12 @@ const EmployersSingleV1 = () => {
                     {/* location info */}
                     <li>
                       <span className="icon flaticon-telephone-1"></span>
-                      {employer?.companyInfo?.phone || "Qeyd yoxdur"}
+                      {employer?.companyInfo?.phone ? <a href={`tel:${employer?.companyInfo?.phone}`}>{employer?.companyInfo?.phone}</a> : "Qeyd yoxdur"}
                     </li>
                     {/* time info */}
                     <li>
                       <span className="icon flaticon-mail"></span>
-                      {employer?.email || "Qeyd yoxdur"}
+                      {employer?.email ? <a href={`mailto:${employer?.email}`}>{employer?.email}</a> : "Qeyd yoxdur"}
                     </li>
                     {/* salary info */}
                   </ul>
@@ -200,10 +215,10 @@ const EmployersSingleV1 = () => {
                           Yaranma tarixi: <span>2011</span>
                         </li> */}
                         <li>
-                          Telefon: <span>{employer?.companyInfo?.phone || "Qeyd yoxdur"}</span>
+                          Telefon: <span>{employer?.companyInfo?.phone ? <a href={`tel:${employer?.companyInfo?.phone}`}>{employer?.companyInfo?.phone}</a> : "Qeyd yoxdur"}</span>
                         </li>
                         <li>
-                          Email: <span>{employer?.email || "Qeyd yoxdur"}</span>
+                          Email: <span>{employer?.email ? <a href={`mailto:${employer?.email}`}>{employer?.email}</a> : "Qeyd yoxdur"}</span>
                         </li>
                         <li>
                           Şəhər: <span>{employer?.companyInfo?.city || "Qeyd yoxdur"}</span>
@@ -215,16 +230,19 @@ const EmployersSingleV1 = () => {
                       </ul>
                       {/* End compnay-info */}
 
-                      <div className="btn-box">
-                        <Link
-                          to={employer?.companyInfo?.website?.includes('https://')? employer.companyInfo.website : `https://${employer.companyInfo.website}`}
-                          className="theme-btn btn-style-three"
-                          style={{ textTransform: "lowercase" }}
-                          target="_blank"
-                        >
-                         {employer?.companyInfo?.website || "Qeyd yoxdur"} 
-                        </Link>
-                      </div>
+                      {
+                        employer?.companyInfo?.website &&
+                        <div className="btn-box">
+                          <Link
+                            to={employer?.companyInfo?.website?.includes('https://')? employer.companyInfo.website : `https://${employer.companyInfo.website}`}
+                            className="theme-btn btn-style-three"
+                            style={{ textTransform: "lowercase" }}
+                            target="_blank"
+                          >
+                          {employer?.companyInfo?.website || "Qeyd yoxdur"} 
+                          </Link>
+                        </div>
+                      }
                       {/* btn-box */}
                     </div>
                   </div>

@@ -6,10 +6,24 @@ import BreadCrumb from "../../BreadCrumb";
 import CopyrightFooter from "../../CopyrightFooter";
 import PackageDataTable from "./components/PackageDataTable";
 import MenuToggler from "../../MenuToggler";
+import SEO from "../../../../utils/seo";
+import pImage from "../../../../img/social_media/new_vacancy.png";
+import { useSelector } from "react-redux";
 
-const index = () => {
+const Index = () => {
+  const {user,info} = useSelector(state=>state.auth);
+
   return (
     <div className="page-wrapper dashboard">
+      <SEO
+        title = {`${user?.name} - Abunəliklərim | KING JOB`}
+        description = "Hesabınızdakı Abunəliklərim səhifəsində abunə olduğunuz paketləri nəzərdən keçirə bilərsiniz !"
+        name = "King Job" 
+        ogType = "article"
+        twType = "summary_large_image" 
+        image = {pImage}
+        // imageWidth = "" 
+      />
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
 
@@ -67,4 +81,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

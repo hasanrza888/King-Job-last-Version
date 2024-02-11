@@ -7,10 +7,23 @@ import CopyrightFooter from "../../CopyrightFooter";
 import AlertDataTable from "./components/AlertDataTable";
 import MenuToggler from "../../MenuToggler";
 import WidgetToFilterBox from "./components/WidgetToFilterBox";
+import SEO from "../../../../utils/seo";
+import pImage from "../../../../img/social_media/new_vacancy.png";
+import { useSelector } from "react-redux";
 
-const index = () => {
+const Index = () => {
+  const {user,info} = useSelector(state=>state.auth);
   return (
     <div className="page-wrapper dashboard">
+      <SEO
+        title = {`${user?.name} - Tapşırıqların nəticəsi | KING JOB`}
+        description = "Hesabınızdakı Tapşırıqların nəticəsi səhifəsində müraciətçilərdən göndərilən tapşırıqların nəticəsinə baxa bilərsiniz !"
+        name = "King Job" 
+        ogType = "article"
+        twType = "summary_large_image" 
+        image = {pImage}
+        // imageWidth = "" 
+      />
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
 
@@ -68,4 +81,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

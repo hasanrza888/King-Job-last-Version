@@ -22,6 +22,9 @@ import { useEffect } from "react";
 import DefaulHeader2 from "../../../components/header/DefaulHeader2";
 import { Link } from "react-router-dom";
 import defcompanylogo from "../../../img/defaultcompanylogo.jpg"
+import SEO from "../../../utils/seo";
+import pImage from "../../../img/social_media/new_vacancy.png";
+
 const JobSingleDynamicV1 = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -66,8 +69,44 @@ const JobSingleDynamicV1 = () => {
       modal.show();
     }
   }
+
+  function htmlToPlainText(html) {
+    var element = document.createElement('div');
+    element.innerHTML = html;
+    
+    // Traverse the DOM tree and extract text content
+    function traverse(node) {
+      var text = '';
+      
+      if (node.nodeType === Node.TEXT_NODE) {
+        text += node.textContent;
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        var children = node.childNodes;
+        for (var i = 0; i < children.length; i++) {
+          text += traverse(children[i]);
+        }
+      }
+      
+      return text;
+    }
+    
+    return traverse(element);
+  }
   return (
     <>
+      {
+        job &&
+        <SEO
+          title = {`${job?.name} | ${job?.companyName} | kingjob.pro`}
+          description = {htmlToPlainText(job?.['descriptionOfVacancy']).slice(0, 170)}
+          name = "King Job" 
+          ogType = "article"
+          twType = "summary_large_image" 
+          image = {pImage}
+          // imageWidth = "" 
+        />
+      }
+
       {/* <!-- Header Span --> */}
       <span className="header-span"></span>
 

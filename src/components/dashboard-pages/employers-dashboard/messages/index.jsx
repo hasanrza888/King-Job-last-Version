@@ -8,10 +8,25 @@ import ChatBox from "./components";
 import MenuToggler from "../../MenuToggler";
 import { useSelector } from "react-redux";
 import ChatHamburger from "./components/ChatHamburger";
+import SEO from "../../../../utils/seo";
+import pImage from "../../../../img/social_media/new_vacancy.png";
+
 const Index = () => {
+
   const { chatSidebar } = useSelector((state) => state.toggle);
+  const {user,info} = useSelector(state=>state.auth);
+
   return (
     <div className="page-wrapper dashboard">
+      <SEO
+        title = {`${user?.name} - Mesajlar | KING JOB`}
+        description = "Hesabınızdakı Mesajlar səhifəsində müraciətçilərinizə mesaj yazaraq əlaqə yarada bilərsiniz !"
+        name = "King Job" 
+        ogType = "article"
+        twType = "summary_large_image" 
+        image = {pImage}
+        // imageWidth = "" 
+      />
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
 

@@ -3,7 +3,7 @@ import { useLocation } from 'react-router';
 
 export default function SEO ({title, description, keywords, name, ogType, twType, image, imageWidth}) {
 
-    const location = useLocation().pathname;
+    const location = "https://www.kingjob.pro" + useLocation().pathname;
 
     return (
         <Helmet>

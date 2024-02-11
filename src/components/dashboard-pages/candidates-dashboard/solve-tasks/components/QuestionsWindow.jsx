@@ -14,6 +14,9 @@ import CountdownTimer from "./CountdownTimer";
 import { detectillegalactiononexam,uploadexamscreenrocerder } from "../../../../../services/api/company_api";
 import TaskResult from "./TaskResultModal";
 import RecordRTC from 'recordrtc';
+import pImage from "../../../../../img/social_media/new_vacancy.png";
+import SEO from "../../../../../utils/seo";
+
 function QuestionsWindow() {
     const dispatch = useDispatch();
     const params = useParams();
@@ -134,9 +137,21 @@ function QuestionsWindow() {
         }
 
     }
+    console.log("crc", currentTask?.questions)
         return ( 
             
             <div className="page-wrapper dashboard task-solve-p">
+                {   currentTask?.questions?.length > 0 &&
+                    <SEO
+                        title = {`${currentTask?.name} | KING JOB`}
+                        description = {`${currentTask?.name} tapşırığını həll edərək göndərə bilərsiniz !`}
+                        name = "King Job" 
+                        ogType = "article"
+                        twType = "summary_large_image" 
+                        image = {pImage}
+                        // imageWidth = "" 
+                    />
+                }
                 {currentTask?.questions?.length >0 && (
                 <section className="user-dashboard pb-5">
                     <div className="dashboard-outer">

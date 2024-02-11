@@ -7,10 +7,23 @@ import CopyrightFooter from "../../CopyrightFooter";
 import WidgetToFilterBox from "./components/WidgetToFilterBox";
 import WidgetContentBox from "./components/WidgetContentBox";
 import MenuToggler from "../../MenuToggler";
+import SEO from "../../../../utils/seo";
+import pImage from "../../../../img/social_media/new_vacancy.png";
+import { useSelector } from "react-redux";
 
-const index = () => {
+const Index = () => {
+  const {user,info} = useSelector(state=>state.auth);
   return (
     <div className="page-wrapper dashboard">
+      <SEO
+        title = {`${user?.name} - Seçilmiş müraciətlər | KING JOB`}
+        description = "Hesabınızdakı Seçilmiş müraciətlər səhifəsində öncədən seçdiyiniz müraciətçiləri nəzərdən keçirə bilərsiniz !"
+        name = "King Job" 
+        ogType = "article"
+        twType = "summary_large_image" 
+        image = {pImage}
+        // imageWidth = "" 
+      />
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
 
@@ -61,4 +74,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

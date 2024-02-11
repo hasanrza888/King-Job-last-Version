@@ -80,7 +80,7 @@ const DefaulHeader2 = () => {
               to={profilenavigate[u_t_p]}
               className="theme-btn btn-style-one"
             >
-              Profile
+              Hesabım
             </Link>}
           </div>
         </div>

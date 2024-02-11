@@ -8,12 +8,24 @@ import DashboardCandidatesHeader from "../../../header/DashboardCandidatesHeader
 import MenuToggler from "../../MenuToggler";
 import { useSelector } from "react-redux";
 import ChatHamburger from "../../employers-dashboard/messages/components/ChatHamburger";
+import SEO from "../../../../utils/seo";
+import pImage from "../../../../img/social_media/new_vacancy.png";
 
 const Index = () => {
   const { chatSidebar } = useSelector((state) => state.toggle);
+  const {user,info} = useSelector(state=>state.auth);
 
   return (
     <div className="page-wrapper dashboard">
+      <SEO
+        title = {`${user?.name} - Mesajlar | KING JOB`}
+        description = "Hesabınızdakı Mesajlar səhifəsində müraciət etdiniz vakansiyanın aid olduğu şirkətlərə mesaj yazaraq əlaqə saxlaya bilərsiniz !"
+        name = "King Job" 
+        ogType = "article"
+        twType = "summary_large_image" 
+        image = {pImage}
+        // imageWidth = "" 
+      />
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
 

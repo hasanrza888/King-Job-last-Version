@@ -10,9 +10,24 @@ import Applicants from "./components/Applicants";
 import CopyrightFooter from "../../CopyrightFooter";
 import MenuToggler from "../../MenuToggler";
 import ApplyingLevelCart from "./components/ApplyingLevelInterval";
+import { useSelector } from "react-redux";
+import SEO from "../../../../utils/seo";
+import pImage from "../../../../img/social_media/new_vacancy.png";
+
 const Index = () => {
+  const {user, info} = useSelector(state=>state.auth);
+
   return (
     <div className="page-wrapper dashboard">
+      <SEO
+        title = {`${user?.name} - İdarə Paneli | KING JOB`}
+        description = "Hesabınızdakı İdarə panelində statistikalarınızı və xülasələri nəzərdən keçirə bilərsiniz"
+        name = "King Job" 
+        ogType = "article"
+        twType = "summary_large_image" 
+        image = {pImage}
+        // imageWidth = "" 
+      />
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}
 

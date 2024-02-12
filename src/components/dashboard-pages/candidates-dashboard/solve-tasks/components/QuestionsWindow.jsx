@@ -150,6 +150,7 @@ function QuestionsWindow() {
                         twType = "summary_large_image" 
                         image = {pImage}
                         // imageWidth = "" 
+                        noindex = {true}
                     />
                 }
                 {currentTask?.questions?.length >0 && (

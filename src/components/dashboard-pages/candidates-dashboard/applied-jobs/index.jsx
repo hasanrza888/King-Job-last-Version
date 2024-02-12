@@ -23,6 +23,7 @@ const Index = () => {
         twType = "summary_large_image" 
         image = {pImage}
         // imageWidth = "" 
+        noindex = {true}
       />
       <span className="header-span"></span>
       {/* <!-- Header Span for hight --> */}

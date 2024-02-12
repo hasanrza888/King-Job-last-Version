@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router';
 
-export default function SEO ({title, description, keywords, name, ogType, twType, image, imageWidth}) {
+export default function SEO ({title, description, keywords, name, ogType, twType, image, imageWidth, noindex}) {
 
     const location = "https://www.kingjob.pro" + useLocation().pathname;
 
@@ -21,7 +21,7 @@ export default function SEO ({title, description, keywords, name, ogType, twType
             {title && <meta property="og:title" content={title} />}
             {description && <meta property="og:description" content={description} />}
             {location && <meta property="og:url" content={location} />}
-            {image && <meta property="og:image" content={image} />}
+            {image && <meta property="og:image" content={"https://www.kingjob.pro" + image} />}
             <meta property="og:image:width" content={imageWidth ? imageWidth : 300} />
             <meta property="og:site_name" content="King Job" />
             { /* End Facebook tags */ }
@@ -33,12 +33,15 @@ export default function SEO ({title, description, keywords, name, ogType, twType
             {twType && <meta name="twitter:card" content={twType} />}
             {title && <meta name="twitter:title" content={title} />}
             {description && <meta name="twitter:description" content={description} />}
-            {image && <meta name='twitter:image' content={image} />}
+            {image && <meta name='twitter:image' content={"https://www.kingjob.pro" + image} />}
             {location && <meta name="twitter:url" content={location} />}
             { /* End Twitter tags */ }
 
             {location && <link rel="canonical" href={location} />}
 
+            {/* noindex */}
+            {noindex && <meta name="robots" content="noindex" /> }
+            
         </Helmet>
     )
 

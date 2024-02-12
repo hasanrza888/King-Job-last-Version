@@ -20,6 +20,9 @@ import { toast } from "react-toastify";
 import { updateApplyer } from "../../../features/employer/employerSlice";
 import { giveanstatustoapplyer } from "../../../services/api/company_api";
 import PdfViewer from "./PdfViewer";
+import SEO from "../../../utils/seo";
+import pImage from "../../../img/social_media/new_vacancy.png";
+
 const CandidateSingleDynamicV1 = () => {
   const dispatch = useDispatch();
   const id = useParams().id;
@@ -109,6 +112,18 @@ const CandidateSingleDynamicV1 = () => {
   };
   return (
     <>
+      { applyer?.user &&
+        <SEO
+          title = {`${applyer?.user?.name} - Müraciətçi | KING JOB`}
+          description = "Hesabınızdakı Şifrəni dəyiş səhifəsində hesabınızın şifrəsini dəyişə bilərsiniz !"
+          name = "King Job" 
+          ogType = "article"
+          twType = "summary_large_image" 
+          image = {pImage}
+          // imageWidth = "" 
+          noindex = {true}
+        />
+      }
       {/* <!-- Header Span --> */}
       <span className="header-span"></span>
 

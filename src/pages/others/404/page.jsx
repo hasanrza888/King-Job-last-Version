@@ -13,6 +13,7 @@ const index = () => {
         twType = "summary_large_image" 
         image = {pImage}
         // imageWidth = "" 
+        noindex = {true}
       />
       <div
         className="error-page-wrapper "

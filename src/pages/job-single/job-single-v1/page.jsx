@@ -171,7 +171,7 @@ const JobSingleDynamicV1 = () => {
                     </div>
                     {/* End .content */}
 
-                    <div className="btn-box">
+                    {/*<div className="btn-box">
                       <button
                         onClick={openModal}
                         className="theme-btn btn-style-one"
@@ -181,7 +181,7 @@ const JobSingleDynamicV1 = () => {
                       <button className="bookmark-btn">
                         <i className="flaticon-bookmark"></i>
                       </button>
-                    </div>
+                    </div>*/}
                     {/* End apply for job btn */}
 
                     {/* <!-- Modal --> */}

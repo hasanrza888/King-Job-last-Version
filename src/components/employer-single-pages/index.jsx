@@ -109,10 +109,10 @@ const EmployersSingleV1 = () => {
                       {employer?.companyInfo?.phone ? <a href={`tel:${employer?.companyInfo?.phone}`}>{employer?.companyInfo?.phone}</a> : "Qeyd yoxdur"}
                     </li>
                     {/* time info */}
-                    <li>
+{/*                     <li>
                       <span className="icon flaticon-mail"></span>
                       {employer?.email ? <a href={`mailto:${employer?.email}`}>{employer?.email}</a> : "Qeyd yoxdur"}
-                    </li>
+                    </li> */}
                     {/* salary info */}
                   </ul>
                   {/* End .job-info */}
@@ -217,9 +217,11 @@ const EmployersSingleV1 = () => {
                         <li>
                           Telefon: <span>{employer?.companyInfo?.phone ? <a href={`tel:${employer?.companyInfo?.phone}`}>{employer?.companyInfo?.phone}</a> : "Qeyd yoxdur"}</span>
                         </li>
-                        <li>
+                        
+{/*                         <li>
                           Email: <span>{employer?.email ? <a href={`mailto:${employer?.email}`}>{employer?.email}</a> : "Qeyd yoxdur"}</span>
-                        </li>
+                        </li> */}
+                        
                         <li>
                           Şəhər: <span>{employer?.companyInfo?.city || "Qeyd yoxdur"}</span>
                         </li>

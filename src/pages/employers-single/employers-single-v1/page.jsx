@@ -71,10 +71,10 @@ const EmployersSingleV1 = ({ params }) => {
                       {employer?.phone}
                     </li>
                     {/* time info */}
-                    <li>
+                    {/*<li>
                       <span className="icon flaticon-mail"></span>
                       {employer?.email}
-                    </li>
+                    </li>*/}
                     {/* salary info */}
                   </ul>
                   {/* End .job-info */}

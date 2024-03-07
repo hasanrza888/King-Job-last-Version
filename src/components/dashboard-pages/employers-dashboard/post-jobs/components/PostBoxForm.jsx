@@ -30,6 +30,7 @@ const modules = {
     [{ 'script': 'sub'}, { 'script': 'super' }],
     [{ 'indent': '-1'}, { 'indent': '+1' }],  
     [{ 'align': [] }],
+    ['link'],
     ['clean'] 
   ],
 };

@@ -39,14 +39,14 @@ module.exports = [
     active: "",
     onClick:""
   },
-  {
-    id: 6,
-    name: "Seçilmiş müraciətlər",
-    icon: "la-bookmark-o",
-    routePath: "/company-dashboard/chosen-applicants",
-    active: "",
-    onClick:""
-  },
+  // {
+  //   id: 6,
+  //   name: "Seçilmiş müraciətlər",
+  //   icon: "la-bookmark-o",
+  //   routePath: "/company-dashboard/chosen-applicants",
+  //   active: "",
+  //   onClick:""
+  // },
   {
     id: 7,
     name: "Tapşırıqlarım",

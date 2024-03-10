@@ -25,7 +25,7 @@ module.exports = [
     title: "Haqqımızda",
     menuList: [
       { name: "Haqqımızda", route: "/about" },
-      { name: "Abunəliklər", route: "/subscriptions" },
+      // { name: "Abunəliklər", route: "/subscriptions" },
       { name: "Şərtlər", route: "/terms" },
       { name: "Əlaqə", route: "/contact" },
     ],

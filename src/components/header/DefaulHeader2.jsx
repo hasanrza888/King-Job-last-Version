@@ -58,9 +58,9 @@ const DefaulHeader2 = () => {
 
         <div className="outer-box">
           {/* <!-- Add Listing --> */}
-          <Link to="/subscriptions" className="upload-cv">
+          {/* <Link to="/subscriptions" className="upload-cv">
             Abunəliklər
-          </Link>
+          </Link> */}
           
           {/* <!-- Login/Register --> */}
           <div className="btn-box">

@@ -39,14 +39,14 @@ module.exports = [
     active: "",
     onCLick:""
   },
-  {
-    id: 6,
-    name: "Geri Dönüşlər",
-    icon: "la la-bell",
-    routePath: "/applicants-dashboard/feedbacks",
-    active: "",
-    onCLick:""
-  },
+  // {
+  //   id: 6,
+  //   name: "Geri Dönüşlər",
+  //   icon: "la la-bell",
+  //   routePath: "/applicants-dashboard/feedbacks",
+  //   active: "",
+  //   onCLick:""
+  // },
   {
     id: 7,
     name: "Yadda saxlanmışlar",
